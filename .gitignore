@@ -1,0 +1,16 @@
+backups/
+cache/
+debug/
+file-history/
+history.jsonl
+local/
+mcp-needs-auth-cache.json
+paste-cache/
+plans/
+projects/
+sessions/
+shell-snapshots/
+statsig/
+todos/
+plugins/know_marketplaces.json
+plugins/marketplaces/

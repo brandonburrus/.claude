@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "respectGitignore": true,
+  "env": {
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "1"
+  },
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "permissions": {
+    "deny": [
+      "Bash(cat .env)",
+      "Bash(* cat .env *)",
+      "Bash(cat .env *)",
+      "Bash(* cat .env)",
+      "Bash(chmod *)",
+      "Bash(chown *)",
+      "Bash(dd *)",
+      "Bash(git * --force)",
+      "Bash(git * --force-with-lease*)",
+      "Bash(git * -f)",
+      "Bash(git push --force*)",
+      "Bash(git reset --hard *)",
+      "Bash(rm -r *)",
+      "Bash(rm -rf *)",
+      "Bash(rmdir *)",
+      "Bash(service *)",
+      "Bash(su *)",
+      "Bash(sudo *)",
+      "Bash(systemctl *)",
+      "Bash(wget *)",
+      "Read(.env)",
+      "Read(* .env)"
+    ],
+    "ask": [
+      "Bash(curl * -H *Authorization*)",
+      "Bash(curl *)",
+      "Bash(git clean -fd *)",
+      "Bash(git commit *)"
+    ],
+    "allow": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Agent",
+      "WebFetch"
+    ],
+    "defaultMode": "plan"
+  },
+  "model": "sonnet",
+  "outputStyle": "direct",
+  "spinnerTipsEnabled": true,
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "medium",
+  "awaySummaryEnabled": true,
+  "plansDirectory": "./plans",
+  "tui": "fullscreen",
+  "voice": {
+    "enabled": true,
+    "mode": "tap"
+  },
+  "channelsEnabled": false,
+  "theme": "custom:neon-chalk",
+  "prefersReducedMotion": false,
+  "showThinkingSummaries": true,
+  "useAutoModeDuringPlan": true,
+  "voiceEnabled": true,
+  "editorMode": "vim",
+  "preferredNotifChannel": "ghostty",
+  "showTurnDuration": true,
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh"
+  }
+}
