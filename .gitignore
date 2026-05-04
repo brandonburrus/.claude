@@ -7,10 +7,11 @@ local/
 mcp-needs-auth-cache.json
 paste-cache/
 plans/
+plugins/know_marketplaces.json
+plugins/marketplaces/
 projects/
 sessions/
 shell-snapshots/
 statsig/
+tasks/
 todos/
-plugins/know_marketplaces.json
-plugins/marketplaces/
