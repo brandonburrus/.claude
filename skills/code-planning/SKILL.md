@@ -1,7 +1,13 @@
 ---
 name: code-planning
-description: IMPORTANT - Use when planning out code implementations. This includes new features, bug fixes, refactors, or any kind of code change.
+description: Use this skill when planning any non-trivial code implementation — new
+  features, bug fixes, refactors, or architectural changes. Use when the user says
+  "plan this", "let's plan before coding", or "what's the approach". Do not use for
+  trivial single-line changes or tasks already fully specified with no design decisions
+  remaining.
 ---
+
+## Purpose
 
 Produce a structured implementation plan before writing any code. The plan is the deliverable — do not begin implementation until the user approves it.
 
@@ -106,3 +112,24 @@ Produce a structured implementation plan before writing any code. The plan is th
 - If a section would be empty, omit it entirely rather than writing "N/A" or "None".
 - If you lack information to fill a section, say so explicitly and ask the user.
 - Plans for changes touching production data or infrastructure must include a rollback section.
+
+## When to Use
+
+- New features with multiple files, dependencies, or non-obvious design decisions
+- Refactors where the approach needs validation before implementation begins
+- Bug fixes that require diagnosing root cause and designing a solution strategy
+- Any change the user wants to review before code is written
+- When the user says "plan this", "let's plan", or "before we write code"
+
+## When NOT to Use
+
+- Trivial one-line changes or simple renames with no design decisions
+- Changes already fully specified with no ambiguity about what to build
+- When the user explicitly says to skip planning and implement directly
+
+## Gotchas
+
+- **Do not include implementation code in the plan.** The plan describes what will be built, not how to type it.
+- **Do not pad with generic advice.** Every statement must be specific to this change. "Ensure proper error handling" is padding; "Wrap the S3 call in a retry loop and surface 5xx as 503 to the caller" is specific.
+- **If a section would be empty, omit it.** Do not write "N/A" — an absent section means it does not apply.
+- **If you lack information to fill a section, say so and ask.** Do not invent field names, assume file paths, or speculate about interfaces.

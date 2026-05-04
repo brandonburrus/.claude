@@ -1,6 +1,9 @@
 ---
 name: ui-ux
-description: Load when the user wants to build or style any kind of User Interface (UI) — web components, pages, dashboards, or any frontend interface.
+description: Use this skill when building or styling any kind of User Interface —
+  web components, pages, dashboards, or frontend interfaces. Do not use for auditing
+  existing UI, writing backend logic with no visual output, or generating design tokens
+  without an actual UI component.
 ---
 
 This skill guides creation of distinctive, production-grade frontend interfaces that avoid generic "AI slop" aesthetics. Implement real working code with exceptional attention to aesthetic details and creative choices.
@@ -266,6 +269,13 @@ These are recurring AI UI mistakes. Recognize and reject them:
 > If a UI choice feels like a default AI move, ban it and pick the harder, cleaner option. Colors should stay calm, not fight.
 
 ---
+
+## When to Use
+
+- Building a new web component, page, or application interface from scratch
+- Styling or redesigning an existing UI
+- Dashboard, admin tool, SaaS app, or any product UI
+- Any frontend request with a visual output (HTML, CSS, React components, etc.)
 
 ## When NOT to Use This Skill
 

@@ -1,6 +1,8 @@
 ---
 name: git
-description: ALWAYS use when performing core git operations. Load when writing commit messages, performing merges, rebases, cherry picking, squashing, or any other key git operations.
+description: Use this skill — always — when performing core git operations: writing
+  commit messages, merges, rebases, cherry picking, squashing, or any other key git
+  workflow step.
 ---
 
 When working with git, ALWAYS follow these rules:

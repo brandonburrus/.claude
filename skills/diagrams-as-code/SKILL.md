@@ -1,6 +1,10 @@
 ---
 name: diagrams-as-code
-description: Load when the user wants to generate architecture, infrastructure, or system diagrams as Python code using the diagrams library. Triggers on requests for cloud architecture diagrams, infrastructure diagrams, network topology diagrams, Kubernetes diagrams, C4 model diagrams, or any visual system diagram that can be expressed as code.
+description: Use this skill when generating architecture, infrastructure, or system
+  diagrams as Python code using the diagrams library. Use for cloud architecture diagrams
+  (AWS, Azure, GCP), infrastructure diagrams, network topology, Kubernetes diagrams,
+  C4 model diagrams, or any visual system diagram expressible as code. Do not use for
+  flowcharts, sequence diagrams, or state machines — use Mermaid for those.
 ---
 
 ## Purpose

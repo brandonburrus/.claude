@@ -1,6 +1,9 @@
 ---
 name: writing-educative
-description: Load when the user wants to write educational or tutorial content that teaches from first principles.
+description: Use this skill when writing educational or tutorial content that teaches
+  from first principles — concept explainers, how-to guides, onboarding docs, or API
+  walkthroughs. Do not use for persuasive documents where the goal is stakeholder
+  buy-in rather than reader understanding.
 ---
 
 ## Purpose

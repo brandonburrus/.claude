@@ -1,6 +1,8 @@
 ---
 name: writing-blog
-description: Load when drafting, editing, or writing blog posts. Not for Confluence docs, READMEs, or any internal technical writing.
+description: Use this skill when drafting, editing, or writing blog posts for blog.brandonburrus.com.
+  Do not use for Confluence docs, READMEs, internal technical writing, or any writing
+  not destined for the blog.
 ---
 
 ## Purpose
@@ -247,6 +249,13 @@ Before considering a post complete, verify:
 - [ ] Post reads naturally aloud — if a sentence sounds awkward spoken, rewrite it
 
 ---
+
+## When to Use
+
+- Drafting a new blog post from a topic brief or idea
+- Editing or revising an existing draft
+- Writing any content destined for the blog as a `.mdx` file
+- When the user says "write a blog post", "draft a post", or "help me write about X for my blog"
 
 ## When NOT to Use This Skill
 

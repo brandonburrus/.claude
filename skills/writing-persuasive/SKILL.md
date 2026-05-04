@@ -1,6 +1,10 @@
 ---
 name: writing-persuasive
-description: Load when the user wants to write a persuasive technical document — proposal, business case, or recommendation.
+description: Use this skill when writing persuasive technical documents — spikes,
+  proposals, RFCs, ADRs, migration plans, or vendor evaluations — where the goal is
+  to convince stakeholders to adopt a recommended approach. Do not use for pure
+  documentation, reference material, or educational content where the goal is reader
+  understanding rather than persuasion.
 ---
 
 ## Purpose
@@ -89,7 +93,7 @@ Use this skill when asked to write or help draft:
 ## When NOT to Use This Skill
 
 - Pure documentation or reference material with no persuasive intent
+- Educational content where the goal is reader understanding (use `writing-educative` instead)
 - Casual Slack messages or brief status updates
 - Code comments or inline documentation
 - Meeting notes or agendas
-

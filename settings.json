@@ -49,7 +49,7 @@
     ],
     "defaultMode": "plan"
   },
-  "model": "opus",
+  "model": "sonnet",
   "statusLine": {
     "type": "command",
     "command": "~/.claude/statusline.sh"
@@ -70,10 +70,10 @@
   "channelsEnabled": false,
   "prefersReducedMotion": false,
   "showThinkingSummaries": true,
-  "useAutoModeDuringPlan": true,
-  "voiceEnabled": true,
   "editorMode": "vim",
   "preferredNotifChannel": "ghostty",
+  "autoCompactEnabled": false,
   "showTurnDuration": true,
-  "skipAutoPermissionPrompt": true
+  "useAutoModeDuringPlan": true,
+  "voiceEnabled": true
 }
