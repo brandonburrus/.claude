@@ -9,6 +9,14 @@
     "pr": ""
   },
   "permissions": {
+    "allow": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "Agent",
+      "WebFetch"
+    ],
     "deny": [
       "Bash(cat .env)",
       "Bash(* cat .env *)",
@@ -39,30 +47,27 @@
       "Bash(git clean -fd *)",
       "Bash(git commit *)"
     ],
-    "allow": [
-      "Read",
-      "Write",
-      "Edit",
-      "Bash",
-      "Agent",
-      "WebFetch"
-    ],
     "defaultMode": "plan"
   },
-  "model": "sonnet",
+  "model": "opus",
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh"
+  },
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true
+  },
   "outputStyle": "direct",
-  "spinnerTipsEnabled": true,
+  "spinnerTipsEnabled": false,
   "alwaysThinkingEnabled": true,
-  "effortLevel": "medium",
+  "effortLevel": "xhigh",
   "awaySummaryEnabled": true,
-  "plansDirectory": "./plans",
   "tui": "fullscreen",
   "voice": {
     "enabled": true,
     "mode": "tap"
   },
   "channelsEnabled": false,
-  "theme": "custom:neon-chalk",
   "prefersReducedMotion": false,
   "showThinkingSummaries": true,
   "useAutoModeDuringPlan": true,
@@ -70,8 +75,5 @@
   "editorMode": "vim",
   "preferredNotifChannel": "ghostty",
   "showTurnDuration": true,
-  "statusLine": {
-    "type": "command",
-    "command": "~/.claude/statusline.sh"
-  }
+  "skipAutoPermissionPrompt": true
 }
