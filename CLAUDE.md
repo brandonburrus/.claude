@@ -28,3 +28,37 @@ You are responsible for remembering and maintaining documentation for AI Agents,
 - You are responsible for self-correcting the documentation when it contradicts observed reality. If you observe something in the project that contradicts what is written in these `AGENTS.md` contextual documents, defer to the actual observed reality and update the documentation accordingly. If it is unclear what should be documented, stop and ask for clarification instead of guessing or making assumptions.
 - When the user makes key decisions about the project (example: choosing a particular library or technology, deciding on an approach, etc.), record the decision in the nearest `AGENTS.md` file to ensure the decision is respected in the future.
 - Maintaining these `AGENTS.md` files is CRITICAL to the success of the project in addition to your own success as an agent working on the project.
+
+# Code Style
+
+Apply these rules whenever writing code in any programming language.
+
+## General
+
+- Strive for simplicity and clarity when writing code.
+- Use clear and descriptive naming conventions always. Names should never be ambiguous or vague, even if they are longer. Clarity is more important than brevity in naming.
+- Write code that is clear and self-documenting in its structure. Code should read nearly like English.
+
+## Comments
+
+- Don't write unnecessary comments, especially ones that explain "what" the code is doing (that is obvious from reading it). Instead, write comments that explain the "why" behind the code, explaining the reasoning behind non-obvious code especially around performance optimizations, edge case handling, and security implications.
+- Prefer idiomatic doc-style comments when you do write comments (example: full-formed JSDoc comments when writing JavaScript/TypeScript code).
+- Don't add "structural" comments that just break up code into sections (example: // --- Hooks ---). Use organizational structures like directories and files to create clear separations instead.
+
+## Organization
+
+- Always follow the existing codebase organizational structures and patterns first. If these patterns do not exist yet, organize code first by feature and domain, then by type (example directory structures: /auth/components, /auth/hooks, /user/components, /user/utils).
+- Prefer directory structures that make it clear where to find code for a specific feature. Follow the idiom "if I didn't understand this codebase and was looking for where this feature was implemented, where would I logically look?"
+
+## Testing Expectations
+
+- Code should always be written with the expectation that it will be tested in an automated fashion. Prefer clear lines of separation between code dependencies to make testing easier.
+- All code should have at bare minimum white box unit tests covering its core logic. Business logic should have 100% code coverage.
+- Module-level code should have black box integration tests that test the module as a whole with its interactions with other modules mocked out.
+
+# Git Conventions
+
+Apply these rules to every git operation:
+
+- When you don't know the codebase git commit conventions, review the most recent 5 commits and follow the established patterns. If there is no established pattern or the existing pattern is erratic, follow conventional commits.
+- Prefer short and direct commit messages that convey the "what" of what is being committed based on the code itself. Avoid commits like "addressing PR comments" or generic "refactored code" commit messages.
