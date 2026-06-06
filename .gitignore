@@ -17,5 +17,8 @@ tasks/
 todos/
 .last-cleanup
 daemon.log
+daemon.lock
+daemon.status.json
 daemon/
 jobs/
+_refs/
