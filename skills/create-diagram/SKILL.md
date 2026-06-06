@@ -5,7 +5,7 @@ description: Use this skill when creating any kind of diagram, including archite
   topology, C4 models, flowcharts, sequence diagrams, state machines, ER diagrams,
   class diagrams, Gantt charts, and git graphs. Use when the user says "diagram this",
   "draw the architecture", "visualize this flow", or wants any visual representation
-  of a system or process. Do not use for UI mockups or wireframes (use ui-ux), editing
+  of a system or process. Do not use for UI mockups or wireframes (use design-ui), editing
   existing images, or plotting charts from datasets.
 ---
 
@@ -47,7 +47,7 @@ List the nodes and relationships before writing source. Keep one diagram to one 
 
 ### 4. Write the source
 
-- `diagrams` library: never guess an import path or class name. For any node not copied verbatim from the reference's starter list, resolve it first with `uv run scripts/find-node.py <term>`; the library has ~2,900 node classes with inconsistent casing, and guessed imports are the top cause of render failure.
+- `diagrams` library: never guess an import path or class name. For any node not copied verbatim from the reference's starter list, resolve it first with `uv run ${CLAUDE_SKILL_DIR}/scripts/find-node.py <term>`; the library has ~2,900 node classes with inconsistent casing, and guessed imports are the top cause of render failure.
 - Mermaid: follow the syntax rules in the reference; quote any label containing special characters or reserved words.
 
 ### 5. Render and verify
@@ -60,7 +60,7 @@ Mandatory; this is the step that makes the skill reliable.
 uv run <filename>.py && ls <filename>.png
 ```
 
-Generated scripts include PEP 723 metadata (see the reference) so `uv run` resolves the `diagrams` dependency without environment setup. On `ImportError`, resolve the correct path with `uv run scripts/find-node.py <name>` and fix; on `ExecutableNotFound: failed to execute 'dot'`, Graphviz is missing (install per the reference). Re-run until the image file exists.
+Generated scripts include PEP 723 metadata (see the reference) so `uv run` resolves the `diagrams` dependency without environment setup. On `ImportError`, resolve the correct path with `uv run ${CLAUDE_SKILL_DIR}/scripts/find-node.py <name>` and fix; on `ExecutableNotFound: failed to execute 'dot'`, Graphviz is missing (install per the reference). Re-run until the image file exists.
 
 **Mermaid path**, in order:
 

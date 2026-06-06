@@ -56,13 +56,15 @@ with Diagram("Title", filename="output_name", show=False, direction="LR"):
 A wrong import path is the most common render failure. The starter reference below covers a fraction of the library; for everything else:
 
 ```shell
-uv run scripts/find-node.py <term> [<term> ...]
+uv run ${CLAUDE_SKILL_DIR}/scripts/find-node.py <term> [<term> ...]
 ```
+
+`${CLAUDE_SKILL_DIR}` renders as this skill's directory when the skill is invoked; if you are reading this file directly, substitute the directory containing it (one level up).
 
 It searches every node class in the installed library case-insensitively and prints paste-ready imports with exact casing:
 
 ```shell
-$ uv run scripts/find-node.py sagemaker cronjob
+$ uv run ${CLAUDE_SKILL_DIR}/scripts/find-node.py sagemaker cronjob
 === 'sagemaker' : 2 match(es) ===
   from diagrams.aws.ml import Sagemaker
   from diagrams.aws.ml import SagemakerModel

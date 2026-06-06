@@ -5,7 +5,7 @@
 """Find the exact import path and class name for diagrams library nodes.
 
 Usage:
-    uv run scripts/find-node.py <search-term> [<search-term> ...]
+    uv run ${CLAUDE_SKILL_DIR}/scripts/find-node.py <search-term> [<search-term> ...]
 
 Case-insensitive substring match against every Node subclass in the diagrams
 library. Prints a ready-to-paste import line for each match, so import paths
@@ -59,10 +59,12 @@ def all_node_classes():
 def main():
     terms = [t.lower() for t in sys.argv[1:]]
     if not terms:
+        # sys.argv[0] is this script's resolved path, so the usage line works
+        # regardless of the caller's working directory.
         sys.exit(
             "Provide at least one search term.\n"
-            "Usage: uv run scripts/find-node.py <term> [<term> ...]\n"
-            "Example: uv run scripts/find-node.py sagemaker cronjob redis"
+            f"Usage: uv run {sys.argv[0]} <term> [<term> ...]\n"
+            f"Example: uv run {sys.argv[0]} sagemaker cronjob redis"
         )
     classes = all_node_classes()
     all_matched = True

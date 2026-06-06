@@ -63,22 +63,26 @@ Over-specifying judgment calls makes the skill brittle; under-specifying fragile
 - Comparison or lookup reference: table
 - Decision procedure: explicit conditional ("if X, do Y; if Z, do W")
 
+**Invocation and execution controls.** Most skills need no frontmatter beyond `name` and `description`, but decide deliberately for two cases: side-effect workflows where the user controls timing (deploy, commit, publish) get `disable-model-invocation: true`, and background knowledge that is not a meaningful user action gets `user-invocable: false`. For these and the rest of the harness surface (arguments, `allowed-tools`, `context: fork`, dynamic context injection, path-scoped loading), read `references/skill-config.md` before writing the frontmatter.
+
 ### Phase 3 - Write the SKILL.md
 
 Use the template below. Fill every section; delete placeholder text. Specific rules:
 
 - `name` field must exactly match the directory name (kebab-case)
+- Names are verb-led: the name states the action the skill performs (`create-diagram`, `write-adr`, `fix`, `follow-tdd`), because the name doubles as the `/command` the user types and a command is an imperative. Noun or topic names (`obsidian`, `code-planning`) read as subject areas, not actions, and give no hint what invoking them does
 - Write the description field last (see Phase 4)
 - H2 for major sections, H3 for subsections; never H1 inside the body
 - Directive language: "Always," "Never," "Prefer," "Avoid." Pair each directive with its reason unless the reason is obvious. A rule whose why is understood generalizes to situations the rule's author never anticipated; a bare MUST invites loopholes the moment the literal wording does not fit
 - Every code block must include a language identifier, even for shell snippets
 - Use tables for comparisons, option lists, and anti-pattern catalogues
 - No "When to Use" or "When NOT to Use" sections in the body. Triggers and boundaries live only in the description; body duplicates drift out of sync and restate routing the agent has already passed. A boundary needing more detail than the description holds becomes a Gotcha; a behavioral exception becomes part of the relevant rule
-- No absolute filesystem paths anywhere in a skill; they break when the library moves or is shared. Refer to locations relative to the skill directory (`scripts/x.py`, `references/x.md`)
+- No absolute filesystem paths anywhere in a skill; they break when the library moves or is shared. Refer to locations relative to the skill directory (`scripts/x.py`, `references/x.md`), or use `${CLAUDE_SKILL_DIR}` where a command needs a path that works from any working directory (see `references/skill-config.md`)
 - One excellent, runnable, real example beats several mediocre ones. Never implement the same example in multiple languages; the agent can port
 - Use one term per concept throughout (always "endpoint", not a mix of "endpoint", "URL", "route")
 - No time-sensitive content ("before August 2025, use the old API"); if legacy behavior matters, put it in a collapsed "Old patterns" subsection
 - For workflows of four or more steps, include a copyable checklist at the top of the workflow so the agent can track progress and not skip validation steps
+- Front-load the critical rules and write them as standing instructions, not one-time steps. An invoked skill body stays in context all session but is never re-read, and on compaction only its first 5,000 tokens survive; a rule buried in the tail can silently vanish mid-task
 - Build feedback loops around quality-critical steps: "run the validator, fix errors, run again; proceed only when it passes"
 - No emojis anywhere in the file
 - No em dashes anywhere in the file
@@ -135,6 +139,7 @@ Write the description after the body is complete; the body reveals the true scop
 | Near-miss boundary | Name at least one thing it does NOT cover | Omitting boundaries entirely |
 | Triggers only | Describe WHEN to use, never HOW the skill works | Summarizing the workflow |
 | Generous triggering | Enumerate trigger contexts, including ones where the user does not name the skill | Single narrow trigger |
+| Key use case first | Lead with the primary trigger; the listing truncates at 1,536 characters | Burying the main trigger behind boundary clauses |
 | Length | 300-600 characters | Over 1024 characters (hard limit) |
 
 Never summarize the skill's workflow in the description. A description that says "does X by doing A then B" becomes a shortcut: the agent follows the two-word summary instead of reading the body, and the body's actual procedure silently stops executing. Triggers in the description; procedure in the body.
@@ -188,7 +193,7 @@ All bundled scripts are Python, executed with `uv run`. Conventions:
 # ///
 ```
 
-- Invoke as `uv run scripts/<name>.py <args>` in the SKILL.md instructions
+- Invoke as `uv run ${CLAUDE_SKILL_DIR}/scripts/<name>.py <args>` in the SKILL.md instructions. The harness substitutes the skill's real directory when the skill content is rendered, so the command works from any working directory while the file on disk stays free of absolute paths. An agent reading the raw file instead of invoking the skill sees the literal placeholder and resolves it from the file's own location
 - Solve, don't punt: handle foreseeable error conditions inside the script (missing file, bad input) instead of failing and leaving the agent to figure it out
 - Validation errors must be verbose and actionable ("Field 'signature_date' not found. Available fields: customer_name, order_total") because the agent uses the message to self-correct
 - No unexplained constants; justify every threshold or timeout in a comment. If you cannot justify the value, the agent cannot adapt it correctly
@@ -197,10 +202,11 @@ All bundled scripts are Python, executed with `uv run`. Conventions:
 ## Local Conventions
 
 - Each skill is a directory in the user skills library: `<skill-name>/SKILL.md`
-- Directory name must be kebab-case and match the `name` frontmatter field exactly
+- Directory name must be kebab-case, verb-led, and match the `name` frontmatter field exactly
+- Check the new name against the bundled command list before settling on it; a personal skill colliding with a bundled skill (`/debug`, `/verify`, `/run`, `/review`) has undefined precedence
 - Reference files: `references/<filename>.md` inside the skill directory
-- Scripts: `scripts/<filename>.py` inside the skill directory, Python only, run via `uv run`
-- No absolute filesystem paths inside any skill file; everything is relative to the skill directory
+- Scripts: `scripts/<filename>.py` inside the skill directory, Python only, run via `uv run ${CLAUDE_SKILL_DIR}/scripts/<filename>.py`
+- No absolute filesystem paths inside any skill file; everything is relative to the skill directory or uses `${CLAUDE_SKILL_DIR}`
 - No emojis anywhere in any skill file
 - No em dashes anywhere in any skill file
 - No H1 headings inside the body (the frontmatter `name` serves as the title)
@@ -224,6 +230,6 @@ All bundled scripts are Python, executed with `uv run`. Conventions:
 
 - **A colon-space inside an unquoted description breaks the frontmatter.** YAML plain scalars cannot contain ": "; the description silently fails to parse and the skill router falls back to garbage (observed: a description showing as "Purpose"). Avoid inline colons in the description, or quote the whole string. Verify after writing: the parsed description must match what you wrote.
 
-- **`name` field and directory name must be identical.** Create the directory first, then write the SKILL.md with the name field matching. If they diverge, skill routing can fail silently.
+- **`name` field and directory name must be identical.** The command name always comes from the directory; the `name` field only sets the display label in listings. A divergent field gives one skill two identities, so the user invokes a name that no listing shows. Create the directory first, then write the SKILL.md with the field matching.
 
 - **Narrative is not a skill.** "In one session we found that X caused Y" is a story about one instance. Extract the reusable rule, state it directively, and drop the narrative.
