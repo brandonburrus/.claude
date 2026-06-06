@@ -42,7 +42,7 @@ Tech Spec Progress:
 
 ### 1. Establish product context
 
-A tech spec answers how; the what and why must exist first. If no product requirements exist, ask the user whether to capture them verbally now (acceptable for small features) or define them properly first. Every technical decision in the spec must trace back to a requirement or constraint; without product context there is nothing to trace to.
+A tech spec answers how; the what and why must exist first. If no product requirements exist, ask the user whether to capture them verbally now (acceptable for small features) or define them properly first with the write-product-spec skill. Every technical decision in the spec must trace back to a requirement or constraint; without product context there is nothing to trace to.
 
 ### 2. Explore before asking
 
