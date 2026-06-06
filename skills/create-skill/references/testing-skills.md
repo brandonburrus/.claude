@@ -34,7 +34,7 @@ Baseline subagent prompt:
 With-skill subagent prompt:
 
 ```text
-Read /Users/brandon/.claude/skills/<skill-name>/SKILL.md and follow it where applicable.
+Read <absolute path to the skill under test>/SKILL.md and follow it where applicable.
 
 <the same test prompt, verbatim>
 ```

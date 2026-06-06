@@ -1,33 +1,17 @@
 ---
 name: create-skill
-description: Use this skill when the user wants to create a new personal skill, add
-  a skill to their skills library, teach the agent a new reusable behavior, or capture
-  domain expertise as a skill. Also use when the user says "make this a skill", "save
-  this as a skill", "turn this into a skill", "create a skill for X", "I want to
-  always do Y", or pastes instructions and asks to invoke them on demand. Do not use
-  for editing an existing SKILL.md or configuring automated hooks (use update-config
-  for hooks).
+description: Use this skill when the user wants to create a new personal skill, update
+  or improve an existing skill, add a skill to their skills library, teach the agent
+  a new reusable behavior, or capture domain expertise as a skill. Also use when the
+  user says "make this a skill", "create a skill for X", "improve my X skill", "update
+  the skill", "add X to the skill", "the skill got this wrong", "I want to always
+  do Y", or pastes instructions and asks to invoke them on demand. Do not use for
+  configuring automated hooks (use update-config) or for AGENTS.md and CLAUDE.md files.
 ---
 
 ## Purpose
 
-Extract domain expertise from the user and produce a well-structured, verified skill following this library's conventions. Do not begin writing the skill until Phase 1 is complete: a skill written without grounded expertise will be generic and low-value. Do not declare the skill done until Phase 5 verification has run: a skill verified only by reading it is unverified. The deliverable is a skill directory containing SKILL.md, plus optional `scripts/` and `references/` files when warranted.
-
-## When to Use
-
-- User explicitly asks to create a new skill or add one to their library
-- User says "make this a skill," "save this as a skill," "create a skill for X"
-- User describes a repeating task they want captured as reusable behavior
-- User pastes a set of instructions and says "I want to be able to invoke this"
-- User says "I want the agent to always do Y" (where Y is a domain-specific procedure)
-
-## When NOT to Use
-
-- Editing or updating content of an existing SKILL.md (direct file edit, not a skill creation workflow)
-- Configuring automated hooks or settings.json behaviors (use `update-config` instead)
-- Creating an AGENTS.md or CLAUDE.md (different conventions and purpose)
-- The user wants to rename or reorganize an existing skill
-- Project-specific conventions with no reuse value across projects (put those in the project's AGENTS.md)
+Extract domain expertise from the user and produce a well-structured, verified skill following this library's conventions. Do not begin writing the skill until Phase 1 is complete: a skill written without grounded expertise will be generic and low-value. Do not declare the skill done until Phase 5 verification has run: a skill verified only by reading it is unverified. The deliverable is a skill directory containing SKILL.md, plus optional `scripts/` and `references/` files when warranted. For changes to an existing skill, the same conventions and verification apply through the adapted workflow in Updating an Existing Skill.
 
 ## Workflow
 
@@ -40,7 +24,7 @@ If the conversation does not contain the expertise, send the user all of these q
 1. What task or situation should trigger this skill? (defines the description trigger)
 2. Walk me through how you do this from start to finish. (extracts the core procedure)
 3. What do agents or people most often get wrong about this? (yields the Gotchas section)
-4. What should never be done here, and why? (yields anti-patterns and When NOT to Use)
+4. What should never be done here, and why? (yields anti-patterns and the description's near-miss boundary)
 5. Is there a concrete example, past artifact, or reference I can look at? (grounds the skill in reality)
 6. How broad should this skill be, one scenario or a family of related tasks? (scope decision)
 
@@ -89,7 +73,8 @@ Use the template below. Fill every section; delete placeholder text. Specific ru
 - Directive language: "Always," "Never," "Prefer," "Avoid." Pair each directive with its reason unless the reason is obvious. A rule whose why is understood generalizes to situations the rule's author never anticipated; a bare MUST invites loopholes the moment the literal wording does not fit
 - Every code block must include a language identifier, even for shell snippets
 - Use tables for comparisons, option lists, and anti-pattern catalogues
-- Every skill needs both "When to Use" and "When NOT to Use" sections
+- No "When to Use" or "When NOT to Use" sections in the body. Triggers and boundaries live only in the description; body duplicates drift out of sync and restate routing the agent has already passed. A boundary needing more detail than the description holds becomes a Gotcha; a behavioral exception becomes part of the relevant rule
+- No absolute filesystem paths anywhere in a skill; they break when the library moves or is shared. Refer to locations relative to the skill directory (`scripts/x.py`, `references/x.md`)
 - One excellent, runnable, real example beats several mediocre ones. Never implement the same example in multiple languages; the agent can port
 - Use one term per concept throughout (always "endpoint", not a mix of "endpoint", "URL", "route")
 - No time-sensitive content ("before August 2025, use the old API"); if legacy behavior matters, put it in a collapsed "Old patterns" subsection
@@ -113,17 +98,6 @@ description: Use this skill when <primary trigger>. Also use when <secondary tri
 
 <One short paragraph. What the agent does when this skill loads. What the deliverable is.
 What the agent must NOT do before a certain condition is met, if applicable.>
-
-## When to Use
-
-- <Trigger condition 1>
-- <Trigger condition 2>
-- <Indirect trigger: user says X but means Y>
-
-## When NOT to Use
-
-- <Near-miss boundary 1, naming the other skill to use instead if one exists>
-- <Near-miss boundary 2>
 
 ## Workflow
 
@@ -182,6 +156,24 @@ A skill is a behavior change, and behavior changes get tested. The default verif
 
 For discipline skills (rules the agent will be tempted to bypass under pressure), lightweight testing is insufficient; read `references/testing-skills.md` for pressure-scenario methodology before verifying. For skills with subjective outputs (writing style, design taste), skip assertions and have the user qualitatively review the with-skill outputs instead.
 
+## Updating an Existing Skill
+
+Trivial typo or formatting fixes that change no behavior need none of this; edit the file directly. Everything else reuses the phases above rather than restarting them:
+
+1. **Read the entire skill first**, including its `references/` and `scripts/`. Edits made from memory of the skill or from its description alone contradict sections that were not read, and break the one-term-per-concept rule when new wording lands next to old.
+2. **Mine what triggered the update.** Most updates come from observed failure: the skill misfired, missed a trigger, or an agent rationalized around a rule. That observation is the Phase 1 expertise; capture it verbatim before it leaves the conversation, because counters and gotchas added from imagination instead of observation are dead weight (same rule as rationalization counters in `references/testing-skills.md`).
+3. **Classify the change, which selects the phases to re-run:**
+
+| Change | Re-run |
+|---|---|
+| New rule or content fix | Phase 3 rules on the edited sections; every new directive gets its reason |
+| New capability, trigger, or scope change | Phase 4 on the description, since the triggers changed |
+| Restructure or growth past ~250 lines | Phase 2 progressive disclosure: move conditional material to `references/` |
+| Observed failure or rationalization | Add the counter where the violation happened, then Phase 5 on that behavior |
+
+4. **Hold the line on scope.** "While you're in there, also add X" that crosses a domain boundary is a new skill, not an update. The scope-creep gotcha applies double here because the existing skill already has a settled scope and a description tuned to it.
+5. **Re-verify proportionally.** Mechanical checks always: no em dashes, line count, description parses and matches what you wrote, `name` still matches the directory. Behavior and trigger changes additionally get targeted Phase 5 runs aimed at the changed behavior only; unchanged behavior needs no re-test.
+
 ## Scripts
 
 All bundled scripts are Python, executed with `uv run`. Conventions:
@@ -204,11 +196,11 @@ All bundled scripts are Python, executed with `uv run`. Conventions:
 
 ## Local Conventions
 
-- Skill directory: `/Users/brandon/.claude/skills/<skill-name>/`
-- SKILL.md path: `/Users/brandon/.claude/skills/<skill-name>/SKILL.md`
+- Each skill is a directory in the user skills library: `<skill-name>/SKILL.md`
 - Directory name must be kebab-case and match the `name` frontmatter field exactly
-- Reference files: `/Users/brandon/.claude/skills/<skill-name>/references/<filename>.md`
-- Scripts: `/Users/brandon/.claude/skills/<skill-name>/scripts/<filename>.py`, Python only, run via `uv run`
+- Reference files: `references/<filename>.md` inside the skill directory
+- Scripts: `scripts/<filename>.py` inside the skill directory, Python only, run via `uv run`
+- No absolute filesystem paths inside any skill file; everything is relative to the skill directory
 - No emojis anywhere in any skill file
 - No em dashes anywhere in any skill file
 - No H1 headings inside the body (the frontmatter `name` serves as the title)
@@ -224,7 +216,7 @@ All bundled scripts are Python, executed with `uv run`. Conventions:
 
 - **Generic content the agent already knows.** A skill that says "write clean code" or "be thorough" adds nothing. Every line must be something the agent would not do by default or would get wrong without being told. The Phase 5 baseline run is the empirical test: if the baseline output matches the with-skill output, that content is dead weight.
 
-- **"When to Use" and the description serve different functions.** The description is read by the routing mechanism before the skill loads. "When to Use" inside the body is read by the agent after loading. Both must be present and consistent.
+- **The description is the only routing surface.** Body sections restating when to use the skill are dead weight: by the time the body is read, routing already happened. Spend that space on procedure; put every trigger and boundary in the description instead.
 
 - **Declarations are not procedures.** "The output should be well-structured" is a declaration and is useless. "Use H2 for major sections and include a fillable template block" is a procedure. Skills teach the agent how to approach a class of problems.
 
