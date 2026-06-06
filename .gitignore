@@ -15,3 +15,7 @@ shell-snapshots/
 statsig/
 tasks/
 todos/
+.last-cleanup
+daemon.log
+daemon/
+jobs/
