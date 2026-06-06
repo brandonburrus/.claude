@@ -59,7 +59,7 @@
   "outputStyle": "direct",
   "spinnerTipsEnabled": false,
   "alwaysThinkingEnabled": true,
-  "effortLevel": "xhigh",
+  "effortLevel": "high",
   "awaySummaryEnabled": true,
   "tui": "fullscreen",
   "voice": {
@@ -69,10 +69,12 @@
   "channelsEnabled": false,
   "prefersReducedMotion": false,
   "showThinkingSummaries": true,
-  "useAutoModeDuringPlan": true,
-  "voiceEnabled": true,
   "editorMode": "vim",
   "preferredNotifChannel": "ghostty",
   "autoCompactEnabled": false,
-  "showTurnDuration": true
+  "showTurnDuration": true,
+  "useAutoModeDuringPlan": true,
+  "voiceEnabled": true,
+  "agentPushNotifEnabled": true,
+  "inputNeededNotifEnabled": true
 }
