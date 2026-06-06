@@ -12,20 +12,6 @@ description: Use this skill when building, styling, or redesigning any kind of U
 
 Build distinctive, production-grade frontend interfaces that avoid generic AI aesthetics. The deliverable is real working code, not a mockup. Do not write any UI code before declaring a Design Read (step 1): most bad LLM design output comes from jumping to a default aesthetic instead of reading the brief.
 
-## When to Use
-
-- Building a new web component, page, or application interface from scratch
-- Styling or redesigning an existing UI
-- Dashboard, admin tool, SaaS app, or any product UI
-- Landing page, portfolio, marketing site, or campaign page
-- Any frontend request with a visual output (HTML, CSS, React components, etc.)
-
-## When NOT to Use
-
-- Auditing or reviewing existing UI with no code changes requested
-- Writing backend logic, APIs, or data layers with no visual output
-- Generating design tokens or theme files without an actual UI component
-
 ## Workflow
 
 ```text

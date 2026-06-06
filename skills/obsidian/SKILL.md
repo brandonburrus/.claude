@@ -372,17 +372,8 @@ Obsidian sanitizes HTML. `<script>` tags are stripped. Safe HTML elements includ
 
 Use HTML for: underline, custom spans with CSS classes, iframes, and HTML comments as an alternative to `%%` comments when exporting via Pandoc.
 
-## When to Use This Skill
+## Gotchas
 
-- The user asks to write or format an Obsidian note
-- The user mentions Obsidian, vault, or Obsidian-flavored Markdown
-- A `.obsidian` directory is detected in the project tree — in this case, ask the user before applying
-- Editing or generating `.md` files you know are destined for an Obsidian vault
-
-## When NOT to Use This Skill
-
-- Writing Markdown for GitHub READMEs, GitHub Pages, or any standard GFM renderer — wikilinks and callouts will not render correctly
-- Writing for static site generators (Hugo, Jekyll, MkDocs, Docusaurus) unless the user confirms they have an Obsidian-compatible renderer plugin
-- The user has specified they want plain CommonMark or a specific non-Obsidian Markdown flavor
-- Documentation that must be portable across multiple tools
+- **A detected `.obsidian` directory is a signal, not a mandate.** Ask the user before applying Obsidian-flavored syntax to files in such a project; the directory proves Obsidian is present, not that every Markdown file is vault content.
+- **Static site generators need confirmation first.** Wikilinks and callouts break in Hugo, Jekyll, MkDocs, and Docusaurus unless an Obsidian-compatible renderer plugin is installed; confirm before using them in SSG content, and prefer plain CommonMark when the file must stay portable across tools.
 

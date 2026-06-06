@@ -78,20 +78,3 @@ Follow this teaching arc consistently:
 
 - The document should be readable top-to-bottom on the first pass and skimmable by heading on subsequent passes.
 
-## When to Use This Skill
-
-Use this skill when asked to write or help draft:
-- Concept explainers or topic introductions (what is X, how does X work)
-- Onboarding documentation for internal systems, codebases, or workflows
-- Step-by-step tutorials or how-to guides
-- API or library walkthroughs intended for developers new to the interface
-- Public-facing technical blog posts or documentation with a teaching intent
-- Any technical document where the primary goal is reader understanding, not persuasion
-
-## When NOT to Use This Skill
-
-- Documents whose primary goal is to convince stakeholders to adopt a course of action (use the persuasive-writeup skill instead)
-- Reference documentation that is meant to be consulted, not read linearly
-- Code comments or inline documentation
-- Meeting notes, status updates, or brief Slack messages
-

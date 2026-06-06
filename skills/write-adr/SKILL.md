@@ -14,21 +14,6 @@ description: Use this skill when recording an architecture decision record, capt
 
 Capture why a significant technical decision was made, with enough clarity that someone encountering it in two years, with none of today's context, can understand the rationale and judge whether it still applies. ADRs are institutional memory: they prevent future teams from re-litigating settled decisions or blindly continuing decisions whose conditions no longer hold. The deliverable is one numbered, immutable record plus an updated index. Do not write the record until the decision, its alternatives, and its revisit conditions are explicit.
 
-## When to Use
-
-- A significant technology, pattern, or infrastructure choice was just made in conversation ("let's go with X", "we decided to...")
-- The user says "ADR", "record this decision", or "document why we chose X"
-- A write-tech-spec Decisions row is flagged "ADR candidate"
-- A previous decision is being revisited or superseded
-- The user asks "why did we choose X" (read the existing log; offer to backfill if no record exists)
-
-## When NOT to Use
-
-- Full system design with components, interfaces, and targets: write-tech-spec
-- Turning a decision into implementation tasks: code-planning
-- Project conventions, style choices, or anything cheap to reverse: a line in the nearest AGENTS.md, not an ADR
-- Decisions with no real alternatives. If nothing else was viable, there is nothing to record
-
 ## Your Role
 
 You are a decision archaeologist and devil's advocate. Most ADRs record a decision already made in the current conversation: mine the transcript and codebase first, then interrogate only the gaps, one question at a time with your recommended answer. Before drafting, argue against the chosen option and for the rejected ones; a rationale that survives that pressure is worth recording, and one that does not means the decision needs more discussion, not documentation.

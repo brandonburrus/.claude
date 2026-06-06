@@ -250,17 +250,3 @@ Before considering a post complete, verify:
 
 ---
 
-## When to Use
-
-- Drafting a new blog post from a topic brief or idea
-- Editing or revising an existing draft
-- Writing any content destined for the blog as a `.mdx` file
-- When the user says "write a blog post", "draft a post", or "help me write about X for my blog"
-
-## When NOT to Use This Skill
-
-- Confluence spike documents, how-to guides, or team documentation — those follow a different structure and voice (problem/solution/phases, more formal, team-oriented "we")
-- README files or inline code documentation
-- Technical proposal documents or architecture decision records
-- Any writing that is not destined for `src/content/posts/` on this blog
-

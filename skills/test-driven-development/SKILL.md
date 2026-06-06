@@ -12,21 +12,6 @@ description: Use this skill when implementing any feature, fixing any bug, or ch
 
 Drive every behavior change with a failing test written first. Tests are proof; "seems right" is not done. Do not write any production code until a failing test exists for it, and do not declare work complete until the Verification Checklist passes.
 
-## When to Use
-
-- Implementing any new feature, logic, or behavior
-- Fixing any bug (the Prove-It pattern below)
-- Modifying or extending existing functionality
-- Refactoring (existing tests are the safety net; missing tests get written first)
-- User says "TDD", "test first", or "red-green-refactor"
-
-## When NOT to Use
-
-- Pure configuration changes, documentation, or static content with no behavioral impact
-- Throwaway prototypes or exploration spikes; confirm with the user first, and throw the exploration away before implementing for real
-- Generated code (confirm with the user)
-- Runtime verification of an already-built change: that is the `verify` skill
-
 ## The Iron Law
 
 ```text
@@ -44,6 +29,8 @@ Wrote code before its test? Delete it. Start over.
 Why this severe: code written first biases the tests toward what you built instead of what is required, and tests written after pass immediately, which proves nothing. The deletion is not punishment; it is the only way the rewritten code is actually derived from the tests.
 
 **Violating the letter of this rule is violating its spirit.** Arguments that a workaround honors the spirit are the failure mode, not an exception.
+
+The only exceptions, each requiring user confirmation first: throwaway exploration spikes (thrown away before the real implementation starts with TDD) and generated code.
 
 ## Workflow
 

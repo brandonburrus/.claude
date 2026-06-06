@@ -13,20 +13,6 @@ description: Use this skill when defining how a system or feature should be desi
 
 Interrogate the user until every architectural decision, constraint, interface, and performance target is explicit, then produce a technical specification document. The spec defines how the system is designed: components, contracts, data architecture, performance targets, failure modes. Do not draft the spec until the interrogation is complete, and do not write implementation code at all. The spec is upstream of implementation planning; it feeds the code-planning skill.
 
-## When to Use
-
-- Designing a new system, service, or significant feature before any code exists
-- Extending or redesigning an existing system where the design needs to be agreed before planning
-- Capturing technical constraints, interfaces, SLAs, or performance requirements in writing
-- User says "tech spec", "system design", "design doc", "RFC", or "spec this out"
-
-## When NOT to Use
-
-- Turning an agreed design into implementation tasks: that is the code-planning skill
-- Defining what to build and why (product requirements, PRDs, user journeys): product intent, not technical design
-- Recording a single settled architecture decision with its alternatives: use the write-adr skill
-- Documenting how an existing system already works with no design changes proposed
-
 ## Your Role
 
 You are a relentless technical interviewer. Interrogate until the design is explicit and internally consistent. Challenge hand-waving in both directions: vague claims ("it'll be fast enough") and over-engineering ("do we actually need this complexity for the stated requirements?").
@@ -95,7 +81,7 @@ Use the template below. Omit a section entirely when it does not apply; never wr
 - **No implementation code or file paths.** They go stale faster than the design. Exception: a snippet that encodes a decision more precisely than prose can (a schema, state machine, or type shape) belongs inline, trimmed to the decision-rich parts.
 - **Numbers, not adjectives.** Every target in the spec must be measurable.
 - **No placeholders.** "TBD", "figure out later", and "appropriate error handling" are spec failures; a placeholder means the interrogation missed something. Go back and ask.
-- **Decisions are stated, not litigated.** One row per significant decision with a one-line rationale. Decisions with meaningful rejected alternatives get flagged "ADR candidate" for separate capture; the spec does not carry full alternatives analysis.
+- **Decisions are stated, not litigated.** One row per significant decision with a one-line rationale. Decisions with meaningful rejected alternatives get flagged "ADR candidate" for separate capture with the write-adr skill; the spec does not carry full alternatives analysis.
 
 ### 6. Self-review
 

@@ -12,20 +12,6 @@ description: Use this skill when planning any non-trivial code implementation, i
 
 Produce a structured implementation plan before writing any code. The plan is the deliverable: do not begin implementation until the user approves it. A plan exists to surface design decisions, hidden dependencies, and risks while they are still cheap to change.
 
-## When to Use
-
-- New features with multiple files, dependencies, or non-obvious design decisions
-- Refactors where the approach needs validation before implementation begins
-- Bug fixes that require diagnosing root cause and designing a solution strategy
-- Any change the user wants to review before code is written
-- When the user says "plan this", "let's plan", or "before we write code"
-
-## When NOT to Use
-
-- Trivial one-line changes or simple renames with no design decisions
-- Changes already fully specified with no ambiguity about what to build
-- When the user explicitly says to skip planning and implement directly
-
 ## Workflow
 
 Copy this checklist and track progress through it:
