@@ -12,6 +12,8 @@ This repository is Brandon's personal Claude Code configuration directory (`~/.c
 ## Critical Constraints
 
 - All skill files: no emojis, no em dashes, no H1 headings in the body.
+- No "When to Use" or "When NOT to Use" sections in any skill body; the description is the only routing surface. Boundary detail too big for the description becomes a Gotcha; behavioral exceptions attach to the relevant rule.
+- No absolute filesystem paths inside skill files; all locations are relative to the skill directory so the library stays portable.
 - Skill directory name and the `name` frontmatter field must match exactly (kebab-case).
 - Skill scripts are Python only, run via `uv run`, with dependencies declared inline using PEP 723 metadata (no venvs, no requirements files).
 - Reference files within a skill stay one level deep from SKILL.md and get a table of contents when over 100 lines.
@@ -29,4 +31,7 @@ This repository is Brandon's personal Claude Code configuration directory (`~/.c
 - 2026-06-06: Skill scripts standardized on Python via `uv run` with PEP 723 inline dependencies.
 - 2026-06-06: Adopted lightweight subagent verification (baseline vs with-skill) as the default for new skills, with full pressure-scenario methodology reserved for discipline-enforcing skills (`skills/create-skill/references/testing-skills.md`).
 - 2026-06-06: `write-tech-spec` uses relentless interrogation (one question at a time with a recommended answer), outputs a single spec document with an offered split for systems of 3+ components, and only states decisions with a one-line rationale; full alternatives capture belongs to `write-adr` (spec Decisions rows flag "ADR candidate").
+- 2026-06-06: `diagrams-as-code` renamed to `create-diagram` and broadened to all diagram types, routing architecture/infra to the Python diagrams library and flowcharts/sequence/state/ER to Mermaid, with destination overriding type (Markdown destinations get fenced Mermaid blocks). Render verification is mandatory; the Mermaid chain is render if tooling exists, one npm install attempt, then deliver validated source with explicit disclosure.
 - 2026-06-06: `write-adr` mines the conversation first and interrogates only gaps, enforces a significance gate (conventions and cheap-to-reverse choices go to AGENTS.md, not the ADR log), requires concrete revisit-when conditions, and treats accepted ADRs as immutable (supersede, never edit). The rsg weighted evaluation-criteria table is optional, kept only for decisions actually scored on multiple criteria, to protect the two-minute readability rule.
+- 2026-06-06: Removed "When to Use"/"When NOT to Use" sections from all skills and banned absolute filesystem paths in skill files; the description is the single routing surface and skills must stay portable. Unique boundary content was preserved as Gotchas (obsidian) or rule exceptions (test-driven-development Iron Law).
+- 2026-06-06: Always-on rule sets do not belong in the skills library; they go in `CLAUDE.md`, which is unconditionally in context. The `code-style` and `git` skills were extracted into `CLAUDE.md` (Code Style, Git Conventions sections) and deleted; a skill marked "ALWAYS use" is a routing bet that CLAUDE.md does not have to make.
