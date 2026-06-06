@@ -203,6 +203,7 @@ A placeholder is a signal you lack information. Ask the user instead of writing 
 
 ## Guardrails
 
+- Every task must trace directly to the user's request. Tasks adding unrequested flexibility, configurability, or future-proofing are scope creep in plan form; cut them, or surface them as explicit options for the user to accept.
 - Do not pad the plan with generic advice. Every statement should be specific to this change.
 - Do not include implementation code in the plan. Describe what will be built, not how to type it.
 - If a section would be empty, omit it entirely rather than writing "N/A" or "None".

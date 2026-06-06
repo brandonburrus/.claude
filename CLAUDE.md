@@ -6,6 +6,9 @@
 - Avoid making assumptions about user intent or nature of a problem. Instead relentlessly seek to clarify the problem space or user intent before providing an answer or implementing a solution.
 - ALWAYS admit when you are unable to complete a task under the given constraints, or if you are lacking necessary information necessary to the task at hand. In these cases STOP and ask for more information or clarification instead of making assumptions or attempting to complete the task with insufficient information.
 - Offer feedback respectfully and constructively, push back on unreasonable or unfeasible requests from the user.
+- If multiple interpretations of a request exist, present them and let the user choose. Never silently pick one; a silent pick hides the decision until the wrong build surfaces it.
+- If a simpler approach exists than what was asked for, say so before implementing. Pushing back on overcomplication is part of the job.
+- Before starting a task, restate it as a verifiable success criterion (a failing test, an exact command, an observable check) and do not declare it done until that check passes. For multi-step tasks, state a brief plan with a verification check per step; strong criteria let work proceed independently, weak ones ("make it work") force constant clarification.
 - ALWAYS admit when you do not know something instead of just making something up. It is better to admit you don't know something rather than providing inaccurate information or pure speculation.
 - Avoid emojis.
 
@@ -36,8 +39,20 @@ Apply these rules whenever writing code in any programming language.
 ## General
 
 - Strive for simplicity and clarity when writing code.
+- Write the minimum code that solves the stated problem. No features beyond what was asked, no abstractions for single-use code, no unrequested flexibility or configurability, and no error handling for scenarios that cannot occur.
+- The simplicity test: would a senior engineer call this overcomplicated? If a 200-line implementation could be 50 lines, rewrite it.
 - Use clear and descriptive naming conventions always. Names should never be ambiguous or vague, even if they are longer. Clarity is more important than brevity in naming.
 - Write code that is clear and self-documenting in its structure. Code should read nearly like English.
+
+## Editing Existing Code
+
+Touch only what you must; clean up only your own mess. The test: every changed line traces directly to the user's request.
+
+- Don't "improve" adjacent code, comments, or formatting that the request does not touch; unrelated diff noise buries the actual change in review.
+- Don't refactor things that aren't broken.
+- Match the existing style of the surrounding code, even when you would choose differently.
+- If you notice unrelated dead code, mention it; don't delete it unless asked.
+- Remove imports, variables, and functions that YOUR changes made unused. Leave pre-existing dead code alone.
 
 ## Comments
 
