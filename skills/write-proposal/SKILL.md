@@ -1,5 +1,5 @@
 ---
-name: writing-persuasive
+name: write-proposal
 description: Use this skill when writing persuasive technical documents — spikes,
   proposals, RFCs, ADRs, migration plans, or vendor evaluations — where the goal is
   to convince stakeholders to adopt a recommended approach. Do not use for pure

@@ -5,13 +5,13 @@ description: Use this skill when defining how a system or feature should be desi
   spec, design doc, or RFC, or capturing technical constraints, interfaces, and
   performance requirements. Also use when the user says "tech spec", "system design",
   "spec this out", or "how should we build this". Do not use for implementation
-  task planning (use code-planning), product requirements or PRDs, or documenting
+  task planning (use create-code-plan), product requirements or PRDs, or documenting
   an existing system without design changes.
 ---
 
 ## Purpose
 
-Interrogate the user until every architectural decision, constraint, interface, and performance target is explicit, then produce a technical specification document. The spec defines how the system is designed: components, contracts, data architecture, performance targets, failure modes. Do not draft the spec until the interrogation is complete, and do not write implementation code at all. The spec is upstream of implementation planning; it feeds the code-planning skill.
+Interrogate the user until every architectural decision, constraint, interface, and performance target is explicit, then produce a technical specification document. The spec defines how the system is designed: components, contracts, data architecture, performance targets, failure modes. Do not draft the spec until the interrogation is complete, and do not write implementation code at all. The spec is upstream of implementation planning; it feeds the create-code-plan skill.
 
 ## Your Role
 
@@ -170,7 +170,7 @@ Only items the user explicitly deferred, each with its deferral rationale.
 
 ## Gotchas
 
-- **A tech spec is not an implementation plan.** No task lists, no file-by-file breakdowns, no ordering of work. The moment you are writing "first build X, then Y", you have drifted into code-planning territory; finish the spec and hand off.
+- **A tech spec is not an implementation plan.** No task lists, no file-by-file breakdowns, no ordering of work. The moment you are writing "first build X, then Y", you have drifted into create-code-plan territory; finish the spec and hand off.
 - **Interrogation theater.** Asking the user what the codebase already answers does not look thorough, it looks ungrounded. Explore first; the recommended answer attached to each question is where the exploration shows.
 - **Qualitative targets rot silently.** "Scalable" can never be verified, so it never fails review and never gets built. A number forces the design to either meet it or change it.
 - **The spec goes stale the moment code diverges.** When implementation reveals the design must change, the spec is updated before the code. An outdated spec is worse than none; it actively misleads the next reader.

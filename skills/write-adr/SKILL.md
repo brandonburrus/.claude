@@ -6,7 +6,7 @@ description: Use this skill when recording an architecture decision record, capt
   "document why we chose X", or asks "why did we choose X" about a past decision,
   when a tech spec flags an ADR candidate, or when a significant technology, pattern,
   or infrastructure choice gets settled mid-conversation. Do not use for full system
-  design (use write-tech-spec), implementation planning (use code-planning), or
+  design (use write-tech-spec), implementation planning (use create-code-plan), or
   project conventions (use AGENTS.md).
 ---
 
@@ -141,7 +141,7 @@ When the user asks about a past decision, scan the index, read the matching reco
 
 ## Gotchas
 
-- **An ADR is a record, not a proposal.** When the document's job is to convince stakeholders to adopt the choice, that is a persuasive document; apply the writing-persuasive skill for the prose and keep this skill's structure. Once the decision lands, the ADR is written as settled fact in present tense.
+- **An ADR is a record, not a proposal.** When the document's job is to convince stakeholders to adopt the choice, that is a persuasive document; apply the write-proposal skill for the prose and keep this skill's structure. Once the decision lands, the ADR is written as settled fact in present tense.
 - **AGENTS.md and ADRs divide the territory.** Conventions and lightweight project decisions live in AGENTS.md where agents read them every session; expensive-to-reverse architecture decisions get ADRs, and the nearest AGENTS.md links to the ADR log so agents discover it.
 - **"It was obvious" means one of two things.** Either the alternatives were non-trivial (document them) or the decision is not significant enough for an ADR (fail the gate and skip). Truly obvious decisions never need records.
 - **Zero documented downsides is a defect.** Every real decision trades something away. A record without honest cons will read as naive the first time the cost shows up, and the reader will distrust the rest of it.

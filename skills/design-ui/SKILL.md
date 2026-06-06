@@ -1,5 +1,5 @@
 ---
-name: ui-ux
+name: design-ui
 description: Use this skill when building, styling, or redesigning any kind of User
   Interface, including web components, pages, landing pages, dashboards, or frontend
   interfaces. Also use when the user says "make this look better", "style this",
