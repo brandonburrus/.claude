@@ -29,6 +29,20 @@ Before any code, read the signals: page kind, vibe words the user used, referenc
 
 Then declare one line before generating: **"Reading this as: \<page kind> for \<audience>, \<register>, leaning toward \<design system or aesthetic family>."**
 
+With the declaration, set three dials (1-10) and hold them for the whole task; they make downstream choices auditable instead of vibes ("why does a settings page have scroll choreography?" becomes a dial violation):
+
+| Context | Density | Motion | Richness |
+|---|---|---|---|
+| Admin dashboard, data-heavy tool | 7-9 | 2-3 | 3-4 |
+| Internal ops tool | 7-8 | 1-2 | 2-3 |
+| Customer-facing SaaS product | 5-6 | 3-4 | 5-6 |
+| Marketing or landing page | 3-4 | 5-7 | 6-8 |
+| Settings or configuration page | 5-6 | 2 | 3 |
+| Onboarding or wizard flow | 4-5 | 4-5 | 5-6 |
+| Public sector, accessibility-first | 5-6 | 1-2 | 2-3 |
+
+Density 1 is spacious marketing, 10 is cockpit; Motion 1 is static, 10 is choreographed scroll sequences; Richness 1 is wireframe-clean, 10 is textured and layered.
+
 If the read genuinely diverges into two directions, ask exactly one clarifying question ("closer to Linear-clean or Awwwards-experimental?"). If you can infer confidently, declare and proceed; do not ask reflexively.
 
 ### 2. Pick the register
@@ -82,20 +96,27 @@ These apply in both registers.
 - Test headings at every breakpoint; overflowing text is a shipped bug, the viewport is part of the design.
 
 **Motion engineering:**
-- Animate only `transform` and `opacity`. Never animate layout properties.
-- `window.addEventListener("scroll")` is banned (per-frame jank): use `useScroll()`, ScrollTrigger, IntersectionObserver, or CSS scroll-driven animations.
+- Default to `transform` and `opacity`. The hard rule is never animate layout-driving properties (`width`, `height`, `top`, `left`, margins) casually; expand and reflow with FLIP-style transforms or `grid-template-rows` instead. Atmospheric properties (blur, `backdrop-filter`, `clip-path`, masks, shadows) are legitimate when bounded to small isolated areas and verified smooth on target devices.
+- `window.addEventListener("scroll")` is banned (per-frame jank): use `useScroll()`, ScrollTrigger, IntersectionObserver (unobserve after firing once), or CSS scroll-driven animations.
 - Never track continuous input (mouse, scroll progress) in `useState`; it re-renders the tree per frame and collapses on mobile. Use motion values (`useMotionValue` / `useTransform`).
 - Every animation must be justifiable in one sentence as hierarchy, storytelling, feedback, or state transition. "It looked cool" means delete it.
 - Reveal animations must enhance an already-visible default. Gating visibility on a class-triggered transition ships blank sections in hidden tabs and headless renderers, where transitions never fire.
-- Ease out with exponential curves; entrances 300-600ms, exits 150-300ms. No bounce or elastic in product UI.
+- Duration by purpose, not taste: 100-150ms instant feedback (press, toggle), 200-300ms state changes (menu, tooltip, hover), 300-500ms layout changes (accordion, modal, drawer), 500-800ms entrances (hero reveal only). Over 500ms for feedback feels laggy. Exits run ~75% of the matching entrance.
+- Ease out with exponential curves; define them as tokens (`--ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1)`, `--ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1)`), never CSS default `ease`. No bounce or elastic in product UI.
+- Stagger is for siblings (cards in a grid, list items), never whole sections. `animation-delay: calc(var(--i) * 50ms)` with capped total: 10 items at 50ms is the ceiling; more items means smaller per-item delay, not a longer wave.
+- `will-change` only on elements about to animate (`:hover`, an `.animating` class), never preemptively across the page; it costs memory per layer.
 
 **States and feedback.** Implement the full cycle, not just the success state: skeleton loaders matching final layout shape (not generic spinners), composed empty states that show how to populate, inline error states, and tactile `:active` feedback (`scale-[0.98]`). CTA labels must not wrap at desktop; one CTA label per intent per page ("Get in touch" and "Let's talk" on one page is a defect).
+
+**Interactive components.** When the task includes forms, buttons, modals, dropdowns, tabs, or any keyboard-driven component, read `references/interaction.md` before building: it covers the eight-state matrix, `:focus-visible` rings, validate-on-blur, the native `<dialog>`/`inert`/Popover APIs that replace z-index and focus-trap hacks, undo-over-confirm, roving tabindex, and 44px touch targets.
 
 **Content and copy:**
 - Re-read every visible string before shipping. Rewrite anything grammatically broken, referent-unclear, or LLM-poetic. Boring copy beats AI-cute copy.
 - Realistic data: no "John Doe", no "Acme", no `99.99%` fake-perfect numbers, no invented spec precision the brand never claimed.
 - Button labels are verb + object ("Save changes", not "OK"). Link text has standalone meaning ("View pricing", not "Click here").
 - No marketing buzzwords (seamless, empower, supercharge, next-generation, elevate). Name what the product literally does.
+- No aphoristic cadence as the page voice: the "serious statement, then punchy short negation" rhythm is an LLM signature. Three or more sections landing on a rebuttal-shaped sentence means rewrite. Specific beats aphoristic.
+- Headings in sentence case, not Title Case On Every Word. No exclamation marks in success messages; confident, not loud.
 
 **Code quality:** semantic HTML elements; CSS custom properties for every design token; semantic z-index scale (dropdown, sticky, modal, toast, tooltip), never `z-[9999]`; `min-h-[100dvh]` never `h-screen` (iOS address bar); CSS Grid over flexbox percentage math; mobile collapse declared explicitly per multi-column section; fonts via `next/font` or self-hosted `@font-face` with `font-display: swap`, max 2 families 2-3 weights loaded.
 
@@ -103,10 +124,11 @@ These apply in both registers.
 
 Before delivering, verify mechanically:
 
-- [ ] Design Read was declared and the output matches it
+- [ ] Design Read was declared and the output matches it, including the three dials
 - [ ] Consistency locks hold: one accent, one radius system, one theme, one icon family
 - [ ] Contrast passes for body, placeholders, buttons, and forms
-- [ ] Every animation motivated and reduced-motion wrapped
+- [ ] Every animation motivated, inside its duration band, and reduced-motion wrapped
+- [ ] Interactive elements have focus-visible rings and 44px touch targets; full state matrix on forms and overlays
 - [ ] Loading, empty, and error states present (product UI)
 - [ ] Copy self-audit done; no banned patterns from the register reference
 - [ ] No text overflow at 375px, 768px, 1280px
@@ -130,6 +152,11 @@ When browser tooling is available (screenshot, Playwright, dev server), render t
 | Pure `#000000` or `#ffffff` | Kills depth; use off-black and off-white |
 | Decorative status dots, scroll cues, locale/weather strips | Agency-portfolio decoration tells; only real semantic state earns a dot |
 | Div-built fake screenshots (fake dashboards/terminals from styled rectangles) | The #1 visual tell; use real screenshots, generated images, or nothing |
+| Ghost cards: `1px` border plus a soft shadow (blur ≥ 16px) on the same element | Pick one, border or shadow (≤ 8px blur), never both as decoration |
+| Over-rounding: border-radius above 16px on cards, sections, or inputs | Cards cap at 12-16px; 24-40px radii are a current-generation tell. Full pill is for tags and buttons only |
+| Hand-drawn or sketchy SVG illustrations (`doodle`/`sketch` classes, `feTurbulence` grain, crude path scenes) | Reads amateurish, not whimsical; if real assets are unavailable, ship no illustration |
+| `repeating-linear-gradient` stripe backgrounds | Pure generated decoration with no brand meaning |
+| "X theater" / "not just X, it's Y" copy constructions | Meta-criticism phrasing is instant slop; name the specific thing |
 
 ## The AI Slop Test
 
