@@ -181,6 +181,15 @@ Before declaring the work complete:
 
 Cannot check every box? TDD was skipped somewhere; the unchecked box names where to restart.
 
+## After Green: Validate Live
+
+Green tests prove the logic; they do not prove the running system. For a change with a runnable surface, the suite exercises code paths while the rendered UI, the live endpoint, and the real serializer go unobserved. Once the cycle is green, hand off to live validation, the step that follows red, green, refactor:
+
+- Web UI: `validate-web` drives a real browser against the dev server.
+- HTTP API: `validate-api` sends real requests against the running service.
+
+A pure library or a refactor with no behavioral surface has nothing to validate live; say so rather than inventing a step.
+
 ## Example: Bug Fix
 
 Bug report: empty email accepted by the signup form.

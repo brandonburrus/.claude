@@ -14,7 +14,7 @@ description: >-
 
 ## Purpose
 
-Validate a web change by driving a real browser with the `agent-browser` CLI, confirming the user-visible behavior actually holds and capturing the evidence that it did. This is semi-manual validation: you drive the browser step by step and read real output, which catches what unit tests miss (it renders, the route is reachable, the click does the thing, nothing throws in the console). The deliverable is a pass/fail report with evidence per behavior. This complements automated testing; it does not replace a Playwright e2e suite, and a validation worth keeping graduates into one.
+Validate a web change by driving a real browser with the `agent-browser` CLI, confirming the user-visible behavior actually holds and capturing the evidence that it did. This is semi-manual validation: you drive the browser step by step and read real output, which catches what unit tests miss (it renders, the route is reachable, the click does the thing, nothing throws in the console). The deliverable is a pass/fail report with evidence per behavior. This complements automated testing; it does not replace a Playwright e2e suite, and a validation worth keeping graduates into one. It runs after the change's automated tests are green, as the live-confirmation step in the red, green, refactor, validate sequence, never a substitute for the suite.
 
 ## Iron rules
 

@@ -15,7 +15,7 @@ description: >-
 
 ## Purpose
 
-Validate an API change by sending real HTTP requests against the running service with the Bruno CLI (`bru`), asserting on status, body, and headers, and saving every request into a Bruno collection so the validation effort becomes a reusable, version-controlled artifact. The collection uses the OpenCollection YAML format (`.yml` files), which the CLI runs directly. This is semi-manual validation: you drive real requests and read real responses, which catches what mocked unit tests miss (it is actually reachable, auth actually works, the real serializer produces the real shape). The collection is the byproduct that makes the next validation cheap. This complements automated testing; it does not replace a vitest/supertest or Playwright API suite.
+Validate an API change by sending real HTTP requests against the running service with the Bruno CLI (`bru`), asserting on status, body, and headers, and saving every request into a Bruno collection so the validation effort becomes a reusable, version-controlled artifact. The collection uses the OpenCollection YAML format (`.yml` files), which the CLI runs directly. This is semi-manual validation: you drive real requests and read real responses, which catches what mocked unit tests miss (it is actually reachable, auth actually works, the real serializer produces the real shape). The collection is the byproduct that makes the next validation cheap. This complements automated testing; it does not replace a vitest/supertest or Playwright API suite. It runs after the change's automated tests are green, as the live-confirmation step that follows the red, green, refactor cycle, never a substitute for the suite.
 
 ## Iron rules
 

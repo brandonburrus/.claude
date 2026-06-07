@@ -107,6 +107,7 @@ Present the plan and ALWAYS wait for explicit user approval before implementing.
 - What to test (unit, integration, e2e) and why
 - Per feature, the three cases to cover: golden path, error cases, and edge cases (boundaries, empty/null, concurrency)
 - How to run and verify tests
+- For a web or API surface, the post-implementation live-validation step (validate-web or validate-api against the running app); green tests do not prove the running system works
 
 ### Integration Points
 - External systems, APIs, services touched (direction + mechanism)
