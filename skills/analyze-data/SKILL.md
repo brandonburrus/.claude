@@ -4,10 +4,12 @@ description: >-
   Use this skill when analyzing, aggregating, summarizing, or plotting tabular
   data from CSV, TSV, Excel, JSON, Parquet, or SQLite sources. Use when the
   user says "analyze this data", "what's the total/average/trend", "group by",
-  "how many rows", "plot this", "make a chart from this data", or hands over a
-  data file with a question. Do not use for editing spreadsheet files as
-  documents (use edit-excel-sheet), designing database schemas (use
-  design-data-schema), or architecture diagrams (use create-diagram).
+  "how many rows", "plot this", "make a chart from this data", hands over a
+  data file with a question, or wants an analysis notebook for the exploration.
+  Do not use for editing spreadsheet files as documents (use edit-excel-sheet),
+  designing database schemas (use design-data-schema), architecture diagrams
+  (use create-diagram), or building an interactive or custom data visualization
+  as the deliverable (use visualize-data).
 ---
 
 ## Purpose
@@ -49,6 +51,20 @@ print("reconcile:", by_region.sum(), "==", df["revenue"].sum())
 | SQLite databases | duckdb or sqlite3; never parse the file manually |
 | Charts | matplotlib, saved to a file the user can open; one chart per question, labeled axes and units |
 | Xlsx as a data source | `pd.read_excel`; the file is a container here, editing it routes to edit-excel-sheet |
+| Interactive or iterative exploration, or a reproducible analysis someone will re-run, page through, or hand off | a marimo notebook (see Notebooks); prefer it over Jupyter |
+
+## Notebooks
+
+The default here is a per-task script: one question, one answer, no lingering state. Reach for a notebook when the work is exploratory and iterative, when someone will re-run or extend it, or when the analysis itself is the deliverable. The preferred notebook is marimo, not Jupyter.
+
+marimo notebooks are plain `.py` files (Git-friendly, runnable as scripts) and reactive: a cell declares the globals it reads as its function arguments and the globals it defines in its return tuple, so editing one cell re-runs every cell downstream and there is no stale hidden state of the kind that makes a Jupyter answer silently wrong. Each global is defined in exactly one cell.
+
+- Create or edit: `uvx --with pandas marimo edit analysis.py` (opens the editor in a browser; add `--with <pkg>` for each library the notebook imports).
+- Run as a read-only app: `uvx marimo run analysis.py`.
+- Run headless as a script: `python analysis.py`.
+- Convert an existing Jupyter notebook: `uvx marimo convert old.ipynb > analysis.py`.
+
+The honesty rules below still apply inside a notebook: profile first, clean with disclosure, reconcile before reporting. Reactivity removes run-order bugs; it does not remove the data traps in the trap table. For a richer interactive visualization or a shareable data app built on the result, hand off to visualize-data.
 
 ## The trap table
 
