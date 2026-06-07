@@ -1,47 +1,50 @@
 ---
 name: write-proposal
-description: Use this skill when writing persuasive technical documents — spikes,
-  proposals, RFCs, ADRs, migration plans, or vendor evaluations — where the goal is
-  to convince stakeholders to adopt a recommended approach. Do not use for pure
-  documentation, reference material, or educational content where the goal is reader
-  understanding rather than persuasion.
+description: >-
+  Use this skill when writing persuasive technical documents (spikes,
+  proposals, RFCs, or vendor evaluations) where the goal is to convince
+  stakeholders to adopt a recommended approach. Do not use for pure
+  documentation, reference material, or educational content where the goal is
+  reader understanding rather than persuasion, for recording a decision
+  already made (use write-adr), or for the staged migration plan itself (use
+  create-migration-plan; this skill writes the pitch that gets it adopted).
 ---
 
 ## Purpose
 
-Generate persuasive technical writeups — spikes, proposals, RFCs, ADRs, migration plans, or vendor evaluations — that convince engineering and business stakeholders to adopt a recommended approach. The writing style is modeled on a specific voice: professional, confident, evidence-driven, and structured to make the recommendation feel like the inevitable conclusion of the evidence.
+Generate persuasive technical writeups (spikes, proposals, RFCs, or vendor evaluations) that convince engineering and business stakeholders to adopt a recommended approach. The writing style is modeled on a specific voice: professional, confident, evidence-driven, and structured to make the recommendation feel like the inevitable conclusion of the evidence.
 
 ## Document Structure
 
 Follow this argumentative arc consistently:
 
-1. **Frame the investigation** — Open with 1-2 paragraphs of context: what is being investigated, why, and what questions need answering. If specific questions or goals drive the investigation, enumerate them explicitly up front. Optionally include a table of contents for longer documents.
+1. **Frame the investigation**: Open with 1-2 paragraphs of context: what is being investigated, why, and what questions need answering. If specific questions or goals drive the investigation, enumerate them explicitly up front. Optionally include a table of contents for longer documents.
 
-2. **Establish the pain** — Document the current state's problems with specific, concrete evidence. Use real data: developer hours lost, dollar costs, error rates, manual process descriptions, specific frustrations developers experience. Make the pain tangible and quantified wherever possible. Each bullet should describe a real, specific problem — not a vague complaint.
+2. **Establish the pain**: Document the current state's problems with specific, concrete evidence. Use real data: developer hours lost, dollar costs, error rates, manual process descriptions, specific frustrations developers experience. Make the pain tangible and quantified wherever possible. Each bullet should describe a real, specific problem, not a vague complaint.
 
-3. **Present the solution** — Introduce the proposed tool, technology, or approach. Explain what it is and how it works at a conceptual level before diving into details. Connect each capability back to a specific pain point from the previous section.
+3. **Present the solution**: Introduce the proposed tool, technology, or approach. Explain what it is and how it works at a conceptual level before diving into details. Connect each capability back to a specific pain point from the previous section.
 
-4. **Demonstrate feasibility** — Show through code samples, architectural walkthroughs, configuration examples, and detailed technical analysis that the solution actually works for the team's specific use cases. Code examples should be realistic and relevant to the team's actual codebase — not toy examples.
+4. **Demonstrate feasibility**: Show through code samples, architectural walkthroughs, configuration examples, and detailed technical analysis that the solution actually works for the team's specific use cases. Code examples should be realistic and relevant to the team's actual codebase, not toy examples.
 
-5. **Address risks and objections** — Proactively identify and address likely concerns: migration complexity, learning curves, cost, compatibility, compliance. Use a concession-then-counter pattern when acknowledging tradeoffs ("However... the tooling around Terraform is still widely considered the best in industry"). Include side-by-side before/after code comparisons when demonstrating simplicity gains.
+5. **Address risks and objections**: Proactively identify and address likely concerns: migration complexity, learning curves, cost, compatibility, compliance. Use a concession-then-counter pattern when acknowledging tradeoffs ("However... the tooling around Terraform is still widely considered the best in industry"). Include side-by-side before/after code comparisons when demonstrating simplicity gains.
 
-6. **Define a migration path** — Always end with concrete, phased implementation steps. Break large changes into discrete, ordered phases (pilot then expand, incremental then full, multi-phase rollout). This reduces perceived risk and demonstrates operational maturity. Never leave the reader wondering "but how would we actually do this?"
+6. **Define a migration path**: Always end with concrete, phased implementation steps. Break large changes into discrete, ordered phases (pilot then expand, incremental then full, multi-phase rollout). This reduces perceived risk and demonstrates operational maturity. Never leave the reader wondering "but how would we actually do this?"
 
 ## Tone and Voice
 
 - **Professional but accessible.** Avoid overly formal academic language, but never become casual or colloquial. Write like a senior engineer addressing a mixed audience of engineers, architects, and business stakeholders.
 
-- **Confident but not dogmatic.** Present recommendations as the logical conclusion of evidence, not as predetermined opinions. Hedging language ("would," "should," "approximately") should be used strategically — only where genuine uncertainty exists — not as a general habit of timidity.
+- **Confident but not dogmatic.** Present recommendations as the logical conclusion of evidence, not as predetermined opinions. Hedging language ("would," "should," "approximately") should be used strategically (only where genuine uncertainty exists), not as a general habit of timidity.
 
 - **Empathetic toward the reader.** Anticipate questions, objections, and knowledge gaps. Create dedicated sections that address likely reader concerns before they can be raised (e.g., "What about Karma?", "Developer Learning Curve", "Would this support our existing hierarchy?").
 
 - **Free of emotional language.** No enthusiasm markers, exclamation points, or superlatives. Persuasion is entirely logical and evidential, never emotional. Let the evidence speak for itself.
 
-- **No explicit recommendation statement.** Do not conclude with "therefore we should do X." The recommendation should be embedded in the structure of the document itself — the evidence and analysis should make the conclusion self-evident.
+- **No explicit recommendation statement.** Do not conclude with "therefore we should do X." The recommendation should be embedded in the structure of the document itself; the evidence and analysis should make the conclusion self-evident.
 
 ## Sentence and Paragraph Style
 
-- **Long, information-dense sentences.** Favor compound-complex sentences that use multiple clauses joined by commas, dashes, and parenthetical insertions. Chain ideas together within single sentences using "and" conjunctions rather than breaking them into many short sentences.
+- **Long, information-dense sentences.** Favor compound-complex sentences that use multiple clauses joined by commas, semicolons, and parenthetical insertions. Chain ideas together within single sentences using "and" conjunctions rather than breaking them into many short sentences.
 
 - **Parenthetical asides.** Use parentheticals frequently to provide caveats, clarifications, or alternative context without breaking the main sentence flow (e.g., "(if you want to know more, talk to Karl Leudke)", "(this does not affect client-side connections as those are measured by MAUs, covered in the next section)").
 
@@ -59,7 +62,7 @@ Follow this argumentative arc consistently:
 
 - **Stack evidence through accumulation.** When listing benefits, certifications, features, or capabilities, deliberately stack them to create an overwhelming impression. Pile certification after certification, feature after feature.
 
-- **Use code as evidence.** Inline code samples serve as proof-of-concept, making abstract claims tangible. Side-by-side before/after code comparisons are the most powerful visual persuasion tool — make the "after" state visually simpler and more appealing.
+- **Use code as evidence.** Inline code samples serve as proof-of-concept, making abstract claims tangible. Side-by-side before/after code comparisons are the most powerful visual persuasion tool: make the "after" state visually simpler and more appealing.
 
 - **Front-load business value.** Present cost analysis, compliance posture, and business impact before the technical deep-dive. This ensures decision-makers stay engaged and the technical audience understands the stakes.
 

@@ -8,8 +8,9 @@ description: >-
   AI workflow", "add an LLM feature", "why is my agent unreliable", or "how
   should this agent be structured". Do not use for Claude API mechanics and
   SDK usage (use the bundled claude-api reference), for authoring Claude Code
-  subagents (use create-claude-agent), or for general system design with no
-  LLM in the loop (use write-tech-spec).
+  subagents (use create-claude-agent), for building the eval suite itself
+  (use write-eval), or for general system design with no LLM in the loop
+  (use write-tech-spec).
 ---
 
 ## Purpose

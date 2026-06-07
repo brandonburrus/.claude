@@ -1,9 +1,9 @@
 ---
 name: teach-through-writing
 description: Use this skill when writing educational or tutorial content that teaches
-  from first principles — concept explainers, how-to guides, onboarding docs, or API
-  walkthroughs. Do not use for persuasive documents where the goal is stakeholder
-  buy-in rather than reader understanding.
+  from first principles, including concept explainers, how-to guides, onboarding
+  docs, and API walkthroughs. Do not use for persuasive documents where the goal is
+  stakeholder buy-in rather than reader understanding (use write-proposal).
 ---
 
 ## Purpose
