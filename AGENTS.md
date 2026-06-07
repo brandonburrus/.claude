@@ -10,6 +10,7 @@ This repository is Brandon's personal Claude Code configuration directory (`~/.c
 - `hooks/` - Hook scripts wired into `settings.json` (see `hooks/AGENTS.md`).
 - `settings.json` - Claude Code harness configuration (permissions, hooks, env).
 - `CLAUDE.md` - Global behavioral instructions loaded into every session.
+- `README.md` - Public-facing overview of the setup with the full inventory of skills, agents, and hooks.
 
 ## Critical Constraints
 
@@ -21,6 +22,7 @@ This repository is Brandon's personal Claude Code configuration directory (`~/.c
 - Reference files within a skill stay one level deep from SKILL.md and get a table of contents when over 100 lines.
 - SKILL.md target length is 80-250 lines, hard limit 500; overflow goes to `references/`.
 - The `create-skill` skill (`skills/create-skill/SKILL.md`) is the authority on skill conventions; follow it when creating or restructuring any skill.
+- `README.md` carries the public inventory of skills, agents, and hooks. Update it, including the counts in its section headers (`Skills (N)`, `Agents (N)`, `Hooks (N)`), whenever one is added, removed, or renamed. A drifted inventory is a defect.
 - `_refs/anthropic-skills` is license-restricted: no extraction, copying, or derivative works (see its LICENSE.txt). Every other ref is open for mining, but check the LICENSE before mining any newly added ref.
 - `skills/humanize/references/ai-patterns.md` contains deliberate em dashes inside the pattern-14 "Before" specimen; they are the artifact being taught. Never remove them in convention sweeps.
 
