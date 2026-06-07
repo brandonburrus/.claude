@@ -86,6 +86,7 @@ Boundaries that need this treatment: request bodies and params, form input, webh
 - **Dependency audit**: run `npm audit` (or the ecosystem equivalent) before release; triage by severity AND reachability: a critical in a runtime dependency on a reachable path is a blocker, a moderate in a dev-only tool is backlog. Deferred findings get a documented reason and a review date
 - **Secrets hygiene**: `.env*` and key files in `.gitignore`, `.env.example` with placeholders committed; a secret that reaches a remote is rotated, not deleted (open-pull-request's staged-diff scan is the last line, not the plan)
 - **CI/CD pipeline**: the build runs with your secrets, so it is an attack surface. Pin third-party actions to a full commit SHA, never a tag or branch (a tag is mutable; a compromised upstream action then runs with your tokens). Never `checkout` and execute untrusted PR code in a `pull_request_target` (or equivalent privileged) workflow, where it runs with write-scoped credentials. Keep secrets out of build logs and step outputs. Treat workflow inputs and PR titles, branch names, and commit messages as untrusted: interpolating them straight into a shell step (`run: echo ${{ github.event.pull_request.title }}`) is a script-injection sink, so pass them through `env:` and quote the variable instead
+- **Concrete values**: the exact security header strings, the CORS config, JWT validation checks, the pre-commit secret grep, and the OWASP Top 10 mapping are in `references/quick-reference.md`
 
 ## Rationalizations
 

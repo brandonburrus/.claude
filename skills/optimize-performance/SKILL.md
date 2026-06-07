@@ -87,6 +87,8 @@ Wins erode silently. Pin them: a bundle-size budget in CI, a Lighthouse CI thres
 | INP (Interaction to Next Paint) | <= 200ms | > 500ms |
 | CLS (Cumulative Layout Shift) | <= 0.1 | > 0.25 |
 
+For the per-layer checklists (images, JS, fonts, network, rendering, DB, API, infra), measurement commands, and the anti-pattern table, read `references/performance.md`.
+
 ## Rationalizations
 
 | Excuse | Reality |

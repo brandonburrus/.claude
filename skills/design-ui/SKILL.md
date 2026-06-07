@@ -89,6 +89,8 @@ These apply in both registers.
 - All interactive elements keyboard-reachable; visible styled focus states (never `outline: none` without replacement); labels associated with inputs; meaningful `alt` text; ARIA only where native semantics fall short.
 - `prefers-reduced-motion` alternatives for every animation. Non-negotiable.
 
+For full WCAG 2.1 AA verification (contrast, screen readers, ARIA live regions, forms, testing tools, anti-patterns), read `references/accessibility.md`; `interaction.md` owns the keyboard, focus, and touch-target mechanics.
+
 **Typography numbers:**
 - Body line length 65-75ch. Hierarchy through scale and weight with ≥ 1.25 ratio between steps.
 - Display ceiling: clamp() max ≤ 6rem. Above that the page is shouting. Letter-spacing floor ≥ -0.04em.
