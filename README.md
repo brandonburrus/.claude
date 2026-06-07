@@ -95,11 +95,14 @@ Skills auto-load when their description matches the task, except where noted. On
 - `tune-context` - audit and tighten the always-on context
 - `audit-agent-context` - audit a project's AGENTS.md coverage and conformance against the standard
 
-## Agents (6)
+## Agents (9)
 
-Subagents are thin wrappers: each preloads the relevant library skill and adds autonomous overrides (decide-and-disclose instead of asking, return-only instead of acting) plus hard guardrails. Three form a `plan -> implement -> verify` pipeline; the rest are specialists.
+Subagents are thin wrappers: each preloads the relevant library skill and adds autonomous overrides (decide-and-disclose instead of asking, return-only instead of acting) plus hard guardrails. Four form a `plan -> review -> implement -> verify` pipeline; the rest are specialists.
 
 - `implementation-planner` - produces an approved-ready implementation plan (wraps `create-code-plan`)
+- `plan-reviewer` - adversarially reviews a large or complex plan before execution; read-only, never edits the plan (wraps `scrutinize` + `create-code-plan`)
+- `product-spec-reviewer` - adversarially reviews a PRD before it is built on; leads with problem validity and simpler-path, read-only (wraps `scrutinize` + `write-product-spec`)
+- `tech-spec-reviewer` - adversarially reviews a system design, tracing it against the real system; read-only (wraps `scrutinize` + `write-tech-spec`)
 - `task-implementer` - executes one plan task test-first and returns an evidence-based report
 - `completion-verifier` - independently verifies claimed-complete work; read-only, never fixes
 - `root-cause-investigator` - diagnoses a failure without fixing it; restores the tree before returning

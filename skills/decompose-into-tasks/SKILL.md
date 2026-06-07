@@ -19,7 +19,7 @@ Decompose a spec into independently implementable, independently verifiable work
 
 ### 1. Gather the source material
 
-Work from the spec in context, or fetch what the user points at (a PRD, tech spec, plan file, or an existing parent issue/epic). With no spec at all, do not invent one; offer write-product-spec or write-tech-spec first, or decompose from a conversation-level description only if the user explicitly wants rough tickets.
+Work from the spec in context, or fetch what the user points at (a PRD, tech spec, plan file, or an existing parent issue/epic). With no spec at all, do not invent one; offer write-product-spec or write-tech-spec first, or decompose from a conversation-level description only if the user explicitly wants rough tickets. Before slicing, scan the source for requirements too vague or unmeasurable to verify (a "fast" or "intuitive" with no number attached) or that contradict each other, and flag these back to the user or write-product-spec rather than slicing them; a requirement you cannot verify becomes a ticket with an acceptance criterion nobody can check.
 
 ### 2. Identify the tracker and conventions
 

@@ -25,7 +25,7 @@ Copy this checklist and track progress:
 
 ```text
 Execute Plan:
-- [ ] 1. Load and validate the plan
+- [ ] 1. Load, validate, and (if large or complex) adversarially review the plan
 - [ ] 2. Establish a green baseline
 - [ ] 3. Execute tasks in dependency order (parallel where marked)
 - [ ] 4. Gate every checkpoint with completion-verifier
@@ -35,7 +35,9 @@ Execute Plan:
 
 ### 1. Load and validate the plan
 
-Read the approved plan (from `create-code-plan` or the `implementation-planner` agent). Extract the task table: each task's description, files, verify command, dependencies, and any parallel marker. If no approved plan exists, stop and route to `create-code-plan`; executing an unwritten plan is improvising, not orchestrating. If the plan is stale against the current code (files moved, interfaces changed), surface that before starting rather than dispatching tasks against a map that no longer matches the territory.
+Read the approved plan (from `create-code-plan` or the `implementation-planner` agent). Extract the task table: each task's description, files, verify command, dependencies, and any parallel marker. If no approved plan exists, stop and route to `create-code-plan`; executing an unwritten plan is improvising, not orchestrating. If the plan is stale against the current code (files moved, interfaces changed), surface that before starting rather than dispatching tasks against a map that no longer matches the territory. When the plan was written from a spec that is still available, reconcile the plan against it too; a plan that drifted from the spec gets faithfully executed into the wrong thing, and execution is the most expensive place to discover that divergence.
+
+**Pre-flight review for large or complex plans.** Before establishing the baseline, dispatch a `plan-reviewer` for any plan that is large or complex: more than roughly six tasks, spanning multiple subsystems, touching production data or infrastructure, carrying a High-impact risk, or introducing a new architectural pattern or data model. Pass it the plan and the source spec or request. It returns severity-ranked findings and a verdict (approve, revise-then-approve, rework, or reject) against the goal, and never edits the plan. Treat a blocker finding or a rework/reject verdict as a stop: surface it and route the fix back through `create-code-plan` or to the user before any task runs, because a flaw caught in the plan is one cheap edit while the same flaw caught mid-execution is unwound work across every task built on it. Skip the pre-flight for small, single-subsystem plans; their create-code-plan step 6 self-review already covers them, and a fresh reviewer on a three-task plan is latency for no gain.
 
 ### 2. Establish a green baseline
 
