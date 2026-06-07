@@ -9,14 +9,8 @@ It is tuned for one operator (me), so it favors strong conventions, hard guardra
 The library mirrors the arc of building software. Skills auto-load when a task matches their description, so the right method shows up at the right moment without being asked for by name.
 
 ```mermaid
-flowchart LR
-  U["Understand<br/>clarify · explore · onboard"]
-  S["Specify<br/>PRD · tech spec · ADR"]
-  D["Design<br/>the design-* family"]
-  B["Plan and build<br/>plan · decompose · TDD"]
-  V["Review and verify<br/>review · scrutinize · validate"]
-  O["Ship and operate<br/>release · incident · post-mortem"]
-  U --> S --> D --> B --> V --> O
+flowchart TD
+  U[Understand] --> S[Specify] --> D[Design] --> B[Plan and build] --> V[Review and verify] --> O[Ship and operate]
   V -. rework .-> B
 ```
 
@@ -29,7 +23,7 @@ Around this arc sit data and document skills (tabular analysis, visualization, O
 Subagents run work in isolated context and report back. Each is a thin wrapper: it preloads the relevant library skill, then adds the overrides a subagent needs (decide-and-disclose instead of asking the user, return-only instead of acting) plus hard read-only guardrails for anything that reviews.
 
 ```mermaid
-flowchart LR
+flowchart TD
   PL[plan] --> PR[review] --> TI[implement] --> CV[verify] --> FR[final review]
   CV -. not done .-> TI
   TI -. breaks .-> RC[root-cause]
