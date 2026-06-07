@@ -27,9 +27,14 @@ You are responsible for remembering and maintaining documentation for AI Agents,
     - A high-level overview of how the system, sub-system, module, component, or feature works and how it fits into the larger project.
     - Any critical information about the system, sub-system, module, component, or feature that would be helpful for an agent working on it for the first time to know. Example: "This module is responsible for handling user authentication and authorization", "This component is a React component that renders a form for creating new blog posts".
     - How the relevent system, sub-system, module, component, or feature relates to other systems, sub-systems, modules, components, or features of the same level in the project.
-- You are reponsible for continuously writing and updating these `AGENTS.md` files as you work. Whenever you complete a task, update the nearest `AGENTS.md` file with any new context, information, invariants, gotchas, or constraints you have learned or observed while working on the task.
+- You are reponsible for continuously writing and updating these `AGENTS.md` files as you work. Whenever you complete a task, update the nearest `AGENTS.md` file with any new context, information, invariants, gotchas, or constraints you have learned or observed while working on the task. These updates capture durable context (invariants, gotchas, constraints), never a changelog of completed work; git history is the work log.
 - You are responsible for self-correcting the documentation when it contradicts observed reality. If you observe something in the project that contradicts what is written in these `AGENTS.md` contextual documents, defer to the actual observed reality and update the documentation accordingly. If it is unclear what should be documented, stop and ask for clarification instead of guessing or making assumptions.
-- When the user makes key decisions about the project (example: choosing a particular library or technology, deciding on an approach, etc.), record the decision in the nearest `AGENTS.md` file to ensure the decision is respected in the future.
+- When the user makes a key decision about the project (example: choosing a particular library or technology, deciding on an approach, etc.), record it in the nearest `AGENTS.md` under a Key Decisions section, but only if it passes BOTH gates:
+    - It constrains future work: an agent acting without knowing it would plausibly do the wrong thing.
+    - It is not already evident from the code, git history, or other documentation.
+- Decision records are one line each, hard cap of two sentences: `- YYYY-MM-DD: <what was decided>. Why: <one short clause>.` Never include implementation summaries, verification results, file inventories, or source citations; git history records the work, and the record exists only to keep the decision respected.
+- Route before recording: durable rules go to Critical Constraints or Conventions, component-specific facts go to the component's own `AGENTS.md`; the decision log is only for choices that needed a reason.
+- Prune while updating: delete decision records that have become self-evident from the code or were superseded.
 - Maintaining these `AGENTS.md` files is CRITICAL to the success of the project in addition to your own success as an agent working on the project.
 
 # Code Style
