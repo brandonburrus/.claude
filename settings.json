@@ -44,8 +44,7 @@
     "ask": [
       "Bash(curl * -H *Authorization*)",
       "Bash(curl *)",
-      "Bash(git clean -fd *)",
-      "Bash(git commit *)"
+      "Bash(git clean -fd *)"
     ],
     "defaultMode": "plan"
   },
