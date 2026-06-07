@@ -8,7 +8,7 @@ description: Use this skill when writing or formatting Markdown files for an Obs
 
 ## Purpose
 
-Produce Markdown files that render correctly in Obsidian, using Obsidian-specific syntax extensions beyond standard CommonMark and GFM. When a `.obsidian` directory is detected in the working directory or any ancestor, ask the user: "I noticed a `.obsidian` directory — would you like me to use Obsidian-flavored Markdown syntax?" before applying this skill.
+Produce Markdown files that render correctly in Obsidian, using Obsidian-specific syntax extensions beyond standard CommonMark and GFM. When a `.obsidian` directory is detected in the working directory or any ancestor, ask the user: "I noticed a `.obsidian` directory, would you like me to use Obsidian-flavored Markdown syntax?" before applying this skill.
 
 Obsidian supports CommonMark, GitHub Flavored Markdown (GFM), and LaTeX as its base. All Obsidian-specific extensions are documented below with their exact syntax.
 
@@ -43,9 +43,9 @@ date: 2024-03-15
 
 **Default Obsidian properties:**
 
-- `tags` — list of tag strings (no `#` prefix needed here)
-- `aliases` — alternative names for the note
-- `cssclasses` — list of CSS class names for per-note styling
+- `tags`: list of tag strings (no `#` prefix needed here)
+- `aliases`: alternative names for the note
+- `cssclasses`: list of CSS class names for per-note styling
 
 **Obsidian Publish properties:** `publish`, `permalink`, `description`, `image`, `cover`
 
@@ -53,7 +53,7 @@ date: 2024-03-15
 - Internal links in property values must be quoted: `link: "[[Note Name]]"`
 - Internal links in list properties must also be quoted: `- "[[Note Name]]"`
 - Markdown formatting is not rendered inside properties
-- Avoid deprecated forms: `tag`, `alias`, `cssclass` — use their plural equivalents
+- Avoid deprecated forms: `tag`, `alias`, `cssclass`; use their plural equivalents
 
 ## Internal Links (Wikilinks)
 
@@ -83,7 +83,7 @@ date: 2024-03-15
 
 Blank spaces in Markdown-format links must be URL-encoded as `%20`. Prefer Wikilink format unless interoperability with non-Obsidian tools is required.
 
-**Block identifiers** — append to the end of a paragraph with a blank space and `^`:
+**Block identifiers**: append to the end of a paragraph with a blank space and `^`:
 
 ```md
 This is the paragraph you want to reference. ^my-block-id
@@ -135,7 +135,7 @@ Prefix any internal link with `!` to embed its content inline.
 
 **Audio:** `![[recording.ogg]]`
 
-**YouTube and Twitter/X** — use the standard external image syntax with the full URL:
+**YouTube and Twitter/X**: use the standard external image syntax with the full URL:
 
 ```md
 ![](https://www.youtube.com/watch?v=VIDEO_ID)
@@ -180,38 +180,38 @@ Note: some sites block iframe embedding. Search for the site name + "embed ifram
 
 | Type | Aliases |
 | --- | --- |
-| `note` | — |
+| `note` | None |
 | `abstract` | `summary`, `tldr` |
-| `info` | — |
-| `todo` | — |
+| `info` | None |
+| `todo` | None |
 | `tip` | `hint`, `important` |
 | `success` | `check`, `done` |
 | `question` | `help`, `faq` |
 | `warning` | `caution`, `attention` |
 | `failure` | `fail`, `missing` |
 | `danger` | `error` |
-| `bug` | — |
-| `example` | — |
+| `bug` | None |
+| `example` | None |
 | `quote` | `cite` |
 
 Type identifiers are case-insensitive. Any unsupported type defaults to the `note` style.
 
 ## Tags
 
-**Inline tags** — use a `#` prefix directly in note body text:
+**Inline tags**: use a `#` prefix directly in note body text:
 
 ```md
 This note is about #productivity and #writing/fiction.
 ```
 
-**Nested tags** — use `/` to create a hierarchy:
+**Nested tags**: use `/` to create a hierarchy:
 
 ```md
 #inbox/to-read
 #project/alpha/design
 ```
 
-**Valid characters:** letters, numbers, `_`, `-`, `/`, Unicode characters and emoji. Tags must contain at least one non-numeric character. No spaces allowed — use `#camelCase`, `#PascalCase`, `#snake_case`, or `#kebab-case`.
+**Valid characters:** letters, numbers, `_`, `-`, `/`, Unicode characters and emoji. Tags must contain at least one non-numeric character. No spaces allowed; use `#camelCase`, `#PascalCase`, `#snake_case`, or `#kebab-case`.
 
 Tags are case-insensitive. When searching `tag:inbox`, Obsidian matches `#inbox` and all nested variants like `#inbox/to-read`.
 
@@ -268,7 +268,7 @@ Inline footnotes (reading view only):
 This sentence has an inline footnote.^[The footnote content goes here.]
 ```
 
-**Escaping Markdown syntax** — prefix the character with `\`:
+**Escaping Markdown syntax**: prefix the character with `\`:
 
 ```md
 \*not italic\*
@@ -358,7 +358,7 @@ Obsidian sanitizes HTML. `<script>` tags are stripped. Safe HTML elements includ
 <tr><td>Content</td></tr>
 </table>
 
-<!-- This does NOT work — blank lines break the block -->
+<!-- This does NOT work: blank lines break the block -->
 <table>
 
 <tr>
