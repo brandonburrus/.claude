@@ -1,19 +1,34 @@
 ---
 name: harden-security
 description: >-
-  Use this skill when building or modifying anything that touches untrusted
-  input, authentication, authorization, sessions, secrets, file uploads,
-  payments, PII, or external integrations, and when the user says "make this
-  secure", "harden this", "add auth", "is this safe", or "handle user input".
-  Apply it while writing the feature, not after. Do not use for auditing an
-  existing diff (use the bundled /security-review), for API contract auth
-  design (use design-api), or for triaging a reported vulnerability (use fix
-  to reproduce it first).
+  Use this skill when designing, building, or modifying anything that touches
+  untrusted input, authentication, authorization, sessions, secrets, file
+  uploads, payments, PII, or external integrations, including threat-modeling
+  the attack surface before writing the code. Use when the user says "make
+  this secure", "harden this", "add auth", "is this safe", "handle user
+  input", "threat model this", "what could go wrong here", or "what's the
+  attack surface". Apply it before and while writing the feature, not after.
+  Do not use for auditing an existing diff (use the bundled /security-review),
+  for API contract auth design (use design-api), or for triaging a reported
+  vulnerability (use fix to reproduce it first).
 ---
 
 ## Purpose
 
-Build security into code as it is written: treat every external input as hostile, every secret as radioactive, and every authorization check as mandatory. Security is a constraint on each line that touches user data, not a phase; retrofitting it costs roughly ten times what building it in does, because retrofits chase data that already flowed through unguarded paths.
+Build security into a feature from the start, proactively and reactively: model where it can be attacked before writing it, then treat every external input as hostile, every secret as radioactive, and every authorization check as mandatory as you build. Security is a constraint on each line that touches user data, not a phase; retrofitting it costs roughly ten times what building it in does, because retrofits chase data that already flowed through unguarded paths.
+
+## Model the threats first
+
+Before building anything on the sensitive surfaces this skill covers, spend a few minutes modeling the threats. This is the proactive half of the skill, and it is what turns the rules below from a flat checklist into a prioritized one. When you are hardening code that already exists rather than designing new behavior, skip to the tiers; the modeling pays off at the start of a change, not in the middle of one.
+
+The pass, kept small and evidence-anchored:
+
+1. **Map the trust boundaries this change crosses.** Find every edge where data moves from less-trusted to more-trusted: internet to handler, handler to database, webhook to processor, client to file store. Anchor each to real code or the actual design, not an imagined architecture; a boundary you cannot point to is one you are guessing at.
+2. **Name the assets and the attacker.** What is worth stealing or breaking here (credentials, PII, integrity-critical state, money), and what a realistic attacker can actually do given how this is exposed. State the attacker's non-capabilities too; "they cannot reach the internal network" is what stops every risk from being rated critical.
+3. **Trace the abuse paths.** For each asset, the concrete route to it: an attacker with capability X, entering at boundary Y, reaches asset Z. A few real paths beat a long checklist; quality over coverage.
+4. **Confirm what swings severity.** Internet exposure, multi-tenancy, and data sensitivity change every rating and live in the user's head, not the code. Ask before committing to priorities rather than assuming; an inflated or deflated model misdirects all the hardening that follows.
+
+The output is a focus list: which boundaries and inputs deserve the most attention. The tiers below tell you HOW to harden; this pass tells you WHERE it matters most, so the dangerous input gets the scrutiny and the trivial one does not eat the same budget.
 
 ## The three-tier boundary system
 
@@ -70,6 +85,7 @@ Boundaries that need this treatment: request bodies and params, form input, webh
 - **CORS**: explicit origin list from config; a wildcard origin with credentials is a misconfiguration, not a convenience
 - **Dependency audit**: run `npm audit` (or the ecosystem equivalent) before release; triage by severity AND reachability: a critical in a runtime dependency on a reachable path is a blocker, a moderate in a dev-only tool is backlog. Deferred findings get a documented reason and a review date
 - **Secrets hygiene**: `.env*` and key files in `.gitignore`, `.env.example` with placeholders committed; a secret that reaches a remote is rotated, not deleted (open-pull-request's staged-diff scan is the last line, not the plan)
+- **CI/CD pipeline**: the build runs with your secrets, so it is an attack surface. Pin third-party actions to a full commit SHA, never a tag or branch (a tag is mutable; a compromised upstream action then runs with your tokens). Never `checkout` and execute untrusted PR code in a `pull_request_target` (or equivalent privileged) workflow, where it runs with write-scoped credentials. Keep secrets out of build logs and step outputs. Treat workflow inputs and PR titles, branch names, and commit messages as untrusted: interpolating them straight into a shell step (`run: echo ${{ github.event.pull_request.title }}`) is a script-injection sink, so pass them through `env:` and quote the variable instead
 
 ## Rationalizations
 
@@ -91,6 +107,7 @@ Before calling security-relevant work done:
 - [ ] Error responses carry codes and safe messages, not internals
 - [ ] Dependency audit clean of reachable critical/high findings
 - [ ] Sensitive fields absent from API responses (check the serializer, not the intent)
+- [ ] If the change touches CI/CD: actions pinned to a SHA, no untrusted code in a privileged workflow, no secrets in logs, inputs not interpolated into shell
 
 ## Gotchas
 
@@ -98,4 +115,5 @@ Before calling security-relevant work done:
 - **The second boundary is the one that gets missed.** Teams validate the public API and trust the webhook, the queue consumer, the cron input, or the admin panel; an attacker finds the unguarded door, not the guarded one.
 - **Timing and existence leaks live in error paths.** "Wrong password" vs "no such user", instant rejection vs slow hash check; uniform errors and constant-time comparison where it matters (auth, token checks).
 - **File uploads are remote code execution with extra steps.** Stored where the web server executes, named by the client, or fetched server-side from a client URL (SSRF): treat the upload pipeline as the attack surface it historically is.
-- **This skill builds; /security-review audits.** When the change is done, the bundled /security-review over the diff is the independent second pass, not a substitute for having built it right.
+- **This skill models and builds; /security-review audits.** The proactive pass concentrates the hardening where the threats actually are, so the dangerous boundary gets scrutiny the trivial one does not; the bundled /security-review over the finished diff is the independent second look afterward, never a substitute for having modeled and built it right.
+- **A flat hardening pass still misses the one that mattered.** Applying the rules to every input equally feels thorough and is not. Without the threat pass to say where risk concentrates, the SSRF-prone upload handler gets the same minute as a static config read. Model first, then the rules land where they count.
