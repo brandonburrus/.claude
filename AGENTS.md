@@ -6,6 +6,7 @@ This repository is Brandon's personal Claude Code configuration directory (`~/.c
 
 - `skills/` - Personal skills library. Each skill is a kebab-case directory containing `SKILL.md`, with optional `references/` and `scripts/` subdirectories.
 - `_refs/` - Cloned open-source skill/agent/hook projects used as reference material for improving the skills library. See `_refs/CATALOG.md` for a full inventory of every ref's skills, agents, and hooks. Never edit files inside `_refs/`; they are read-only references.
+- `agents/` - Personal subagent definitions (see `agents/AGENTS.md`).
 - `hooks/` - Hook scripts wired into `settings.json` (see `hooks/AGENTS.md`).
 - `settings.json` - Claude Code harness configuration (permissions, hooks, env).
 - `CLAUDE.md` - Global behavioral instructions loaded into every session.
@@ -29,6 +30,7 @@ This repository is Brandon's personal Claude Code configuration directory (`~/.c
 - New or substantially changed skills get verified per create-skill Phase 5: parallel baseline vs with-skill subagent runs on realistic prompts.
 - Always-on rule sets go in `CLAUDE.md`, never the skills library; a skill marked "ALWAYS use" is a routing bet CLAUDE.md does not have to make.
 - Skills that teach exact harness or protocol formats (agent frontmatter, hook events, MCP) ground them in a fresh official-docs digest captured under `references/`; these formats are hallucination-prone.
+- Agents in `agents/` are thin role wrappers: they preload library skills via the `skills` frontmatter field, and the body carries only identity, tool limits, autonomous overrides (subagents cannot ask the user or act outward), and the output contract.
 - Git commits follow conventional commit style (`feat(skills): ...`, `chore: ...`); commit only when asked.
 
 ## Key Decisions
@@ -40,3 +42,4 @@ This repository is Brandon's personal Claude Code configuration directory (`~/.c
 - 2026-06-06: `execute-code-plan` is deferred until the agents phase. Why: user wants the skills library finished first.
 - 2026-06-06: `hooks/inject-agents-md.py` auto-injects AGENTS.md files (root at SessionStart, nested lazily on file touch). Why: Claude Code natively loads only CLAUDE.md.
 - 2026-06-06: Decision records are gated one-liners; work narrative lives in git history. Why: the log had grown to 25KB of changelog, past the hook's 10KB inline injection cap.
+- 2026-06-06: Threat modeling lives inside `harden-security` as a proactive front-section, not a separate `model-threats` skill. Why: same attacker-mindset domain across design and build; avoids a near-duplicate security skill.
