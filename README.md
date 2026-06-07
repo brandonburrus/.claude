@@ -4,7 +4,7 @@ This repository is my personal [Claude Code](https://claude.com/claude-code) har
 
 It is tuned for one operator (me), so it favors strong conventions, hard guardrails, and high-signal automation over breadth. Most of it is portable; the parts that are personal (blog target, paths) are noted where they appear.
 
-## Skills (62)
+## Skills (63)
 
 Skills auto-load when their description matches the task, except where noted. One skill is manual-invoke-only: `rubber-duck` (call it with `/rubber-duck`).
 
@@ -70,7 +70,8 @@ Skills auto-load when their description matches the task, except where noted. On
 
 ### Data and files
 
-- `analyze-data` - analyze, aggregate, and plot tabular data (CSV, Excel, SQLite, and more)
+- `analyze-data` - analyze, aggregate, and plot tabular data (CSV, Excel, SQLite, and more); marimo for notebooks
+- `visualize-data` - build a data visualization as the deliverable with marimo, Streamlit, or D3
 - `edit-excel-sheet` - create, edit, and read Excel spreadsheets
 - `edit-word-doc` - create, edit, and read Word documents
 - `edit-powerpoint-slides` - create, edit, and read PowerPoint decks
@@ -97,7 +98,7 @@ Skills auto-load when their description matches the task, except where noted. On
 - `tune-context` - audit and tighten the always-on context
 - `audit-agent-context` - audit a project's AGENTS.md coverage and conformance against the standard
 
-## Agents (9)
+## Agents (10)
 
 Subagents are thin wrappers: each preloads the relevant library skill and adds autonomous overrides (decide-and-disclose instead of asking, return-only instead of acting) plus hard guardrails. Four form a `plan -> review -> implement -> verify` pipeline; the rest are specialists.
 
@@ -110,6 +111,7 @@ Subagents are thin wrappers: each preloads the relevant library skill and adds a
 - `root-cause-investigator` - diagnoses a failure without fixing it; restores the tree before returning
 - `code-reviewer` - anti-noise PR review; never posts to GitHub
 - `security-reviewer` - exploitability-ranked findings with a proof-of-concept bar for high severity
+- `deep-researcher` - multi-source web research with adversarial verification; returns a cited synthesis, read-only (self-contained, no wrapped skill)
 
 ## Hooks (3)
 
