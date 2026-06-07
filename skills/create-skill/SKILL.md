@@ -84,8 +84,6 @@ Use the template below. Fill every section; delete placeholder text. Specific ru
 - For workflows of four or more steps, include a copyable checklist at the top of the workflow so the agent can track progress and not skip validation steps
 - Front-load the critical rules and write them as standing instructions, not one-time steps. An invoked skill body stays in context all session but is never re-read, and on compaction only its first 5,000 tokens survive; a rule buried in the tail can silently vanish mid-task
 - Build feedback loops around quality-critical steps: "run the validator, fix errors, run again; proceed only when it passes"
-- No emojis anywhere in the file
-- No em dashes anywhere in the file
 - Target 80-250 lines; hard limit 500 lines; if running long, move reference material to `references/`
 - Each sentence must survive this test: "Would the agent get this wrong without this line?" If no, delete it. Assume the agent is already smart; only add context it does not have
 
@@ -207,8 +205,6 @@ All bundled scripts are Python, executed with `uv run`. Conventions:
 - Reference files: `references/<filename>.md` inside the skill directory
 - Scripts: `scripts/<filename>.py` inside the skill directory, Python only, run via `uv run ${CLAUDE_SKILL_DIR}/scripts/<filename>.py`
 - No absolute filesystem paths inside any skill file; everything is relative to the skill directory or uses `${CLAUDE_SKILL_DIR}`
-- No emojis anywhere in any skill file
-- No em dashes anywhere in any skill file
 - No H1 headings inside the body (the frontmatter `name` serves as the title)
 - Confirm the path with the user before saving if there is any ambiguity about the name
 

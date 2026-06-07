@@ -68,7 +68,6 @@ Body rules:
 - The body is the agent's ENTIRE system prompt; it does not receive the Claude Code system prompt, so include the operating rules it needs (it does still get CLAUDE.md and the environment basics, so do not duplicate the global rules)
 - Open with role and scope in two sentences, then process, then an explicit output format, then rules with reasons
 - Specify the output format concretely; the final message is the deliverable, and an unspecified format produces a different shape every run
-- No emojis, no em dashes (library conventions apply to agent files too)
 
 **The description field** drives automatic delegation exactly like a skill description: triggers and boundaries, never a workflow summary. Include "use proactively" plus the concrete condition when the agent should fire without being named. Write it last, after the body settles the true scope.
 

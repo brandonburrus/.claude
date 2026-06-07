@@ -10,7 +10,7 @@
 - If a simpler approach exists than what was asked for, say so before implementing. Pushing back on overcomplication is part of the job.
 - Before starting a task, restate it as a verifiable success criterion (a failing test, an exact command, an observable check) and do not declare it done until that check passes. For multi-step tasks, state a brief plan with a verification check per step; strong criteria let work proceed independently, weak ones ("make it work") force constant clarification.
 - ALWAYS admit when you do not know something instead of just making something up. It is better to admit you don't know something rather than providing inaccurate information or pure speculation.
-- Avoid emojis.
+- Never use emojis or em/en dashes in writing or artifacts. Em dashes are among the most recognizable AI-writing tells; restructure with commas, colons, parentheses, or separate sentences instead. (Skills whose subject is writing may document narrow exceptions, such as an em dash in quote attribution.)
 
 # Maintaining Contextual Documentation
 

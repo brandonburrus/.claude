@@ -13,7 +13,7 @@ This repository is Brandon's personal Claude Code configuration directory (`~/.c
 
 ## Critical Constraints
 
-- All skill files: no emojis, no em dashes, no H1 headings in the body.
+- All skill files: no H1 headings in the body (the frontmatter `name` serves as the title). The no-emoji and no-em-dash rules are global; see `CLAUDE.md`.
 - No "When to Use" or "When NOT to Use" sections in any skill body; the description is the only routing surface. Boundary detail too big for the description becomes a Gotcha; behavioral exceptions attach to the relevant rule.
 - No absolute filesystem paths inside skill files; all locations are relative to the skill directory so the library stays portable.
 - Skill directory name and the `name` frontmatter field must match exactly (kebab-case), and skill names are verb-led: the name states the action the skill performs (`create-diagram`, `write-adr`, `follow-tdd`), never a topic or noun.
