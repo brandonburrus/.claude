@@ -47,7 +47,7 @@ Any red gate stops the release and routes to fix. Never disable, skip, or rerun-
 - **Migrations**: if schema or data changes ship with this release, verify they are backward compatible with the currently deployed code, because app rollback takes minutes while database rollback may not exist. Staged or risky migrations route to create-migration-plan before the release proceeds.
 - **Config and environment**: diff required env vars and config against what each target environment has; a release that needs an unset variable fails at startup, after the deploy.
 - **Feature flags**: confirm which flags gate the new behavior and their intended launch state. Flags decouple deploying code from releasing behavior, which makes the rollback story a toggle instead of a redeploy.
-- **Observability**: confirm the health endpoint covers the new surface and that errors and latency for it will actually appear on a dashboard someone watches.
+- **Observability and baseline**: confirm the health endpoint covers the new surface and that errors and latency for it will actually appear on a dashboard someone watches. Then record the current production baseline now, before the deploy: error rate, p50/p95/p99 latency, availability. This is not decoration; the numbers become the concrete rollback triggers in the next step, and a baseline captured after deploying is already contaminated by the deploy.
 
 ### 5. Write the rollback plan before deploying anything
 
@@ -63,7 +63,7 @@ Staging, preview, and canary deploys are within the skill's authority; run them 
 
 ### 7. Hand off production
 
-Present one confirmation package: version and bump reason, changelog entry, gates table, rides-along review, rollback plan, staging verification results, and the exact production deploy command or action, copy-pasteable, for the user to run. Offer to watch the post-deploy signals once they have deployed. The skill's job ends at the handoff line.
+Present one confirmation package: version and bump reason, changelog entry, gates table, rides-along review, rollback plan, staging verification results, and the exact production deploy command or action, copy-pasteable, for the user to run. Include the post-deploy verification step they run immediately after deploying: the exact health check plus the step-4 baseline metrics to compare against, with the success condition stated plainly. The deploy is confirmed only when health is green and metrics hold within the rollback triggers; if they do not, execute the rollback plan. Offer to watch the post-deploy signals with them once they have deployed. The handoff tells the user both how to start the deploy and how to know it actually worked; the skill's job ends there, not at the deploy command alone.
 
 ## Gotchas
 
