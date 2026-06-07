@@ -119,7 +119,8 @@
     "command": "~/.claude/statusline.sh"
   },
   "enabledPlugins": {
-    "typescript-lsp@claude-plugins-official": true
+    "typescript-lsp@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true
   },
   "outputStyle": "direct",
   "spinnerTipsEnabled": false,

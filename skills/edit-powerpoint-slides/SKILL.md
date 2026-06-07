@@ -3,8 +3,9 @@ name: edit-powerpoint-slides
 description: >-
   Use this skill when creating, editing, or reading PowerPoint presentations
   (.pptx), including slides, layouts, placeholders, text, images, tables,
-  charts, and speaker notes. Use when the user says "make a slide deck",
-  "create a presentation", "update these slides", "add a slide", or references
+  charts, speaker notes, and click-to-reveal builds and animations. Use when
+  the user says "make a slide deck", "create a presentation", "update these
+  slides", "add a slide", "reveal the bullets one at a time", or references
   a .pptx file. Do not use for diagrams as standalone artifacts (use
   create-diagram), for visual design direction of non-slide UIs (use
   design-ui), or for legacy .ppt files without converting to .pptx first.
@@ -38,7 +39,7 @@ body.add_paragraph().text = "Churn down 0.4pt"
 prs.save("deck-updated.pptx")
 ```
 
-4. **Verify by re-opening**: slide count, the new slide's text via its placeholders, and untouched slides intact. python-pptx cannot render, so describe what was verified structurally; offer a PDF render via `soffice --headless --convert-to pdf` only if LibreOffice is installed.
+4. **Verify by re-opening**: slide count, the new slide's text via its placeholders, and untouched slides intact. python-pptx cannot render, so describe what was verified structurally. For a visual check, render to PDF with LibreOffice: `soffice --headless --convert-to pdf <file>` (on macOS soffice is not on PATH; it lives at `/Applications/LibreOffice.app/Contents/MacOS/soffice`). Pass a fresh `-env:UserInstallation=file:///tmp/<new-dir>` each run, because a reused profile silently returns a stale render, and close the .pptx first or the convert is blocked.
 
 ## Working with the template
 
@@ -60,6 +61,14 @@ prs.save("deck-updated.pptx")
 | Speaker notes | `slide.notes_slide.notes_text_frame.text = ...`; accessing `notes_slide` creates it if absent |
 | Reorder slides | No public API; requires manipulating `prs.slides._sldIdLst` XML element order |
 
+## Builds and animations
+
+python-pptx has no animation API; click-to-reveal builds are raw `<p:timing>` XML appended to the slide element. Each click is an entrance effect (presetID 1, presetClass "entr") whose `<p:set>` flips the target's visibility to visible.
+
+- **Build text by paragraph with `build="p"` in `<p:bldP>`.** Valid `ST_TLParaBuildType` values are `allAtOnce`, `p`, `cust`, `whole`; the plausible-looking `byParagraph` is invalid, and PowerPoint silently reveals the whole shape at once instead.
+- **A table animates only as one object.** There is no row-level target, so to reveal rows one at a time, build each row as its own one-row table stacked seamlessly and animate each; splitting the table means re-creating banding with explicit cell fills.
+- **Verify builds structurally, not by rendering.** A PDF render shows the fully-built slide, so confirm builds by counting `clickEffect` nodes and checking `bldP` build values in the XML, then have the user confirm the click sequence in PowerPoint.
+
 ## Gotchas
 
 - **There is no delete-slide API.** python-pptx cannot remove a slide through its public interface; deletion means dropping the slide's entry from the `_sldIdLst` XML and its relationship. When asked to delete slides, either do the XML manipulation deliberately and verify the deck still opens, or rebuild a new deck copying the slides to keep; say which you did.
@@ -67,4 +76,5 @@ prs.save("deck-updated.pptx")
 - **Copying a slide between decks is not supported.** Cross-deck copy drags layout, master, and relationship dependencies; the practical route is recreating the slide's content on the target deck's closest layout.
 - **`slide.shapes.title` can be None** on layouts without a title placeholder; check before assigning or the edit dies mid-script.
 - **Text extraction misses grouped shapes and SmartArt.** Reading a deck means walking `shape.shape_type == MSO_SHAPE_TYPE.GROUP` recursively, and SmartArt text is not exposed by python-pptx at all; the inspector shows shape types so silence about a SmartArt-heavy slide is detectable rather than assumed empty.
-- **16:9 vs 4:3 changes every position.** Read `prs.slide_width` before computing any placement; hardcoded Inches positions for one aspect ratio land off-slide in the other.
+- **16:9 vs 4:3 changes every position, and the default master is 4:3.** Read `prs.slide_width` before computing any placement; hardcoded positions for one aspect ratio land off-slide in the other. If you set a 16:9 size on the default template, inherited title and body placeholders keep their 4:3 (left-half-width) geometry, so centered text lands left of center even with `algn=ctr`. Fix by setting the placeholder's left, top, width, and height to span the slide, and set all four together: assigning just one (e.g. `.left`) materializes the transform and zeroes the rest.
+- **A named font that is not installed renders with wrong metrics** (loose spacing, wrong widths) in both LibreOffice and PowerPoint, even though the .pptx names the right font. Install the font (on macOS, drop the .ttf into `~/Library/Fonts`) before rendering, or embed it in the file so it travels.
