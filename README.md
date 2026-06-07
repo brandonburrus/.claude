@@ -4,7 +4,7 @@ This repository is my personal [Claude Code](https://claude.com/claude-code) har
 
 It is tuned for one operator (me), so it favors strong conventions, hard guardrails, and high-signal automation over breadth. Most of it is portable; the parts that are personal (blog target, paths) are noted where they appear.
 
-## Skills (58)
+## Skills (60)
 
 Skills auto-load when their description matches the task, except where noted. One skill is manual-invoke-only: `rubber-duck` (call it with `/rubber-duck`).
 
@@ -56,8 +56,9 @@ Skills auto-load when their description matches the task, except where noted. On
 - `respond-to-incident` - drive a live outage: mitigate, classify, communicate, report
 - `prepare-for-deploy` - release prep and rollback plan; never auto-deploys to production
 - `open-pull-request` - open a PR for the current branch
-- `triage-issues` - triage an incoming backlog of issues
+- `triage-backlog` - triage an incoming backlog of issues
 - `triage-review-feedback` - handle review feedback on your own PR
+- `triage-security-finding` - triage an incoming vuln/CVE/scanner finding to a disposition
 
 ### Review and verify
 
@@ -92,6 +93,7 @@ Skills auto-load when their description matches the task, except where noted. On
 - `create-claude-hook` - author a hook
 - `learn-from-context` - capture durable learnings mid-session
 - `tune-context` - audit and tighten the always-on context
+- `audit-agent-context` - audit a project's AGENTS.md coverage and conformance against the standard
 
 ## Agents (6)
 

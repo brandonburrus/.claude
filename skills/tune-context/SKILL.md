@@ -7,8 +7,10 @@ description: >-
   bloated", "the agent keeps ignoring conventions", "audit my agent setup",
   or "clean up the AGENTS.md", and periodically as always-on files accumulate.
   Do not use for capturing new learnings (use learn-from-context), for
-  writing a project's first AGENTS.md (use onboard-codebase), or for managing
-  conversation-level context in a single session (compaction handles that).
+  writing a project's first AGENTS.md (use onboard-codebase), for auditing a
+  project's AGENTS.md coverage and conformance against the standard (use
+  audit-agent-context), or for managing conversation-level context in a single
+  session (compaction handles that).
 ---
 
 ## Purpose

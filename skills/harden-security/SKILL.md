@@ -9,8 +9,8 @@ description: >-
   input", "threat model this", "what could go wrong here", or "what's the
   attack surface". Apply it before and while writing the feature, not after.
   Do not use for auditing an existing diff (use the bundled /security-review),
-  for API contract auth design (use design-api), or for triaging a reported
-  vulnerability (use fix to reproduce it first).
+  for API contract auth design (use design-api), or for triaging an
+  incoming vulnerability or security finding (use triage-security-finding).
 ---
 
 ## Purpose

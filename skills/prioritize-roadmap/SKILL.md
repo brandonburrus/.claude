@@ -10,7 +10,7 @@ description: >-
   explicit cut pile. Do not use for defining what one feature is (use
   write-product-spec), for breaking a chosen item into tasks (use
   decompose-into-tasks), for triaging individual incoming issues (use
-  triage-issues), or for choosing among technical approaches to one problem (use
+  triage-backlog), or for choosing among technical approaches to one problem (use
   explore-solutions).
 ---
 

@@ -8,7 +8,7 @@ description: >-
   to the PR feedback", "the reviewer asked for changes", "handle the
   CodeRabbit comments", or pastes reviewer feedback to act on. Do not use for
   reviewing someone else's PR (use review-pull-request), for working an issue
-  tracker (use triage-issues), or for creating the PR itself (use
+  tracker (use triage-backlog), or for creating the PR itself (use
   open-pull-request).
 ---
 

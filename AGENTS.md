@@ -41,7 +41,7 @@ This repository is Brandon's personal Claude Code configuration directory (`~/.c
 - 2026-06-06: The debugging skill is named `fix`. Why: Claude Code's bundled `/debug` skill (session debug logs) collides with the obvious name.
 - 2026-06-06: `design-ui` is build-only; auditing existing UI without changing it is out of scope. Why: user choice.
 - 2026-06-06: `open-pull-request` is frictionless: no approval gate before `gh pr create`, pending work auto-committed. Why: user chose one-command PR creation.
-- 2026-06-06: `triage-issues` was verified by judged trigger checks only. Why: no live tracker was available; shake it down on first real use.
+- 2026-06-06: `triage-backlog` was verified by judged trigger checks only. Why: no live tracker was available; shake it down on first real use.
 - 2026-06-06: `execute-code-plan` is deferred until the agents phase. Why: user wants the skills library finished first.
 - 2026-06-06: `hooks/inject-agents-md.py` auto-injects AGENTS.md files (root at SessionStart, nested lazily on file touch). Why: Claude Code natively loads only CLAUDE.md.
 - 2026-06-06: Decision records are gated one-liners; work narrative lives in git history. Why: the log had grown to 25KB of changelog, past the hook's 10KB inline injection cap.

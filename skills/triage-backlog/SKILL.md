@@ -1,5 +1,5 @@
 ---
-name: triage-issues
+name: triage-backlog
 description: >-
   Use this skill when triaging incoming issues, bug reports, or feature
   requests on any tracker (GitHub Issues, Jira, Rally, Linear), including
