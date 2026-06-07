@@ -8,9 +8,10 @@ description: >-
   migration", "upgrade to the next major version", "move from X to Y",
   "deprecate this", "zero-downtime change", or "how do we get rid of this
   safely". The deliverable is a staged plan, not executed changes. Do not use
-  for designing a schema from scratch (use design-data-schema), for executing
-  the planned work (use create-code-plan), or for release mechanics (use
-  prepare-for-deploy).
+  for writing each migration safely against a specific engine or ORM (use
+  design-data-migration), for designing a schema from scratch (use
+  design-data-schema), for executing the planned work (use create-code-plan), or
+  for release mechanics (use prepare-for-deploy).
 ---
 
 ## Purpose
