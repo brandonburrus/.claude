@@ -48,10 +48,6 @@
     ],
     "defaultMode": "plan"
   },
-  "statusLine": {
-    "type": "command",
-    "command": "~/.claude/statusline.sh"
-  },
   "hooks": {
     "PreToolUse": [
       {
@@ -65,6 +61,21 @@
           {
             "type": "command",
             "command": "bash ~/.claude/hooks/block-gh-watch.sh",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/block-no-verify.sh",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|NotebookEdit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/hooks/block-secret-writes.py",
             "timeout": 5
           }
         ]
@@ -90,8 +101,22 @@
             "timeout": 10
           }
         ]
+      },
+      {
+        "matcher": "Read|WebFetch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/hooks/scan-read-for-injection.py",
+            "timeout": 10
+          }
+        ]
       }
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh"
   },
   "enabledPlugins": {
     "typescript-lsp@claude-plugins-official": true
@@ -109,12 +134,13 @@
   "channelsEnabled": false,
   "prefersReducedMotion": false,
   "showThinkingSummaries": true,
+  "theme": "dark",
   "editorMode": "vim",
   "preferredNotifChannel": "ghostty",
   "autoCompactEnabled": false,
   "showTurnDuration": true,
-  "useAutoModeDuringPlan": true,
-  "voiceEnabled": true,
+  "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
-  "inputNeededNotifEnabled": true
+  "useAutoModeDuringPlan": true,
+  "voiceEnabled": true
 }
