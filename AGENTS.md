@@ -10,7 +10,7 @@ This repository is Brandon's personal Claude Code configuration directory (`~/.c
 - `hooks/` - Hook scripts wired into `settings.json` (see `hooks/AGENTS.md`).
 - `settings.json` - Claude Code harness configuration (permissions, hooks, env).
 - `CLAUDE.md` - Global behavioral instructions loaded into every session.
-- `README.md` - Public-facing overview of the setup with the full inventory of skills, agents, and hooks.
+- `README.md` - Public-facing flow overview of how the harness fits together across the SDLC; a map, not an exhaustive index.
 - `aliases.sh` - Personal shell aliases (git, node, docker, infra); sourced by the user's `~/.zshrc`. The common ones are documented in `CLAUDE.md` so the agent prefers them in Bash.
 
 ## Critical Constraints
@@ -23,7 +23,7 @@ This repository is Brandon's personal Claude Code configuration directory (`~/.c
 - Reference files within a skill stay one level deep from SKILL.md and get a table of contents when over 100 lines.
 - SKILL.md target length is 80-250 lines, hard limit 500; overflow goes to `references/`.
 - The `create-skill` skill (`skills/create-skill/SKILL.md`) is the authority on skill conventions; follow it when creating or restructuring any skill.
-- `README.md` carries the public inventory of skills, agents, and hooks. Update it, including the counts in its section headers (`Skills (N)`, `Agents (N)`, `Hooks (N)`), whenever one is added, removed, or renamed. A drifted inventory is a defect.
+- `README.md` is a flow overview of how the harness fits together, not an exhaustive index; the `skills/`, `agents/`, and `hooks/` directories are the source of truth for what exists. Update it only when the overall flow or a load-bearing piece changes, not on every individual add, and never reintroduce a per-item catalog or maintained counts.
 - `_refs/anthropic-skills` is license-restricted: no extraction, copying, or derivative works (see its LICENSE.txt). Every other ref is open for mining, but check the LICENSE before mining any newly added ref.
 - `skills/humanize/references/ai-patterns.md` contains deliberate em dashes inside the pattern-14 "Before" specimen; they are the artifact being taught. Never remove them in convention sweeps.
 
@@ -46,3 +46,4 @@ This repository is Brandon's personal Claude Code configuration directory (`~/.c
 - 2026-06-06: `hooks/inject-agents-md.py` auto-injects AGENTS.md files (root at SessionStart, nested lazily on file touch). Why: Claude Code natively loads only CLAUDE.md.
 - 2026-06-06: Decision records are gated one-liners; work narrative lives in git history. Why: the log had grown to 25KB of changelog, past the hook's 10KB inline injection cap.
 - 2026-06-06: Threat modeling lives inside `harden-security` as a proactive front-section, not a separate `model-threats` skill. Why: same attacker-mindset domain across design and build; avoids a near-duplicate security skill.
+- 2026-06-07: `README.md` is a flow overview, not a per-item inventory with maintained counts. Why: user prefers readability over enumeration; the directories are the source of truth.
