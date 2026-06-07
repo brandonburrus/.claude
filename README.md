@@ -4,7 +4,7 @@ This repository is my personal [Claude Code](https://claude.com/claude-code) har
 
 It is tuned for one operator (me), so it favors strong conventions, hard guardrails, and high-signal automation over breadth. Most of it is portable; the parts that are personal (blog target, paths) are noted where they appear.
 
-## Skills (60)
+## Skills (62)
 
 Skills auto-load when their description matches the task, except where noted. One skill is manual-invoke-only: `rubber-duck` (call it with `/rubber-duck`).
 
@@ -65,6 +65,8 @@ Skills auto-load when their description matches the task, except where noted. On
 - `review-pull-request` - review someone else's pull request
 - `scrutinize` - intent-level adversarial review: should this exist, does it do what it claims
 - `audit-architecture` - codebase architecture and tech-debt audit
+- `validate-web` - drive a real browser (agent-browser) to validate a web change end to end, with evidence
+- `validate-api` - send real requests (Bruno) to validate an API change; leaves a reusable collection behind
 
 ### Data and files
 
