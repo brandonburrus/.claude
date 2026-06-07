@@ -3,9 +3,9 @@ name: code-with-best-practices
 description: >-
   Use this skill when planning, writing, or reviewing code in TypeScript,
   JavaScript, Python, Go, Rust, SQL, or Bash, or when working with React,
-  Node.js, Vitest, Playwright, Terraform, or AWS CDK. Use for any
-  implementation work in these stacks even when the user never says "best
-  practices". Do not use for API contract design (use design-api), database
+  Node.js, Vitest, Playwright, Terraform, AWS CDK, pandas, NumPy, polars,
+  marimo, or Jupyter notebooks. Use for any implementation work in these stacks
+  even when the user never says "best practices". Do not use for API contract design (use design-api), database
   schema design (use design-data-schema), or UI visual design (use design-ui).
 ---
 
@@ -36,6 +36,11 @@ Consolidated entry point for language and framework best practices. Detect the s
 | Rust | [Rust](references/language-rust.md) |
 | SQL queries or migrations | [SQL](references/language-sql.md) |
 | Bash or shell scripts | [Bash](references/language-bash.md) |
+| pandas data work | [pandas](references/library-pandas.md) + [Python](references/language-python.md) |
+| NumPy numerical code | [NumPy](references/library-numpy.md) + [Python](references/language-python.md) |
+| polars data work | [polars](references/library-polars.md) + [Python](references/language-python.md) |
+| marimo notebooks | [marimo](references/tool-marimo.md) + [Python](references/language-python.md) |
+| Jupyter notebooks | [Jupyter](references/tool-jupyter.md) + [Python](references/language-python.md) |
 
 ## Loading rules
 
