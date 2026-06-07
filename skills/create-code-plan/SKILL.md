@@ -104,7 +104,7 @@ Present the plan and ALWAYS wait for explicit user approval before implementing.
 
 ### Testing Strategy
 - What to test (unit, integration, e2e) and why
-- Key scenarios and edge cases to cover
+- Per feature, the three cases to cover: golden path, error cases, and edge cases (boundaries, empty/null, concurrency)
 - How to run and verify tests
 
 ### Integration Points

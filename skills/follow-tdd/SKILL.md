@@ -50,7 +50,15 @@ TDD Cycle:
 
 ### 1. List the behaviors
 
-Before any test, list the behaviors to verify (not implementation steps), using the project's existing domain vocabulary. You cannot test everything; prioritize critical paths and complex logic over exhaustive edge-case enumeration, and confirm priorities with the user when the interface design is not already settled.
+Before any test, list the behaviors to verify (not implementation steps), using the project's existing domain vocabulary.
+
+For every feature, the coverage floor is three tests, and naming them is how you find the behaviors:
+
+- **Golden path**: the feature does what it is for, with valid input under expected conditions. The proof it works at all.
+- **Error case**: invalid input or a failure condition is handled as designed (rejected, returns an error, throws, degrades), not swallowed or crashed. The proof it fails safely.
+- **Edge case**: the boundary where the logic is most likely to break (empty, null, zero, the maximum, the off-by-one, the concurrent call, the duplicate). The proof it holds at the corners.
+
+This is a floor, not a ceiling. A feature with branching logic or several failure modes needs an error and an edge test per branch; a trivial pure function may genuinely need only the three. Above the floor, prioritize critical paths and complex logic over exhaustive enumeration, and confirm priorities with the user when the interface design is not already settled. Skipping a category is a decision to state, not a default to drift into: "no error case because the type system makes invalid input unrepresentable" is a valid call, silently testing only the golden path is not.
 
 ### 2. RED: write one failing test
 
@@ -163,6 +171,7 @@ All of these mean: delete the code, restart with TDD.
 Before declaring the work complete:
 
 - [ ] Every new behavior has a test
+- [ ] Every feature covers all three cases: golden path, error case, and edge case (or a stated reason a category does not apply)
 - [ ] Watched each test fail before implementing, for the expected reason
 - [ ] Minimal code written per test, no speculative features
 - [ ] Full suite passes with pristine output

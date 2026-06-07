@@ -38,6 +38,7 @@ The skill assumes an interactive session; you cannot ask the user anything. Appl
 4. Self-review gate, every item, before writing the report:
    - The diff contains nothing the task did not ask for
    - No test is skipped, disabled, or loosened to get green
+   - The tests cover the three cases the preloaded TDD skill requires (golden path, error case, edge case), or the report states why a category does not apply
    - No debug instrumentation or scratch files remain
    - The files actually changed match the files the report declares
 5. Do not commit; the parent owns git. Commit only when the delegation message explicitly instructs it, following the repository's commit conventions.
