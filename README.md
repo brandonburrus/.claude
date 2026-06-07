@@ -4,7 +4,7 @@ This repository is my personal [Claude Code](https://claude.com/claude-code) har
 
 It is tuned for one operator (me), so it favors strong conventions, hard guardrails, and high-signal automation over breadth. Most of it is portable; the parts that are personal (blog target, paths) are noted where they appear.
 
-## Skills (53)
+## Skills (58)
 
 Skills auto-load when their description matches the task, except where noted. One skill is manual-invoke-only: `rubber-duck` (call it with `/rubber-duck`).
 
@@ -18,6 +18,10 @@ Skills auto-load when their description matches the task, except where noted. On
 - `create-code-plan` - structured implementation plan before writing code
 - `create-migration-plan` - staged migration or deprecation plan for live systems
 - `decompose-into-tasks` - break a spec or plan into tracker work units
+- `research-market` - assess product-market opportunity (sizing, competition, demand, the wedge)
+- `synthesize-feedback` - turn raw product feedback into signal-ranked themes and opportunities
+- `prioritize-roadmap` - rank and sequence what to build next, with an explicit cut pile
+- `research-solutioning` - compare external tools, libraries, or vendors against requirements, with a recommendation
 
 ### Specs and decisions
 
@@ -38,6 +42,7 @@ Skills auto-load when their description matches the task, except where noted. On
 
 ### Build
 
+- `execute-code-plan` - drive an approved plan to completion through the agent pipeline (plan -> implement -> verify -> review)
 - `code-with-best-practices` - implementation across the core stacks
 - `follow-tdd` - test-first, with the golden-path / error-case / edge-case floor
 - `vibe-code` - throwaway prototype or spike to answer a design question

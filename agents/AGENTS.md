@@ -20,7 +20,7 @@ Personal Claude Code subagent definitions. Each `<name>.md` file's frontmatter c
 
 ## The pipeline
 
-The seven agents compose into plan -> implement -> verify: `implementation-planner` produces the plan, `task-implementer` executes each task (parallelizable where the plan marks tasks independent; add `isolation: worktree` if they would collide), `completion-verifier` gates each checkpoint, `code-reviewer` + `security-reviewer` do the final pass, and `root-cause-investigator` is the off-ramp when something breaks. `execute-code-plan` (deferred) is the thin orchestration skill that will drive this; the agents already speak compatible output contracts so it stays thin.
+The seven agents compose into plan -> implement -> verify: `implementation-planner` produces the plan, `task-implementer` executes each task (parallelizable where the plan marks tasks independent; add `isolation: worktree` if they would collide), `completion-verifier` gates each checkpoint, `code-reviewer` + `security-reviewer` do the final pass, and `root-cause-investigator` is the off-ramp when something breaks. The `execute-code-plan` skill is the thin orchestrator that drives this from the main conversation (it spawns these agents, so it cannot itself be an agent); the agents already speak compatible output contracts, which is what keeps it thin.
 
 ## Gotchas
 
