@@ -6,27 +6,37 @@ It is tuned for one operator (me), so it favors strong conventions, hard guardra
 
 ## How the skills fit together
 
-The library mirrors the arc of building software, and skills auto-load when a task matches their description, so the right method shows up at the right moment without being asked for by name.
+The library mirrors the arc of building software. Skills auto-load when a task matches their description, so the right method shows up at the right moment without being asked for by name.
 
-**Understand the problem.** A vague ask gets sharpened before any work starts, an unfamiliar repo gets mapped, and product-shaped questions (market opportunity, roadmap priority, feedback synthesis) get their own treatment.
+```mermaid
+flowchart LR
+  U["Understand<br/>clarify · explore · onboard"]
+  S["Specify<br/>PRD · tech spec · ADR"]
+  D["Design<br/>the design-* family"]
+  B["Plan and build<br/>plan · decompose · TDD"]
+  V["Review and verify<br/>review · scrutinize · validate"]
+  O["Ship and operate<br/>release · incident · post-mortem"]
+  U --> S --> D --> B --> V --> O
+  V -. rework .-> B
+```
 
-**Write it down.** Once the problem is clear it becomes a spec or a decision record: a PRD, a system design, a proposal, or an ADR. Each interrogates before it drafts rather than guessing intent.
+A few things the arc enforces that the boxes do not show: specs and designs interrogate before they draft rather than guessing intent; built work is validated against reality by actually running it (a real browser, real API requests), because a green test suite is necessary but never sufficient; and releases are prepared with a rollback plan but never auto-deployed to production.
 
-**Design the pieces.** Contracts and structures are designed before they are built. APIs, data schemas, CLIs, MCP servers, LLM agents, UIs, CI/CD pipelines, data migrations, and observability each have a dedicated `design-*` method.
-
-**Plan and build.** A non-trivial change is planned, sliced into tracker tasks, then built test-first with stack-specific best practices. `execute-code-plan` drives an approved plan to completion through the agent pipeline below.
-
-**Review, verify, validate.** Finished work is reviewed for intent and quality, then validated against reality by actually running it: one skill drives a real browser, another sends real API requests. A green test suite is necessary, never sufficient.
-
-**Ship and operate.** Releases are prepared with a rollback plan but never auto-deployed to production, live incidents are driven to mitigation, and the aftermath is captured as a post-mortem.
-
-Around this arc sit data and document skills (tabular analysis, visualization, Office and PDF editing), writing and communication skills, and a meta layer that maintains the library itself (authoring skills, agents, and hooks; tuning the always-on context). Each skill's `SKILL.md` is its own documentation.
+Around this arc sit data and document skills (tabular analysis, visualization, Office and PDF editing), writing and communication skills, and a meta layer that maintains the library itself. Each skill's `SKILL.md` is its own documentation.
 
 ## The agent pipeline
 
-Subagents run work in isolated context and report back. They are thin wrappers: each preloads the relevant library skill, then adds the overrides a subagent needs (decide-and-disclose instead of asking the user, return-only instead of acting) plus hard read-only guardrails for anything that reviews.
+Subagents run work in isolated context and report back. Each is a thin wrapper: it preloads the relevant library skill, then adds the overrides a subagent needs (decide-and-disclose instead of asking the user, return-only instead of acting) plus hard read-only guardrails for anything that reviews.
 
-The core loop is **plan -> review -> implement -> verify**: a planner produces the plan, a plan-reviewer adversarially vets it, an implementer builds each task test-first, and a completion-verifier independently confirms the work is done and actually wired in. Code and security reviewers do the final pass, and a root-cause-investigator is the off-ramp when something breaks. Spec-stage reviewers, a silent-failure auditor, and a deep-researcher are on-demand specialists dispatched as needed. Definitions live in `agents/`.
+```mermaid
+flowchart LR
+  PL[plan] --> PR[review] --> TI[implement] --> CV[verify] --> FR[final review]
+  CV -. not done .-> TI
+  TI -. breaks .-> RC[root-cause]
+  RC -.-> TI
+```
+
+A planner produces the plan, a plan-reviewer adversarially vets it, an implementer builds each task test-first, and a completion-verifier independently confirms the work is done and actually wired in. Code and security reviewers do the final pass, and a root-cause-investigator is the off-ramp when something breaks. Spec-stage reviewers, a silent-failure auditor, and a deep-researcher are on-demand specialists dispatched as needed. Definitions live in `agents/`.
 
 ## The enforcement layer
 
