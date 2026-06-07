@@ -82,3 +82,13 @@ Apply these rules to every git operation:
 
 - When you don't know the codebase git commit conventions, review the most recent 5 commits and follow the established patterns. If there is no established pattern or the existing pattern is erratic, follow conventional commits.
 - Prefer short and direct commit messages that convey the "what" of what is being committed based on the code itself. Avoid commits like "addressing PR comments" or generic "refactored code" commit messages.
+
+## Shell aliases
+
+These personal aliases (from `~/.claude/aliases.sh`) are active in the Bash tool; prefer them.
+
+- **Git:** `gs` status, `ga` add, `gc` commit, `gl` -P log --oneline, `gp` push, `gpr` pull, `gsw` switch, `gm` merge, `gr` rebase, `gst` stash (not status; `gs` is status)
+- **Node:** `npi` npm install, `npr` npm run, `npt` npm test, `pnpi` pnpm install, `pnpr` pnpm run, `nscr` print package.json scripts, `ndeps` print deps
+- **Tools:** `d` docker, `dco` docker compose, `tf` terraform, `kube` kubectl, `cg` cargo
+
+`cat` is aliased to `bat`. For a force-push or hard reset, run the full `git` command so the settings.json deny rules still apply.

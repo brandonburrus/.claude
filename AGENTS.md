@@ -11,6 +11,7 @@ This repository is Brandon's personal Claude Code configuration directory (`~/.c
 - `settings.json` - Claude Code harness configuration (permissions, hooks, env).
 - `CLAUDE.md` - Global behavioral instructions loaded into every session.
 - `README.md` - Public-facing overview of the setup with the full inventory of skills, agents, and hooks.
+- `aliases.sh` - Personal shell aliases (git, node, docker, infra); sourced by the user's `~/.zshrc`. The common ones are documented in `CLAUDE.md` so the agent prefers them in Bash.
 
 ## Critical Constraints
 
