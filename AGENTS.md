@@ -12,6 +12,7 @@ This repository is Brandon's personal Claude Code configuration directory (`~/.c
 - `CLAUDE.md` - Global behavioral instructions loaded into every session.
 - `README.md` - Public-facing flow overview of how the harness fits together across the SDLC; a map, not an exhaustive index.
 - `aliases.sh` - Personal shell aliases (git, node, docker, infra); sourced by the user's `~/.zshrc`. The common ones are documented in `CLAUDE.md` so the agent prefers them in Bash.
+- `link-copilot.py` - Interactive `uv` script (PEP 723, questionary) that symlinks selected skills/agents into `~/.copilot`. Skills link as directories into `~/.copilot/skills/<name>`; agents link as `~/.copilot/agents/<name>.agent.md` (Copilot's required extension). Sync semantics: the checklist is the desired end state, and it only ever removes symlinks that resolve back into `~/.claude`.
 
 ## Critical Constraints
 
