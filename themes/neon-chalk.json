@@ -1,0 +1,29 @@
+{
+  "name": "neon-chalk",
+  "base": "dark",
+  "overrides": {
+    "background": "#49c0b6",
+    "autoAccept": "#364ded",
+    "bashBorder": "#da0caa",
+    "blue_FOR_SUBAGENTS_ONLY": "#02a7ff",
+    "briefLabelClaude": "#82cb4d",
+    "briefLabelYou": "#02a7ff",
+    "chromeYellow": "#ff8c00",
+    "claude": "#49c0b6",
+    "claudeShimmer": "#49c0b6",
+    "planMode": "#7264ce",
+    "text": "#e8e8e8",
+    "clawd_body": "#49c0b6",
+    "green_FOR_SUBAGENTS_ONLY": "#41b645",
+    "orange_FOR_SUBAGENTS_ONLY": "#ff8c00",
+    "claudeBlue_FOR_SYSTEM_SPINNER": "#49c0b6",
+    "clawd_background": "#201d26",
+    "ide": "#49c0b6",
+    "claudeBlueShimmer_FOR_SYSTEM_SPINNER": "#62cac2",
+    "professionalBlue": "#49c0b6",
+    "suggestion": "#49c0b6",
+    "remember": "#49c0b6",
+    "rainbow_blue": "#49c0b6",
+    "rainbow_blue_shimmer": "#62cac2"
+  }
+}
