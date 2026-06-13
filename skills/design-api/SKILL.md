@@ -72,6 +72,38 @@ Hard rules:
 - `@deprecated(reason)` precedes any field removal; introspection is disabled or restricted in production for non-public APIs
 - Demand controls are part of the design: depth limits, complexity limits, rate limits
 
+## Typed interfaces (where the surface is typed)
+
+For TypeScript clients and servers, the contract lives in the types, so model it so the compiler rejects the misuse the runtime cannot catch. These two patterns apply only to the typed surface; on the wire IDs stay plain strings and variants stay JSON.
+
+Brand distinct IDs so they are not interchangeable. Two `string` IDs are the same type to the compiler, so passing an order ID where a user ID is expected compiles and fails only in production. A phantom brand makes each ID its own type while staying a string at runtime.
+
+```typescript
+type UserId = string & { readonly __brand: "UserId" };
+type OrderId = string & { readonly __brand: "OrderId" };
+
+function getOrder(id: OrderId): Promise<Order> { /* ... */ }
+
+declare const userId: UserId;
+getOrder(userId); // compile error: UserId is not assignable to OrderId
+```
+
+Model variant shapes as a discriminated union, not one wide type with optional fields. A single type carrying every field as optional lets impossible combinations type-check (a `failed` result holding `data`, no `error`) and gives the consumer no exhaustiveness guarantee. A literal discriminant ties each field set to its variant and lets the compiler flag an unhandled case.
+
+```typescript
+type Result =
+  | { status: "success"; data: Order }
+  | { status: "error"; code: string; message: string };
+
+function render(result: Result): string {
+  switch (result.status) {
+    case "success": return result.data.id;
+    case "error": return result.message;
+    // adding a third variant makes this switch a compile error until handled
+  }
+}
+```
+
 ## Anti-patterns (reject on sight)
 
 | Anti-pattern | Why |

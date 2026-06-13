@@ -20,6 +20,7 @@ Author a Claude Code subagent definition: a Markdown file whose frontmatter conf
 A subagent is a single role with a single output format. Confirm before writing:
 
 1. What task does it perform, start to finish, and what does it return? (Its final message is its entire output; the parent sees nothing else)
+   - Scope gate: if that start-to-finish job runs more than roughly 20 steps, split it into two focused agents with a clean handoff (the first returns what the second consumes) rather than one oversized agent. LLM reliability degrades as context grows, so a job past that bound loses focus mid-run; catch this here, before writing the definition, not after a sprawling agent underperforms.
 2. Should this be an agent at all? The layer test: a **skill** is a workflow the current agent follows; an **agent** is a role with its own context window, tool surface, and perspective; a **command/explicit invocation** is the entry point that composes them. Reach for an agent when the work benefits from context isolation (verbose output the parent does not need), a restricted tool surface, or an independent perspective (review, audit). A second role appearing during the interview means a second agent, not a bigger one.
 3. When should the parent delegate to it automatically? (This becomes the description)
 

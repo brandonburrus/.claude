@@ -70,8 +70,8 @@ The guess is the point: users react to a wrong guess faster than they generate a
 |---|---|
 | 1. Problem and vision | The pain that exists today; who specifically has it; how they solve it now; why that is insufficient; what measurable success looks like; what is explicitly out of scope |
 | 2. Users and journeys | Per persona: what triggers them to use this; their goal in their own words; the steps of the happy path; what can go wrong at each step; how they know they succeeded; what they do next |
-| 3. Features | Per feature: which journey it serves (no orphan features); the minimum version that delivers value; testable acceptance criteria; inputs the user provides and outputs they receive; business rules and constraints |
-| 4. Priority and scope | The one feature that ships if only one can; MVP versus full vision boundary; dependencies between features; real deadlines versus "soon"; what would make this a failure even if shipped on time |
+| 3. Features | Per feature: which journey it serves (no orphan features); the minimum version that delivers value; how that slice is exercised and demonstrated on its own with nothing else built (its independent test); testable acceptance criteria; inputs the user provides and outputs they receive; business rules and constraints |
+| 4. Priority and scope | A P1/P2/P3 rank per feature where P1 ships first as a standalone slice; the one feature that ships if only one can; MVP versus full vision boundary; dependencies between features; real deadlines versus "soon"; what would make this a failure even if shipped on time |
 
 Interrogation rules:
 
@@ -191,13 +191,14 @@ In-product flows for the features below: how a feature behaves once the user is 
 ## Features
 ### <Feature name>
 - Serves: <journey / persona>
+- Priority: P1 / P2 / P3, with rationale (P1 is the one that ships first)
+- Independent test: <how this feature alone is exercised and the value it delivers on its own, with nothing else built>
 - Description (user's perspective):
 - Acceptance criteria:
   - [ ] <specific, testable condition>
 - Inputs: / Outputs:
 - Business rules:
 - Edge cases: <scenario> -> <expected behavior>
-- Priority: Must / Should / Nice, with rationale
 - Dependencies:
 
 ## Open Questions
@@ -213,6 +214,7 @@ Only items the user explicitly deferred, each with its deferral rationale.
 - [ ] Every journey has a trigger, steps, error states, and a completion signal
 - [ ] Every feature traces back to a journey; no orphan features
 - [ ] Every feature has testable acceptance criteria
+- [ ] Every feature carries a P1/P2/P3 priority and an independent test describing the value it delivers as a standalone slice
 - [ ] Success metrics are measurable, with a measurement method
 - [ ] Scope boundaries are explicit in both directions
 - [ ] No technical implementation detail anywhere in the document
@@ -227,3 +229,4 @@ Only items the user explicitly deferred, each with its deferral rationale.
 - **Out of scope is half the document's value.** Most misalignment is silent disagreement about what is not being built. A spec without an out-of-scope section has not made the hard decisions, only listed the easy ones.
 - **Features without journeys are wishes.** A feature that cannot name the journey and persona it serves was generated from category convention ("apps like this have notifications"), not from a user need. Cut it or trace it.
 - **Success metrics rot when qualitative.** "Users are happier" can never fail review, so it never constrains anything. A number with a measurement method forces the product to either meet it or change it.
+- **A feature that cannot be tested alone is not a slice, it is a fragment.** P1/P2/P3 ranks the features into a delivery order, but the independent test is what proves each one ships as a standalone increment: if you cannot state how the P1 feature is exercised and delivers value with nothing else built, the spec describes a flat pile of features, not the thinnest sliceable increment. Write the independent test as the demo you would give after building only that feature; if no such demo exists, the slice is drawn wrong, so re-cut it.

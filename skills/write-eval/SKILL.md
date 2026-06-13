@@ -30,6 +30,15 @@ Split into two kinds with different jobs: capability evals (does the new behavio
 - Source cases from real inputs first, then synthesize variations seeded by the real ones (matching length, format, and tone of production data). Every production failure becomes a new case permanently.
 - Pin everything the case depends on (input files, repo commits, fixtures) so results stay comparable across months.
 - Hold out a subset that prompt-tuning never sees; it is the only honest measure once the visible set has shaped the prompt.
+- Beyond representative cases, plant trap cases: inputs engineered so a known LLM failure mode produces a plausible-looking-but-wrong output, with the grader checking for the specific tell rather than surface plausibility. Representative cases answer "does the output look right"; trap cases answer "does the output reveal the failure", which is the question that catches the failures that ship. Each trap case names the mode it targets and the tell, so a regression is diagnosable, not just a red cell.
+
+| Failure mode | Example trap case | What the grader checks |
+|---|---|---|
+| Plausible-but-wrong answer | Question whose confident-sounding common answer is incorrect | Output matches the verified answer, not the popular wrong one |
+| Hallucinated fact or citation | Prompt inviting a specific source, figure, or quote the model lacks | Every named source or figure resolves against ground truth; no invented specifics |
+| Buggy work passed off as correct | Task whose naive solution has a subtle defect (off-by-one, wrong edge case) | Output handles the seeded edge input correctly, not just the happy path |
+| Shortcut that beats a naive check | Input where a spurious cue (keyword, format) predicts the naive-graded answer | Output stays correct when the cue is flipped or removed in a paired variant |
+| Unsupported claim stated as fact | Prompt that rewards asserting beyond the given evidence | Claims trace to provided context; the model hedges or declines when evidence is absent |
 
 ### 3. Choose the cheapest grader that grades truthfully
 

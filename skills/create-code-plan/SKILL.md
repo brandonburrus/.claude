@@ -54,11 +54,12 @@ Use the template below. Include every applicable section; omit a section only wh
 Run this checklist against the draft before presenting it. Fix issues inline.
 
 1. **Spec reconciliation**: re-read the original request or spec and confirm three things: every requirement maps to a task (add tasks for gaps), no part of the plan contradicts what the spec stated (stack, constraint, success criterion), and no requirement is too vague or unmeasurable to plan against. A contradiction is a silent divergence the user never approved; a vague requirement gets kicked back to the user or clarify-ambiguity, not planned around with a guess.
-2. **Placeholder scan**: search the plan for the patterns in No Placeholders below. Replace each with concrete detail or a question for the user.
-3. **Naming consistency**: types, function names, and file paths used in later tasks must match what earlier tasks define. `createTask` in Task 2 but `addTask` in Task 5 is a plan defect.
-4. **Dependency ordering**: can each task execute in the listed order? If Task 3 needs output from Task 5, reorder.
-5. **File summary completeness**: the File Summary must account for every file mentioned in any task. Missing entries mean the implementation will diverge from the plan.
-6. **Scope discipline**: does every task trace to the request, or did the plan add abstraction, configurability, or future-proofing nobody asked for? Cut it, or surface it as an explicit option for the user; unrequested flexibility is scope creep in plan form (see Guardrails).
+2. **Goal-backward verification**: spec reconciliation is forward (requirement to task) and necessary but not sufficient, because a task can exist while a truth the goal depends on has no task. Work backward from the outcome instead: enumerate what must be TRUE for the goal to be met, map each truth to the task that makes it true, and flag any truth with no covering task. A plan with "create the auth endpoint" task passes the forward check yet still misses "passwords are hashed" when no task delivers it; the goal-truth-to-task pass catches that gap. Add a task for each uncovered truth, or kick the truth back to the user if it cannot be planned against.
+3. **Placeholder scan**: search the plan for the patterns in No Placeholders below. Replace each with concrete detail or a question for the user.
+4. **Naming consistency**: types, function names, and file paths used in later tasks must match what earlier tasks define. `createTask` in Task 2 but `addTask` in Task 5 is a plan defect.
+5. **Dependency ordering**: can each task execute in the listed order? If Task 3 needs output from Task 5, reorder.
+6. **File summary completeness**: the File Summary must account for every file mentioned in any task. Missing entries mean the implementation will diverge from the plan.
+7. **Scope discipline**: does every task trace to the request, or did the plan add abstraction, configurability, or future-proofing nobody asked for? Cut it, or surface it as an explicit option for the user; unrequested flexibility is scope creep in plan form (see Guardrails).
 
 ### 7. Present and wait for approval
 

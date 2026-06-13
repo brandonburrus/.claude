@@ -27,31 +27,29 @@ Perf Progress:
 - [ ] 5. Regression guard in place
 ```
 
-### 1. Measure a baseline
+### 1. Route the symptom, then measure a baseline
 
-Record concrete numbers before touching anything, under conditions you can reproduce for the after-measurement:
+Triage the observed symptom to its first suspects and the right tool before recording numbers; pointing the wrong instrument (synthetic where you needed RUM, wall-clock where you needed a profiler) wastes the baseline and the comparison built on it.
 
-- **Web frontend**: Lighthouse or a DevTools Performance trace (synthetic, reproducible) plus real-user data (web-vitals library, CrUX) when available; synthetic finds issues, RUM proves users felt the fix
-- **Backend**: timed logging around the suspect path, APM traces, database query logs with timing (`EXPLAIN ANALYZE` for SQL)
-- **Scripts and jobs**: a profiler, not wall-clock guesses (`python -m cProfile`, `node --cpu-prof`, `go pprof`); wall-clock total tells you it is slow, the profile tells you where
-- Measure on representative conditions: production-like data volume, throttled network and CPU for web, release builds not dev builds
+| Symptom | First suspects | Where/how to measure |
+|---|---|---|
+| Slow first page load | Bundle size, render-blocking resources, slow TTFB (then: server, not frontend) | DevTools Network waterfall (TTFB vs transfer); bundle analyzer |
+| Slow LCP | Oversized or late-discovered hero image, render-blocking CSS/JS, slow server | Lighthouse synthetic + CrUX/RUM for field LCP; trace the LCP element |
+| Poor INP / janky interaction | Long main-thread tasks (>50ms), oversized DOM updates, layout thrashing | Field-first (CrUX/RUM), then DevTools Performance trace while interacting, throttled CPU |
+| High CLS | Images without dimensions, late-loading embeds, font swaps | DevTools Performance layout-shift attribution; field CLS in RUM |
+| One endpoint slow | N+1 queries, missing index, unbounded fetch | Query log with timing, `EXPLAIN ANALYZE`; APM trace of the path |
+| Everything slow | Connection pool exhaustion, memory pressure, GC, an external dependency | APM dashboards, pool and GC metrics, p95 latency |
+| Intermittent slowness | Lock contention, GC pauses, cold caches, a flaky upstream | p95/p99 over time, GC and lock traces, upstream latency |
+| Job or script slow | The hot function is rarely the one that looks ugly | A profiler (`python -m cProfile`, `node --cpu-prof`, `go pprof`), not wall-clock guesses |
+
+General rules once routed:
+
+- Synthetic (Lighthouse, DevTools trace) finds and reproduces issues; RUM (web-vitals library, CrUX) proves users felt the fix. Use both where they apply.
+- Measure on representative conditions: production-like data volume, throttled network and CPU for web, release builds not dev builds.
 
 ### 2. Identify the bottleneck from the data
 
-Let the symptom route the investigation:
-
-| Symptom | First suspects |
-|---|---|
-| Slow first page load | Bundle size, render-blocking resources, slow TTFB (then: server, not frontend) |
-| Slow LCP | Oversized or late-discovered hero image, render-blocking CSS/JS, slow server |
-| Poor INP / janky interaction | Long main-thread tasks (>50ms), oversized DOM updates, layout thrashing |
-| High CLS | Images without dimensions, late-loading embeds, font swaps |
-| One endpoint slow | N+1 queries, missing index, unbounded fetch; read the query log |
-| Everything slow | Connection pool exhaustion, memory pressure, GC, an external dependency |
-| Intermittent slowness | Lock contention, GC pauses, cold caches, a flaky upstream |
-| Job or script slow | Profile it; the hot function is rarely the one that looks ugly |
-
-The profile decides, not intuition: optimize the top of the profile, and stop reading this table the moment you have real measurement data that contradicts it.
+The profile decides, not intuition: optimize the top of the profile, treat the routing table's first suspects as a starting hypothesis, and discard it the moment real measurement data contradicts it.
 
 ### 3. Fix the measured bottleneck
 
@@ -70,6 +68,14 @@ The recurring offenders, most of the wins live here:
 | Algorithmic complexity | The O(n squared) hiding behind nested loops or per-item scans; fix the algorithm before micro-tuning the code |
 
 One fix at a time; combined fixes make the re-measurement unattributable.
+
+When the bottleneck is a slow TTFB (over ~800ms), it is not atomic: split it in the Network waterfall and fix the dominant segment, because "the server is slow" is usually only one of four segments.
+
+| TTFB segment | Targeted fix |
+|---|---|
+| DNS resolution | `dns-prefetch` or `preconnect` for known origins |
+| TCP + TLS handshake | HTTP/2 or HTTP/3, connection keep-alive and reuse, edge deployment |
+| Server processing | Profile the backend, fix slow queries, add caching |
 
 ### 4. Verify with the same yardstick
 

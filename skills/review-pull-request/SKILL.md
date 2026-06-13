@@ -86,6 +86,28 @@ Label every finding so the author knows what is required versus optional; unlabe
 
 Each finding carries four parts: what (one sentence, with `file:line`), why it matters (the consequence, not the principle), evidence (the trace step or input that exposes it), and a concrete suggested fix. Quantify when possible: "this N+1 adds ~50ms per list item" beats "could be slow".
 
+Before any finding reaches the report, it must clear this gate; a finding that fails it gets dropped or demoted to a caveated Suggestion, never promoted, because manufactured findings are the primary failure mode of an automated reviewer and a single fabricated Critical erodes the trust the whole review depends on:
+
+- **Quote the line.** Paste the `file:line` plus the verbatim source that triggers the finding. If the claim is "field X is missing from model Y", quote the body or schema of Y where X would live; if "this can be null", quote the line that produces the null. A finding you cannot ground in quoted source is unverified.
+- **Name the concrete failure.** State the input, state, and bad outcome. If you cannot name the trigger you are pattern-matching, not reviewing.
+- **Confirm you read the context.** Check callers, imports, and tests; many apparent issues are already handled one frame up or guarded by a type.
+- **Defend the severity.** A missing doc comment is never Critical; a single loose type in a test fixture is never Important. Inflation erodes trust faster than a missed nit.
+
+Framework-generated symbols are verified at their source, not in the class body: an ORM relation, a decorator-defined column, a Rails `has_many`, a Prisma client field, or a migration-created column exists even when no literal line declares it. Quote the decorator, the model `Meta`, the migration, or the schema file that creates the symbol; "I grepped the class and the name was not there" is not evidence of absence.
+
+A zero-finding review is a valid, honest outcome. When a well-tested, convention-following diff yields nothing, the "What I traced" section is the review; do not invent a finding to look rigorous.
+
+These patterns are the highest-value false positives to suppress at the gate, each because the apparent defect is resolved by code the diff does not show:
+
+| Flagged as | Why it is usually a false positive |
+|---|---|
+| Missing error handling | The error path is owned by a caller, middleware, error boundary, or an upstream `.catch`; trace one caller before flagging |
+| Missing input validation | The input is already validated at a higher layer (route guard, schema, type) and this function is internal |
+| Field does not exist on the model | The field is defined via an ORM decorator, relation, or migration, not a literal line in the class body |
+| Possible null dereference | A preceding guard or type narrowing in scope already excludes null; trace the type flow, do not match on `?.` |
+| N+1 query | The loop is fixed-cardinality (a small enum) or the path already batches via a loader |
+| Magic number | The value is a well-known constant (HTTP status, `1024`, a timeout) or a single-use local whose name states its meaning |
+
 ### 6. Report with verdict
 
 ```markdown

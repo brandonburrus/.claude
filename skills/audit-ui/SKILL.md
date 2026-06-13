@@ -13,8 +13,9 @@ Review an existing UI for quality and accessibility and return a severity-ranked
 Audit Progress:
 - [ ] 1. Target and inputs resolved
 - [ ] 2. Each dimension checked against its table
-- [ ] 3. Findings located, severity-ranked, fixes written
-- [ ] 4. Report assembled: anti-slop verdict first, then findings by severity
+- [ ] 3. Primary task walked as 2-3 personas; stalls recorded
+- [ ] 4. Findings located, severity-ranked, fixes written
+- [ ] 5. Report assembled: anti-slop verdict first, then findings by severity
 ```
 
 ### 1. Resolve the target and how you can observe it
@@ -36,7 +37,51 @@ Walk all six. Skipping a dimension silently reads as a pass; if a dimension does
 | Interaction / feedback states | Every interactive element has hover, focus, active, disabled; async actions show loading; lists have empty states; errors are inline and recoverable; success is confirmed | Missing focus state, spinner where a skeleton belongs, blank "No results", destructive action with no confirm or undo |
 | Content / copy | Strings read like a person wrote them; button labels are verb plus object; no marketing buzzwords; no em dashes; realistic data, not "John Doe" or fake-perfect numbers | LLM-poetic cadence, "Click here" links, exclamation marks in success messages |
 
-### 3. Accessibility checklist
+The dimensions above catch visual and structural defects. To catch usability defects that look fine but cost the user effort, run this lens against the interaction and hierarchy dimensions. Nielsen's heuristics name the usability failure; cognitive load names why the screen feels heavy.
+
+| Usability check | Failure to flag | Maps to dimension |
+|---|---|---|
+| Visibility of status | No feedback after an action; user cannot tell what happened or whether it is loading | Interaction / feedback |
+| Match to real world | Jargon or system terms where the user's own words belong; unnatural information order | Content / copy |
+| User control | No undo, cancel, or escape from a state the user entered by mistake | Interaction / feedback |
+| Consistency | Same concept named or styled two ways; a control behaves differently than its twin elsewhere | Hierarchy / consistency |
+| Error prevention | A destructive action with no confirm, or free input where a constraint (picker, dropdown) would stop the error | Interaction / feedback |
+| Recognition over recall | User must remember a value from a prior screen, or options are hidden behind memory instead of shown | Hierarchy / Content |
+| Minimalist design | Elements that earn no pixel compete with the ones that matter | Visual quality / Hierarchy |
+| Error recovery | Error message names a code or "something went wrong" instead of the specific problem and its fix | Interaction / Content |
+
+Cognitive load is the effort the interface demands. Separate three kinds, because only one is worth cutting:
+
+- **Intrinsic** is the task's own difficulty; you cannot remove it, only structure it (steps, defaults, progressive disclosure). Do not file it as a defect.
+- **Extraneous** is effort the design itself adds: unclear labels, inconsistent patterns, visual noise, a detour between intent and result. This is pure waste; every instance is a finding, and cutting it is the goal of the load lens.
+- **Germane** is effort that builds the user's understanding; it is good load, leave it.
+
+Working-memory rule: at any single decision point, count the distinct options the user must hold at once. Four or fewer is fine, five to seven is pushing it (group or disclose progressively), eight or more overloads and is a finding. Apply it to nav items, choices in a menu, and visible form fields per group.
+
+### 3. Walk the primary task as personas
+
+Per-dimension checks find defects in isolation; they do not prove a real user can finish the job. Pick the one primary action of the surface (subscribe, check out, create the record), then walk it end to end as 2-3 personas and record the exact element where each one stalls. A persona stall is a finding like any other, located and severity-ranked.
+
+Select the 2-3 personas whose failure modes the surface is most exposed to:
+
+| Surface | Personas to walk | What each surfaces |
+|---|---|---|
+| Landing / marketing | First-timer, mobile, stress-tester | Clarity in 5 seconds, thumb reach, trust under odd input |
+| Dashboard / admin | Power user, screen-reader user | Speed and shortcuts, keyboard and ARIA flow |
+| Checkout / forms | First-timer, screen-reader user, mobile | Label clarity, accessible inputs, state kept across interruption |
+| Onboarding | First-timer, mobile | Jargon and dead ends, progress lost on a tab switch |
+
+Persona behaviors to walk the action through:
+
+- **First-timer**: reads every label literally, knows no jargon, needs the next step obvious. Stalls at icon-only nav, undefined terms, no visible help, ambiguous "what now" after a step.
+- **Power user**: skips onboarding, reaches for the keyboard, wants batch and shortcuts. Stalls at unskippable tutorials, no keyboard path to the primary action, one-at-a-time work where batch is natural.
+- **Screen-reader / keyboard user**: tabs linearly, cannot see hover or color-only signals. Stalls at click-only controls, missing focus, unlabeled fields, state changes never announced. (Overlaps the a11y checklist below; the walkthrough catches failures that only appear mid-flow.)
+- **Mobile / interrupted user**: one thumb, gets interrupted and returns. Stalls at top-of-screen primary actions, progress lost on a tab switch, large text input where a selection would do.
+- **Stress-tester**: pushes past the happy path with empty, huge, or odd input. Stalls at silent failures, errors that leave the UI broken, useless empty states, data lost on refresh.
+
+Report each stall as "Persona: the exact element and what broke", not a generic worry. "First-timer: the only way forward is an unlabeled gear icon" is a finding; "could be more intuitive" is not.
+
+### 4. Accessibility checklist
 
 Run every item; a11y findings are the ones most often missed by eye and carry the highest user cost.
 
@@ -54,7 +99,7 @@ Run every item; a11y findings are the ones most often missed by eye and carry th
 - [ ] Animations respect prefers-reduced-motion
 ```
 
-### 4. Rank by severity and write the report
+### 5. Rank by severity and write the report
 
 Assign each finding one severity. Rank by user impact, not by how easy the fix is.
 

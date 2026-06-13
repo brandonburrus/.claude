@@ -44,10 +44,24 @@ Run this scan before the full rewrite; it surfaces the most common misses fast, 
 - Any business jargon ("navigate", "deep dive", "circle back", "lean into") standing in for a plain verb?
 - Any em dash, en dash, emoji, or curly quote (the hard-rule scan, also run again at the end)?
 
+### Curse-of-knowledge diagnostic
+
+The checks above catch how the text is phrased; this one catches what the text wrongly assumes the reader already knows. It is a separate problem class: a passage can be free of every AI tell and still be unreadable because the writer skipped the context, the stakes, or the concrete example an outsider needs. Run it as its own pass; the fixes are supplying missing information, not rephrasing existing sentences, so do not fold it into the tells scan.
+
+| Check | What to scan for | Why it is a gap |
+|---|---|---|
+| Undefined jargon | Domain terms and acronyms used without a gloss, more than roughly two per paragraph | The writer reads them as plain words; the outsider stops at each one |
+| Missing "why this matters" | A claim or feature stated with its stakes assumed rather than named | The reader cannot tell whether to care, so the point lands as noise |
+| Unanswered "so what" | A claim that never connects to a consequence the reader feels | Relevance lives in the writer's head, not on the page |
+| Abstraction with no instance | Abstract nouns (efficiency, alignment, transformation) carrying the meaning, with no concrete example underneath | The reader pictures nothing, so the claim stays unverifiable |
+| Fails the smart-outsider read | A passage a sharp non-specialist could not follow on one read | The expert's filled-in steps are invisible to them and to the writer |
+
+When a check fires, the fix obeys the hard rules: supply the missing term, stake, consequence, or example only from specifics in the source or from the user (never invent one), or flag the gap for the user to fill. Leaving the sentence general is better than fabricating the detail it lacks.
+
 ## Workflow
 
 1. **Calibrate voice.** If the user provides a writing sample (inline or a file path), read it first and note sentence-length habits, word register, punctuation tics, and how transitions are handled; the rewrite should replace AI patterns with that writer's patterns, not generic polish. Without a sample, default to a natural, varied voice fitting the content's register.
-2. **Quick-check pre-pass.** Run the Quick checks scan above against the text; apply the Core rules to what it surfaces. This catches the common misses before the slower catalog pass.
+2. **Quick-check pre-pass.** Run the Quick checks scan above against the text; apply the Core rules to what it surfaces. Then run the curse-of-knowledge diagnostic as a separate pass, since it finds assumed-knowledge gaps the phrasing scan cannot. This catches the common misses before the slower catalog pass.
 3. **Load the catalog.** Read [references/ai-patterns.md](references/ai-patterns.md) and check the text against every pattern in it. The catalog is the skill; working from memory of it produces partial passes.
 4. **Judge before flagging.** Apply the cluster rule below; confirm each flagged instance is a real tell and not legitimate prose.
 5. **Draft rewrite.** Fix every confirmed instance. Read it aloud mentally: varied sentence length, simple copulas (is, are, has), specific over abstract.

@@ -58,6 +58,7 @@ Fix Progress:
 - [ ] 4. Hypotheses ranked; survivor confirmed by failed disproof
 - [ ] 5. Fix written against a failing regression test
 - [ ] 6. End-to-end verification green; instrumentation removed
+- [ ] 7. Bug class hardened (optional; for recurring or high-blast-radius bugs)
 ```
 
 ### 1. Build a feedback loop
@@ -103,7 +104,17 @@ Shrink the search space until the cause has nowhere to hide:
 
 - **Minimize.** Remove code, config, and input until only the failure remains. A minimal case makes the root cause obvious and prevents fixing a symptom.
 - **Bisect regressions.** When the bug appeared between two known states, `git bisect run` with the feedback loop as the check. Machines binary-search faster than humans theorize.
-- **Instrument boundaries in multi-component systems.** For each component boundary on the path, log what enters and what exits, run once, and read off which layer breaks. Evidence first, then investigate only the failing layer.
+- **Instrument every boundary in one pass for multi-component systems** (CI to build to signing, API to service to database). Instrument all boundaries before running, not one at a time, so a single run shows which layer breaks instead of one round-trip per boundary. At each boundary capture four things, because a break can hide in any of them: the data entering the component, the data exiting it, whether config and environment propagated across the boundary, and the state visible at that layer. Then run once and read off the first boundary where input was right but output was wrong; investigate only that layer.
+
+  ```bash
+  # Boundary 1: workflow -> build (input, propagation)
+  echo "[boundary-1] IDENTITY=${IDENTITY:+SET}${IDENTITY:-UNSET}"   # propagation
+  # Boundary 2: build -> signing (output of build, state at signing)
+  env | grep IDENTITY || echo "[boundary-2] IDENTITY absent in build env"  # output/propagation
+  security find-identity -v                                          # state
+  # Boundary 3: signing -> artifact (input to the failing op)
+  codesign --sign "$IDENTITY" --verbose=4 "$APP"                    # input + observed failure
+  ```
 - **Trace bad values backward.** When an error surfaces deep in the stack, the symptom site is almost never the cause. Trace the bad value up the call chain until you find where it originated, and aim the fix there. Fixing where the error appears instead of where it starts is the canonical symptom patch.
 
 ### 4. Hypothesize and falsify
@@ -133,6 +144,21 @@ All of these before declaring done:
 - [ ] All tagged instrumentation is gone (`grep` the `[DBG-` prefix)
 - [ ] Throwaway harnesses and repro scripts are deleted or clearly parked
 - [ ] The confirmed root cause is stated in the commit message, so the next debugger inherits the conclusion, not just the diff
+
+### 7. Harden the bug class (optional, recommended for recurring or high-blast-radius bugs)
+
+The fix from step 5 closes the one instance; it does not stop the same bad value from reaching the same operation through a different code path, a refactor, or a mock that bypasses the check. Single-layer validation is exactly why a bug class reappears elsewhere. After the fix is confirmed and instrumentation removed, harden so the class is structurally impossible, not just patched. Target the class (any invalid value reaching this operation), not the instance (this one input on this one path). Skip this for a genuinely one-off bug with no second path; spend it where the blast radius or the recurrence history justifies it.
+
+Trace the bad value's full path, then add validation at the layers it crosses (each catches what the others miss):
+
+| Layer | Guards against | Add |
+|---|---|---|
+| Entry-point validation | Bad input crossing the public boundary | Schema or shape check at the API edge that rejects malformed input before it propagates |
+| Business-logic validation | Input that is well-formed but wrong for this operation | A check that the value makes sense for what the operation does, not just that it parses |
+| Environment guard | A dangerous operation running in the wrong context | A refusal when context is wrong (block destructive ops in test mode, outside a temp dir, against prod) |
+| Debug instrumentation | The next occurrence arriving with no evidence | Durable context capture (inputs, stack) at the dangerous operation, so a future forensic pass has data |
+
+Each added guard is a behavior change: cover it with a test (per follow-tdd) that drives the bad value at that layer and asserts the rejection, so the hardening itself is proven and cannot silently rot.
 
 ## Escalation: Three Failed Fixes
 

@@ -103,7 +103,7 @@ WRONG (horizontal):  test1, test2, test3 ... then impl1, impl2, impl3
 RIGHT (vertical):    test1 -> impl1, test2 -> impl2, test3 -> impl3
 ```
 
-Tests written in bulk test imagined behavior, not actual behavior; you commit to test structure before the implementation has taught you anything. Each test should respond to what the previous cycle revealed.
+Tests written in bulk test imagined behavior, not actual behavior; you commit to test structure before the implementation has taught you anything. Each vertical slice is a tracer bullet: one test, one implementation, then the next test responds to what that cycle revealed. This is the same one-behavior-at-a-time ordering plans use, so a plan that lists work in tracer-bullet order is implemented in that same order, not batched into all-tests-then-all-code.
 
 ## The Prove-It Pattern (Bug Fixes)
 
@@ -122,7 +122,19 @@ For complex bugs, consider spawning a subagent to write the reproduction test fr
 | Structured | Arrange-Act-Assert | Interleaved setup and assertions |
 | Real | Real implementation > fake > stub > mock | Mocking your own modules |
 
-When adding any mock, test double, or test utility, read `references/test-quality.md` first; it contains the gate functions and the anti-pattern catalogue (testing mock behavior, test-only production methods, incomplete mocks, over-mocking).
+## Test Anti-Patterns
+
+These failures make the suite pass while proving nothing. Run the gate question before you write the test; if the honest answer is the wrong side of it, stop and rework, because the test is about to verify the wrong thing.
+
+| Anti-pattern | Why it is wrong | Gate question |
+|---|---|---|
+| Testing mock behavior | A `*-mock` assertion proves the mock is present, not that the real code works; it fails only when the mock is removed | Am I asserting on real behavior or on the mock's existence? |
+| Test-only methods in production | A method called only from tests pollutes the production API and is dangerous if real code ever calls it | Is this method used anywhere outside tests? |
+| Mocking without understanding | Stubbing a method whose real side effect the test depends on makes the test pass for the wrong reason or fail mysteriously | What side effects does the real method have, and does this test depend on any of them? |
+| Incomplete mocks | A mock with only the fields you happened to read hides the rest of the real shape; downstream code reading an omitted field fails silently while the test stays green | Does this mock mirror every field the real response returns? |
+| Interaction assertions | Asserting which methods were called couples the test to internals, so it breaks on refactors that change nothing observable | Am I asserting an observable outcome (state) rather than a call sequence? |
+
+When adding any mock, test double, or test utility, read `references/test-quality.md` first; it holds the worked examples, fixes, and the full gate functions behind this table.
 
 ## Common Rationalizations
 

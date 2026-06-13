@@ -16,7 +16,9 @@ Generate persuasive technical writeups (spikes, proposals, RFCs, or vendor evalu
 
 ## Document Structure
 
-Follow this argumentative arc consistently:
+Before drafting any section, lock the core claim, then follow this argumentative arc consistently:
+
+0. **Lock the core claim**: Before writing, extract the single sentence that must survive if every other word is cut: the one defensible claim the proposal exists to win. State it in one jargon-free sentence ("Migrating to Terraform cuts our provisioning incidents and pays for itself within two quarters"), and keep it visible while you draft. Lock this first because a proposal that argues one claim well beats one that diffuses across many; the locked claim is the filter every later section must pass.
 
 1. **Frame the investigation**: Open with 1-2 paragraphs of context: what is being investigated, why, and what questions need answering. If specific questions or goals drive the investigation, enumerate them explicitly up front. Optionally include a table of contents for longer documents.
 
@@ -29,6 +31,8 @@ Follow this argumentative arc consistently:
 5. **Address risks and objections**: Proactively identify and address likely concerns: migration complexity, learning curves, cost, compatibility, compliance. Use a concession-then-counter pattern when acknowledging tradeoffs ("However... the tooling around Terraform is still widely considered the best in industry"). Include side-by-side before/after code comparisons when demonstrating simplicity gains.
 
 6. **Define a migration path**: Always end with concrete, phased implementation steps. Break large changes into discrete, ordered phases (pilot then expand, incremental then full, multi-phase rollout). This reduces perceived risk and demonstrates operational maturity. Never leave the reader wondering "but how would we actually do this?"
+
+After drafting, check each section against the locked claim: every section must visibly support that one claim, and any passage that does not advance it gets cut or rewritten until it does. This is a relevance filter on the locked claim, not a restatement of top-down flow: a section can flow logically and still fail to earn its place in the argument.
 
 ## Tone and Voice
 

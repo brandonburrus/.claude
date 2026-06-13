@@ -91,6 +91,8 @@ These apply in both registers.
 
 For full WCAG 2.1 AA verification (contrast, screen readers, ARIA live regions, forms, testing tools, anti-patterns), read `references/accessibility.md`; `interaction.md` owns the keyboard, focus, and touch-target mechanics.
 
+**Serif discipline.** A serif typeface is permitted only when one of two gates is met: the brief explicitly names a serif, or the aesthetic genuinely calls for one (editorial, luxury, publication, manuscript, heritage, vintage) and you can state in one sentence why this serif fits this brand. Everything else (creative agency, design studio, modern brand, premium consumer, portfolio, lifestyle) defaults to a sans display face. "It feels creative, premium, or editorial" is not a gate; reaching for a serif on a generic creative brief is a top AI design tell, because the model's reflex equates "creative" with "serif."
+
 **Typography numbers:**
 - Body line length 65-75ch. Hierarchy through scale and weight with ≥ 1.25 ratio between steps.
 - Display ceiling: clamp() max ≤ 6rem. Above that the page is shouting. Letter-spacing floor ≥ -0.04em.
@@ -108,7 +110,7 @@ For full WCAG 2.1 AA verification (contrast, screen readers, ARIA live regions, 
 - Stagger is for siblings (cards in a grid, list items), never whole sections. `animation-delay: calc(var(--i) * 50ms)` with capped total: 10 items at 50ms is the ceiling; more items means smaller per-item delay, not a longer wave.
 - `will-change` only on elements about to animate (`:hover`, an `.animating` class), never preemptively across the page; it costs memory per layer.
 
-**States and feedback.** Implement the full cycle, not just the success state: skeleton loaders matching final layout shape (not generic spinners), composed empty states that show how to populate, inline error states, and tactile `:active` feedback (`scale-[0.98]`). CTA labels must not wrap at desktop; one CTA label per intent per page ("Get in touch" and "Let's talk" on one page is a defect).
+**States and feedback.** Implement the full cycle, not just the success state: skeleton loaders matching final layout shape (not generic spinners), composed empty states that show how to populate, inline error states, and tactile `:active` feedback (`scale-[0.98]`). Two CTA hard rules, both pre-flight fails: a CTA label must fit on one line at desktop width (shorten the label or widen the button, never constrain CTA `max-width`), and one CTA intent gets one label across the whole page (nav, hero, footer), so "Get in touch" and "Let's talk" co-existing is a defect, not stylistic variety.
 
 **Interactive components.** When the task includes forms, buttons, modals, dropdowns, tabs, or any keyboard-driven component, read `references/interaction.md` before building: it covers the eight-state matrix, `:focus-visible` rings, validate-on-blur, the native `<dialog>`/`inert`/Popover APIs that replace z-index and focus-trap hacks, undo-over-confirm, roving tabindex, and 44px touch targets.
 
@@ -131,6 +133,8 @@ Before delivering, verify mechanically:
 - [ ] Contrast passes for body, placeholders, buttons, and forms
 - [ ] Every animation motivated, inside its duration band, and reduced-motion wrapped
 - [ ] Interactive elements have focus-visible rings and 44px touch targets; full state matrix on forms and overlays
+- [ ] Any serif passes a gate (named in brief, or aesthetic fits with a stated reason); no default serif on a generic creative brief
+- [ ] No CTA label wraps at desktop; no two CTAs share one intent
 - [ ] Loading, empty, and error states present (product UI)
 - [ ] Copy self-audit done; no banned patterns from the register reference
 - [ ] No text overflow at 375px, 768px, 1280px
