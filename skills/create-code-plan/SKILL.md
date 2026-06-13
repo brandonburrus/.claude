@@ -165,6 +165,7 @@ Split a task when any of these holds:
 
 Ordering rules:
 
+- **Make the first slice a tracer bullet.** Order Task 1 as the thinnest end-to-end slice that exercises the whole path (request to response, or UI to data to back), even if it handles one trivial case. Prove the pieces fit together before adding breadth: a thin working slice converts the riskiest unknown, "do these layers actually integrate," into evidence on day one instead of week three, when being wrong is most expensive to unwind. Widen feature by feature after the tracer lands, each later slice shippable on its own.
 - **Slice vertically, not horizontally.** "User can register (schema + endpoint + UI)" beats "all schemas, then all endpoints, then all UI" because each slice delivers working, testable functionality and surfaces integration problems immediately instead of at the end.
 - **Order by dependency, foundations first.** Every task's "Depends on" must reference earlier tasks only.
 - **Put high-risk or unknown-heavy tasks early.** If an approach is going to fail, fail before the cheap tasks are built on top of it.

@@ -64,7 +64,7 @@ Recommend one approach with the single biggest reason it wins. Name the stronges
 
 The workflow above is the whole method. Two solution spaces recur often enough to carry their own divergence generators, weighted criteria, and pitfalls; when the decision is one of them, load the matching reference and use its axes in step 3 and its generators in step 2:
 
-- **Product approaches** (which approach best solves the user problem: feature shape, UX direction, build versus buy versus partner from the user-value angle, what to defer). Read [references/product-solutioning.md](references/product-solutioning.md). Its criteria lead on user value, adoption, differentiation, and reversibility.
+- **Product discovery** (find and validate the product approach: which approach best solves the user problem, and is it proven enough to commit. Feature shape, UX direction, build versus buy versus partner from the user-value angle, what to defer, and the cheapest experiment that tests the riskiest assumption first). Read [references/product-discovery.md](references/product-discovery.md). Its criteria lead on user value, adoption, differentiation, and reversibility.
 - **Technical approaches** (architecture and mechanism: sync versus async, monolith versus service, which pattern, where the work runs). Read [references/technical-solutioning.md](references/technical-solutioning.md). Its criteria lead on complexity, operability, performance, blast radius, and migration cost. Once the approach is fixed and the open question is which named library, framework, or service implements it, that is research-solutioning, not this skill.
 
 Load at most the one that fits; a non-code process or strategy decision uses the core method as written, with axes drawn from the problem.

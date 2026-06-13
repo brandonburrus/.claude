@@ -33,12 +33,13 @@ Copy this checklist and track progress:
 Product Spec Progress:
 - [ ] 1. Context mined; hypothesis and confidence declared
 - [ ] 2. Interrogation complete (all applicable phases)
-- [ ] 3. Intent restated; explicit yes received
-- [ ] 4. Output shape and location confirmed
-- [ ] 5. Spec drafted
-- [ ] 6. Self-review passed
-- [ ] 7. Silent assumptions surfaced (optional)
-- [ ] 8. User approved
+- [ ] 3. Lifecycle journey mapped; win/loss stages located
+- [ ] 4. Intent restated; explicit yes received
+- [ ] 5. Output shape and location confirmed
+- [ ] 6. Spec drafted
+- [ ] 7. Self-review passed
+- [ ] 8. Silent assumptions surfaced (optional)
+- [ ] 9. User approved
 ```
 
 ### 1. Mine context, then declare a hypothesis
@@ -79,7 +80,24 @@ Interrogation rules:
 - **Challenge scope in both directions.** "Is this actually needed for v1?" and "You said this is for power users, but this feature assumes no domain knowledge; which is it?" Surface contradictions the moment they appear.
 - **Track open questions.** Keep a running list; close each before drafting. Items the user explicitly defers go to the spec's Open Questions section with the deferral rationale.
 
-### 3. Restate and get an explicit yes
+### 3. Map the lifecycle journey
+
+The User Journeys from Phase 2 show how a feature works once someone is using it; this step zooms out to where the user is won or lost across the whole relationship. Activation and retention problems do not live inside a feature's happy path, they live in the stages around it: the user who never reaches first value, the one who gets it once and never returns. Map those stages so the spec's features and metrics attach where the lifecycle actually breaks, not only where a feature is convenient to build.
+
+Walk the persona through the lifecycle stages, adapting them to the product (a free tool has no purchase stage; an internal tool has no advocacy stage). For each stage, establish the user's goal, the touchpoints where they meet the product or brand, their emotional state, and the friction or drop-off that loses them there. Interrogate the same way as Phase 2: one stage at a time, your guess attached.
+
+| Stage | The question each stage answers |
+|---|---|
+| Awareness | How do they first learn this exists, and what makes them look closer versus scroll past |
+| Consideration | What do they weigh it against, and what doubt has to be resolved before they try it |
+| Onboarding | What stands between signup and the first real use; where do first-timers stall |
+| First value (activation) | The "aha" moment where the core value lands for the first time; what specifically has to happen for it to land |
+| Habitual use | What pulls them back unprompted; what turns a one-time win into a routine |
+| Advocacy or churn | What makes them recommend it, and the opposite: the moment they quietly stop |
+
+Two outputs from this pass feed the rest of the spec. First, name the activation moment explicitly: the single point where a user crosses from trying to getting value is the spec's most important threshold, and most success metrics should hang off reaching it or returning after it. Second, locate the highest-risk drop-off stages; these are candidate features ("the onboarding loses people at step 3" is a feature brief) and candidate metrics, not afterthoughts. Carry both into the restate.
+
+### 4. Restate and get an explicit yes
 
 When you can predict the user's reaction to the next three questions you would ask, stop interviewing and restate the intent in their own words:
 
@@ -96,25 +114,25 @@ Yes / no / refine?
 
 The gate is an explicit yes. "Sounds good", "sure, let's go", and silence are not yes; follow up with "anything you'd refine?". "Whatever you think is best" means re-asking as a choice between two concrete options. Do not draft until the yes lands.
 
-### 4. Confirm output shape and location
+### 5. Confirm output shape and location
 
 Default output is a single PRD document. When the product has several features that each need their own journey and acceptance-criteria treatment, offer a split: a master PRD plus per-feature files. Confirm the file location with the user before writing (suggest `docs/specs/` if the project has no convention, alongside any tech specs).
 
-### 5. Draft the spec
+### 6. Draft the spec
 
 Use the template below. Omit sections that genuinely do not apply; never write "N/A", and a placeholder means the interrogation missed something, so go back and ask.
 
-### 6. Self-review
+### 7. Self-review
 
 Check the draft against the Completion Criteria and fix gaps before presenting. Verify internal consistency: persona names, journey names, and feature names match across all sections, and every feature traces to a journey.
 
-### 7. Surface the silent assumptions (optional)
+### 8. Surface the silent assumptions (optional)
 
 Self-review checks the spec against itself; this checks the spec against reality. For a spec carrying real cost or uncertainty, run one focused pass before the approval gate: imagine it is six months post-launch and the product failed, then work backward to the 3-5 load-bearing assumptions the spec never states but silently rests on. These are the bets, not the features everyone is already arguing about: "this persona exists in the volume we need", "activation is the constraint, not retention", "users will switch from the tool they have". For each, name the cheapest test that would falsify it before engineering commits (a landing page, five user calls, a query against existing data, a concierge run). List them in the spec's Open Questions section as assumptions-to-test, or close the cheap ones now.
 
 Keep it lightweight: this is a sub-step, not a second review. Specs fail on the unstated bet that turns out wrong, not on the parts under active debate, and the cheapest moment to kill a wrong bet is before the build, not after the launch.
 
-### 8. Present and get approval
+### 9. Present and get approval
 
 Present the spec and wait for explicit approval. The PRD is a living document: when product decisions change during design or implementation, update the spec first. Commit it to version control. Hand off to write-tech-spec for the technical design.
 
@@ -144,7 +162,24 @@ The pain that exists today, who has it, how they cope now, and why that fails.
 ### Out of scope
 - <Excluded thing> and why
 
+## Lifecycle Journey
+The persona's path across the whole relationship; where value lands and where users are lost. Adapt or drop stages that do not apply.
+
+| Stage | Goal | Touchpoints | Emotional state | Friction / drop-off |
+|---|---|---|---|---|
+| Awareness | | | | |
+| Consideration | | | | |
+| Onboarding | | | | |
+| First value (activation) | | | | |
+| Habitual use | | | | |
+| Advocacy / churn | | | | |
+
+- Activation moment: <the single point where value first lands>
+- Highest-risk stages: <where users are most likely lost, and what feature or metric addresses each>
+
 ## User Journeys
+In-product flows for the features below: how a feature behaves once the user is inside it. The Lifecycle Journey above places these within the wider relationship.
+
 ### <Journey name> (<persona>)
 - Trigger:
 - Goal (in their words):
@@ -174,6 +209,7 @@ Only items the user explicitly deferred, each with its deferral rationale.
 - [ ] Hypothesis and confidence were declared before the first question
 - [ ] Restated intent received an explicit yes before drafting
 - [ ] Every persona is named and characterized
+- [ ] The lifecycle journey names the activation moment and the highest-risk drop-off stages
 - [ ] Every journey has a trigger, steps, error states, and a completion signal
 - [ ] Every feature traces back to a journey; no orphan features
 - [ ] Every feature has testable acceptance criteria
