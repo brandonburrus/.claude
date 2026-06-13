@@ -60,6 +60,15 @@ Score each approach against the axes honestly, including the real costs of the o
 
 Recommend one approach with the single biggest reason it wins. Name the strongest rejected alternative and why it lost; if the runner-up has a piece worth grafting in, say so. State the condition that would change the decision, so the reader knows what assumption it rests on. If two approaches are genuinely close and the tie-breaker is empirical (does it perform, does the API actually work that way), recommend a time-boxed spike with vibe-code rather than deliberating further on paper.
 
+## Specializing for the solution space
+
+The workflow above is the whole method. Two solution spaces recur often enough to carry their own divergence generators, weighted criteria, and pitfalls; when the decision is one of them, load the matching reference and use its axes in step 3 and its generators in step 2:
+
+- **Product approaches** (which approach best solves the user problem: feature shape, UX direction, build versus buy versus partner from the user-value angle, what to defer). Read [references/product-solutioning.md](references/product-solutioning.md). Its criteria lead on user value, adoption, differentiation, and reversibility.
+- **Technical approaches** (architecture and mechanism: sync versus async, monolith versus service, which pattern, where the work runs). Read [references/technical-solutioning.md](references/technical-solutioning.md). Its criteria lead on complexity, operability, performance, blast radius, and migration cost. Once the approach is fixed and the open question is which named library, framework, or service implements it, that is research-solutioning, not this skill.
+
+Load at most the one that fits; a non-code process or strategy decision uses the core method as written, with axes drawn from the problem.
+
 ## Anti-patterns
 
 - **Fake divergence.** Three variants of one idea is one option, not three. The test: if swapping any two approaches would not change the trade-off conversation, you have not actually diverged.

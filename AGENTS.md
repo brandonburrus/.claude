@@ -40,7 +40,7 @@ This repository is Brandon's personal Claude Code configuration directory (`~/.c
 ## Key Decisions
 
 - 2026-06-06: The debugging skill is named `fix`. Why: Claude Code's bundled `/debug` skill (session debug logs) collides with the obvious name.
-- 2026-06-06: `design-ui` is build-only; auditing existing UI without changing it is out of scope. Why: user choice.
+- 2026-06-06: `design-ui` is build-only; auditing existing UI without changing it belongs to `audit-ui` (added 2026-06-13), not `design-ui`. Why: user choice to keep building and read-only critique as separate skills.
 - 2026-06-06: `open-pull-request` is frictionless: no approval gate before `gh pr create`, pending work auto-committed. Why: user chose one-command PR creation.
 - 2026-06-06: `triage-backlog` was verified by judged trigger checks only. Why: no live tracker was available; shake it down on first real use.
 - 2026-06-06: `execute-code-plan` is deferred until the agents phase. Why: user wants the skills library finished first.

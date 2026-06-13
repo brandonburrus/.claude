@@ -24,7 +24,7 @@ Copy this checklist and track progress:
 
 ```text
 Prioritize:
-- [ ] 1. Frame the goal
+- [ ] 1. Frame the goal as a measurable objective
 - [ ] 2. Gather the candidates
 - [ ] 3. Pick one scoring lens
 - [ ] 4. Score honestly, with confidence
@@ -33,9 +33,14 @@ Prioritize:
 - [ ] 7. Name what would change the order
 ```
 
-### 1. Frame the goal
+### 1. Frame the goal as a measurable objective
 
-Priorities are meaningless without the objective they serve. Establish what this cycle optimizes for (activation, retention, revenue, risk reduction, a strategic bet) before scoring anything. Pull it from the user; it lives in their head, not the backlog. Without it, every score is arbitrary and the exercise just launders a gut call.
+Priorities are meaningless without the objective they serve, and a vague objective is no better than none: ranking against "grow the business" is unfalsifiable, so any score survives and the cut pile is indefensible. Make the goal checkable before scoring anything.
+
+- **Name the metric the work must move.** Establish a single success metric for the cycle, ideally a north-star metric: one customer-centric measure of the value users get, a leading indicator of the business outcome, not a raw revenue or activity count. Add 2 to 4 input metrics that drive it (the levers a feature can actually pull, like activation rate or repeat usage). Candidates then compete on how much they move these, not on how they feel.
+- **Express the goal as an objective with key results.** State the qualitative objective and the 2 to 3 key results that say what "moved it" means in numbers (a target on the north-star or its inputs). Each candidate then has to ladder to a key result; an item that maps to no key result is either a missing objective or a cut.
+
+Pull the metric and objective from the user; they live in their head, not the backlog. Without them, every score is arbitrary and the exercise just launders a gut call. If the user cannot name a metric, that gap is the finding to surface, not a reason to invent one.
 
 ### 2. Gather the candidates
 
@@ -86,7 +91,7 @@ Then: **Cut for now:** item, reason, one line each. Then: **Re-prioritize if:** 
 
 ## Gotchas
 
-- **No goal means no priority.** Scoring without the objective it serves is noise with a number attached. The goal is the criterion; everything else is input.
+- **No goal means no priority, and a vague goal is no goal.** Scoring without the objective it serves is noise with a number attached, and "grow the business" survives any ranking. The criterion is a success metric and its key results; an item that ladders to none of them is a cut, not a contender.
 - **The loudest voice is not the criterion.** The stakeholder who asks most often, or the HiPPO (highest-paid person's opinion), is one input weighted like any other against the goal, not an override.
 - **Ranking is not sequencing.** A list sorted purely by score ignores dependencies and risk; foundations and scary bets come first regardless of their raw number.
 - **False precision is theater.** Two-decimal RICE on guessed reach and effort projects a rigor the inputs do not have. Round, and carry the confidence instead.

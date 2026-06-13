@@ -77,6 +77,9 @@ Construction ladder, roughly in order of preference:
 | Property or fuzz loop over random inputs | "Sometimes wrong output" with unknown trigger |
 | Bisection harness (boot at state X, check, repeat) | Bug appeared between two known-good states |
 | Differential run (old vs new version, config A vs B) on identical input | Regressions with a working comparison point |
+| Human-in-the-loop script that prompts a person for the one manual action, then captures and asserts on the result | A step genuinely cannot be automated (a physical click, a third-party UI, hardware) |
+
+The last row is a fallback before the give-up-and-ask path below, not above it: when a human must be the actuator, keep them inside a structured loop that still captures output and reruns on demand, rather than dropping to ad-hoc manual testing. A scripted human step is still a rerunnable signal; manual poking is not.
 
 Then iterate on the loop itself: make it faster (cache setup, narrow scope), sharper (assert the specific symptom, not "did not crash"), and deterministic (pin time, seed randomness, isolate the filesystem, freeze the network). A 2-second deterministic loop is a superpower; a 30-second flaky one is barely better than nothing.
 
