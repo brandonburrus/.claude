@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
-"""Claude Code hook: auto-inject AGENTS.md files into context.
+"""Claude Code hook: point Claude at nearby AGENTS.md files.
 
-SessionStart (startup/clear): injects the project root AGENTS.md via stdout.
+SessionStart (startup/clear): points to the project root AGENTS.md via stdout.
 SessionStart (compact): clears this session's seen-state so every AGENTS.md
-re-injects lazily after compaction may have summarized it away.
+re-surfaces lazily after compaction may have summarized it away.
 PostToolUse (Read|Edit|Write|NotebookEdit): walks from the touched file's
-directory up to the project root and injects any AGENTS.md not yet seen this
+directory up to the project root and points to any AGENTS.md not yet seen this
 session via hookSpecificOutput.additionalContext.
+
+It points rather than injects content: Claude reliably reads an AGENTS.md once
+told one is nearby, so inlining the file only duplicated context (and risked
+serving a stale copy). The hook's value is the pointer and the per-session
+dedup, not the bytes.
 
 Convenience hook: fails open (exit 0) on any internal error so a broken hook
 never wedges the session. Stdlib only; this runs on every file-tool call and
@@ -20,9 +25,6 @@ import sys
 import time
 
 STATE_DIR = os.path.expanduser("~/.cache/claude-agents-md")
-# Files over this many bytes inject as a read-this pointer instead of inline
-# content, so one pathological AGENTS.md cannot flood the context window.
-INLINE_CAP_BYTES = 10 * 1024
 # Stale state files are deleted opportunistically at session start; a week is
 # comfortably past any session's lifetime.
 STATE_MAX_AGE_SECONDS = 7 * 24 * 3600
@@ -62,15 +64,11 @@ def save_seen(path, seen):
 
 
 def render(agents_path):
-    size = os.path.getsize(agents_path)
-    if size > INLINE_CAP_BYTES:
-        return (
-            f"AGENTS.md at {agents_path} is {size} bytes, over the inline "
-            "injection cap; read it before working in this directory."
-        )
-    with open(agents_path, encoding="utf-8", errors="replace") as f:
-        content = f.read()
-    return f"Project context from {agents_path}:\n\n{content}"
+    return (
+        f"There is an AGENTS.md at {agents_path} carrying context and "
+        "conventions for that directory. Read it before working there if you "
+        "have not already this session."
+    )
 
 
 def collect_unseen(cwd, file_path, seen):
@@ -146,7 +144,7 @@ def handle_post_tool(event):
     for agents in unseen:
         seen[agents] = os.path.getmtime(agents)
         # The touched file IS this AGENTS.md: Claude just read or wrote its
-        # content, so injecting it back would duplicate context. Mark seen only.
+        # content, so pointing back at it is redundant. Mark seen only.
         if agents == file_path:
             continue
         blocks.append(render(agents))

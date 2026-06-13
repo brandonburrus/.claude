@@ -44,8 +44,10 @@ This repository is Brandon's personal Claude Code configuration directory (`~/.c
 - 2026-06-06: `open-pull-request` is frictionless: no approval gate before `gh pr create`, pending work auto-committed. Why: user chose one-command PR creation.
 - 2026-06-06: `triage-backlog` was verified by judged trigger checks only. Why: no live tracker was available; shake it down on first real use.
 - 2026-06-06: `execute-code-plan` is deferred until the agents phase. Why: user wants the skills library finished first.
-- 2026-06-06: `hooks/inject-agents-md.py` auto-injects AGENTS.md files (root at SessionStart, nested lazily on file touch). Why: Claude Code natively loads only CLAUDE.md.
-- 2026-06-06: Decision records are gated one-liners; work narrative lives in git history. Why: the log had grown to 25KB of changelog, past the hook's 10KB inline injection cap.
+- 2026-06-06: `hooks/inject-agents-md.py` surfaces AGENTS.md files (root at SessionStart, nested lazily on file touch). Why: Claude Code natively loads only CLAUDE.md.
+- 2026-06-11: The AGENTS.md hook points at the file (read-this pointer) rather than injecting its content. Why: Claude reads it anyway once told, so inlining only duplicated context and risked a stale copy.
+- 2026-06-11: `hooks/enforce-verification.py` plus the CLAUDE.md done-gate enforce verify-before-done; the Stop hook blocks ending a turn that changed source code without running any check. Why: the verification agents were opt-in, leaving the everyday main-loop edit path ungated.
+- 2026-06-06: Decision records are gated one-liners; work narrative lives in git history. Why: the log had grown to 25KB of changelog, bloating the always-loaded context.
 - 2026-06-06: Threat modeling lives inside `harden-security` as a proactive front-section, not a separate `model-threats` skill. Why: same attacker-mindset domain across design and build; avoids a near-duplicate security skill.
 - 2026-06-07: `README.md` is a flow overview, not a per-item inventory with maintained counts. Why: user prefers readability over enumeration; the directories are the source of truth.
 - 2026-06-07: `evaluate-software-options` is a distinct skill from `research-solutioning`: buyer-side discovery and ranking of commercial/OSS application products (with an interactive requirements interview) versus engineer-side selection of technical building blocks. Why: different audience, lens, and output, so do not merge or duplicate.
