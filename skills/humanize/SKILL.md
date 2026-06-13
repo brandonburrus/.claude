@@ -23,15 +23,37 @@ Edit text to remove the specific, documented tells of AI-generated writing while
 - **No emojis, no curly quotes, no mechanical boldface** in the final rewrite.
 - **Match the register.** For encyclopedic, technical, legal, or reference text, neutral and plain is the correct human voice; injecting opinions or first person there makes it worse, not warmer.
 
+## Core rules
+
+Apply these principles first, then run the catalog to catch the specific tells they miss. Principles fix the prose; the catalog names the residue.
+
+- **Cut throat-clearing and filler.** Openers that announce the point ("here's the thing", "it turns out", "the real question is") and phrases that add no meaning ("it is worth noting", "at the end of the day") delay the content; the text should start at its first real sentence. Why: the warm-up is where the reader's attention leaks, and its evenness is itself a tell.
+- **Break binary contrasts.** "Not X, it's Y", "the answer isn't X, it's Y", "X isn't the problem, Y is" are telegraphed reversals; state Y directly and drop the negation. Why: the setup-reveal cadence is one of the most mechanical AI rhythms, and stating Y is shorter and truer.
+- **Prefer active voice with a named actor.** Every claim should have a subject doing something; replace passive constructions and hidden actors with the person or thing responsible. Why: passive voice drains energy and lets the sentence dodge who actually acted.
+- **Choose specifics over vague declaratives.** "The implications are significant", "the reasons are structural" announce importance without naming it; replace each with the concrete implication or reason, or cut it. Why: humans hoard particulars, models round them off, so a named specific reads human and a vague abstraction reads generated.
+- **Put the narrator in the room.** "Nobody designed this", "people tend to" float above the scene; "you" and a concrete situation place the reader inside it. Why: the distant-lecturer voice is generic by construction, and proximity is what makes prose feel written by someone who was there.
+
+## Quick checks
+
+Run this scan before the full rewrite; it surfaces the most common misses fast, then the catalog pass catches the rest.
+
+- Does the text open by announcing itself ("here's what", "let's dive in") instead of starting with content?
+- Any "not X, it's Y" or "the question isn't X, it's Y" contrast that could just state Y?
+- Any sentence whose actor is hidden by passive voice or handed to an inanimate thing ("the data tells us", "the decision emerges")?
+- Any vague declarative of importance ("the stakes are high", "this matters") with no specific named behind it?
+- Any business jargon ("navigate", "deep dive", "circle back", "lean into") standing in for a plain verb?
+- Any em dash, en dash, emoji, or curly quote (the hard-rule scan, also run again at the end)?
+
 ## Workflow
 
 1. **Calibrate voice.** If the user provides a writing sample (inline or a file path), read it first and note sentence-length habits, word register, punctuation tics, and how transitions are handled; the rewrite should replace AI patterns with that writer's patterns, not generic polish. Without a sample, default to a natural, varied voice fitting the content's register.
-2. **Load the catalog.** Read [references/ai-patterns.md](references/ai-patterns.md) and check the text against every pattern in it. The catalog is the skill; working from memory of it produces partial passes.
-3. **Judge before flagging.** Apply the cluster rule below; confirm each flagged instance is a real tell and not legitimate prose.
-4. **Draft rewrite.** Fix every confirmed instance. Read it aloud mentally: varied sentence length, simple copulas (is, are, has), specific over abstract.
-5. **Self-audit.** Ask: what makes this draft still obviously AI-generated? List the remaining tells honestly; an even, mid-length cadence and too-tidy contrasts survive most first drafts.
-6. **Final rewrite.** Address the audit findings, then run the hard-rule scans (dashes, emojis, curly quotes).
-7. **Deliver** the final rewrite plus a short summary of the pattern groups removed. Show the intermediate draft and audit only when the user asks to see the work.
+2. **Quick-check pre-pass.** Run the Quick checks scan above against the text; apply the Core rules to what it surfaces. This catches the common misses before the slower catalog pass.
+3. **Load the catalog.** Read [references/ai-patterns.md](references/ai-patterns.md) and check the text against every pattern in it. The catalog is the skill; working from memory of it produces partial passes.
+4. **Judge before flagging.** Apply the cluster rule below; confirm each flagged instance is a real tell and not legitimate prose.
+5. **Draft rewrite.** Fix every confirmed instance. Read it aloud mentally: varied sentence length, simple copulas (is, are, has), specific over abstract.
+6. **Self-audit.** Ask: what makes this draft still obviously AI-generated? List the remaining tells honestly; an even, mid-length cadence and too-tidy contrasts survive most first drafts.
+7. **Final rewrite.** Address the audit findings, then run the hard-rule scans (dashes, emojis, curly quotes).
+8. **Deliver** the final rewrite plus a short summary of the pattern groups removed. Show the intermediate draft and audit only when the user asks to see the work.
 
 ## Detection judgment
 

@@ -25,8 +25,9 @@ Refactor Progress:
 - [ ] 2. Code understood (Chesterton's Fence)
 - [ ] 3. Test Gate passed (green run recorded)
 - [ ] 4. Opportunities identified
-- [ ] 5. Changes applied one at a time, tests between
-- [ ] 6. Whole-result verification
+- [ ] 5. Findings recorded (tagged, one line each)
+- [ ] 6. Changes applied one at a time, tests between
+- [ ] 7. Whole-result verification
 ```
 
 ### 1. Pin the scope
@@ -61,11 +62,36 @@ Concrete signals, not vague smells:
 | Redundancy | Dead code, commented-out blocks | Remove after confirming truly dead |
 | Redundancy | Single-use wrapper adding nothing | Inline it |
 
-### 5. One change at a time
+#### First rung that holds
+
+Once an opportunity is spotted, the table says what to change but not how far to go. Climb this ladder and stop at the first rung that works; reaching past it adds the complexity you came to remove.
+
+1. **Does this need to exist at all?** Code with no current caller or a speculative-only one is deletable (YAGNI).
+2. **Standard library does it?** Replace the hand-rolled version with the stdlib call.
+3. **Native platform feature covers it?** Prefer it over custom code (a DB constraint over app-level checks, CSS over JS).
+4. **An already-installed dependency solves it?** Use it before writing more code; never add a new dependency for what a few lines already handle.
+5. **Can it be one clear line?** One line, as long as it still reads in a single pass.
+6. **Only then**: the minimum custom code that works.
+
+Two rungs both hold? Take the higher one and move on; this is a reflex for scoping a simplification, not a research project. The lower rungs stay subject to the same behavior-preservation gate as everything else.
+
+### 5. Record findings (tagged, one line each)
+
+Before applying anything, list each simplification as a single scannable line so the scope is reviewable at a glance: `<location>: <tag> <what to cut>. <what replaces it>.`
+
+- `delete:` dead code, unused flexibility, speculative feature. Replacement: nothing.
+- `stdlib:` hand-rolled logic the standard library ships. Name the function.
+- `native:` dependency or code doing what the platform already does. Name the feature.
+- `yagni:` abstraction with one implementation, config nobody sets, layer with one caller.
+- `shrink:` same behavior, fewer lines. Show the shorter form.
+
+The tags map onto the ladder rungs, so the finding already says which rung it stopped at. Example: `auth.ts:L12-38: stdlib: 27-line email validator. Regex check is one line; real validation is the confirmation mail.`
+
+### 6. One change at a time
 
 For each simplification: make the change, run the tests, then commit or continue; on red, revert and reconsider rather than patching forward. Never batch untested simplifications, because a red run after five changes tells you nothing about which one broke. Keep refactor commits separate from feature and fix commits. If the total would touch more than ~500 lines, reach for automation (codemods, AST transforms) instead of hand edits.
 
-### 6. Verify the whole
+### 7. Verify the whole
 
 After the pass: is the result genuinely easier to understand, does it match the project's conventions rather than your preferences, is the diff clean of unrelated changes, and did every test pass without modification? If the "simplified" version reads worse, revert it; not every attempt succeeds, and reverting is a valid outcome.
 

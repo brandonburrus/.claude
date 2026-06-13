@@ -27,7 +27,7 @@ Copy this checklist and track progress:
 ```text
 Market research:
 - [ ] 1. Frame the idea and the target segment
-- [ ] 2. Size the market bottoms-up
+- [ ] 2. Size the market (TAM, SAM, SOM)
 - [ ] 3. Map competitors and the do-nothing alternative
 - [ ] 4. Read the demand signals
 - [ ] 5. Find the wedge
@@ -38,9 +38,17 @@ Market research:
 
 State the product, the job it does, and a named ideal-customer hypothesis. A market assessment with no target segment evaluates "everyone", which is no one, and every later step (sizing, competitors, demand) becomes ungroundable. Narrow to a beachhead segment to assess; the whole TAM comes later.
 
-### 2. Size the market bottoms-up
+### 2. Size the market: TAM, SAM, SOM
 
-Estimate TAM, SAM, and SOM with stated assumptions, and lead with a bottoms-up build (number of target customers times realistic annual spend), then cross-check against a top-down figure. Top-down alone ("1% of a $50B market") is the vanity trap that justifies anything. Carry confidence; a sized market on guessed inputs is a guess with a dollar sign. Use the `estimate-at-scale` altitude for the arithmetic.
+Size three nested figures with stated assumptions, and compute TAM two independent ways so they can check each other:
+
+- **TAM (top-down):** start from a published industry figure and narrow to the relevant slice.
+- **TAM (bottom-up):** number of target customers times realistic annual spend, built from the ground up.
+- **Reconcile the two.** They will not match; the gap is the point. A disagreement of more than roughly an order of magnitude means a load-bearing assumption is wrong (customer count, price, or the slice you carved), so hunt it down before trusting either number. A single method is easy to fool yourself with; two that disagree expose the bad assumption.
+- **SAM:** the serviceable slice of TAM you can actually reach given product, channel, geography, and pricing tier.
+- **SOM:** what is realistically obtainable in 1-3 years given competition, traction, and go-to-market capacity.
+
+Lead with the bottom-up build; top-down alone ("1% of a $50B market") is the vanity trap that justifies anything. Carry confidence; a sized market on guessed inputs is a guess with a dollar sign. Use the `estimate-at-scale` altitude for the arithmetic.
 
 ### 3. Map competitors and the do-nothing alternative
 

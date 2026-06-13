@@ -9,6 +9,7 @@ Check the text against every pattern below. Grounded in Wikipedia's "Signs of AI
 - Style patterns (14-19)
 - Communication patterns (20-22)
 - Filler, hedging, and framing (23-30)
+- Vocabulary and false agency (31-32)
 
 ## Content patterns
 
@@ -224,3 +225,34 @@ Documentation or comments narrating a change ("This function was added to replac
 
 > Before: This function was added to replace the previous approach of iterating through all items.
 > After: This function uses a hash map for O(1) lookups, avoiding the O(n squared) cost of naive iteration.
+
+## Vocabulary and false agency
+
+### 31. Business jargon verbs
+
+Watch for the consultant register standing in for a plain verb. Replace with the plain word; the jargon adds register, not meaning.
+
+| Avoid | Use instead |
+|---|---|
+| navigate (a challenge) | handle, address |
+| unpack (an analysis) | explain, examine |
+| lean into | accept, commit to |
+| deep dive | analysis, examination |
+| double down | commit, increase |
+| circle back | return to, revisit |
+| moving forward | next, from now on |
+| take a step back | reconsider |
+| on the same page | aligned, agreed |
+| game-changer | significant, important |
+
+> Before: Moving forward, we need to lean into the discomfort and navigate these challenges as a team.
+> After: Next, the team needs to accept the discomfort and handle the funding shortfall.
+
+### 32. False agency verbs
+
+Watch for inanimate things performing human actions: the decision emerges, the data tells us, the market rewards, the culture shifts, a complaint becomes a fix, the conversation moves toward.
+
+This is distinct from copula avoidance (pattern 8, where the verb dresses up a plain "is") and passive voice (pattern 13, where the actor is hidden): here an abstraction is handed a verb only a person can do, which lets the sentence skip naming who acted. Fix: name the human; if no specific person fits, use "you" to put the reader in the seat.
+
+> Before: Over time the decision emerges, and the data tells us the market rewards speed.
+> After: After a week the team decided, having read in the usage logs that buyers paid more for the faster tier.

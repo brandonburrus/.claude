@@ -56,7 +56,20 @@ For each claim, answer explicitly:
 - **What does it silently change?** Performance, error semantics, observability, the contract other callers depend on, on-disk or on-wire format.
 - **Do the tests exercise the traced path, or pass while skipping it?** Mocks that hide the bug, assertions on intermediate state, happy-path only.
 
-### 4. Report
+### 4. Enumerate: mechanically walk every path
+
+Steps 1 through 3 are attitude-driven: they question intent and motive, then chase down the specific inputs that would break a *claimed* behavior. This pass is method-driven and runs independent of any claim. Drop the adversary's voice and become a pure path tracer: do not judge whether the code is good or right, only list what it leaves unhandled.
+
+Walk every branch and boundary in scope mechanically, not by intuition, and derive the edge classes from the artifact itself rather than a fixed list:
+
+- **Control flow**: every conditional (the missing `else` / default), every loop bound (off-by-one, empty collection, single element), every early return, every `catch` and the error it does not catch.
+- **Boundary values**: empty, null / undefined, zero, negative, one, the maximum, just over the maximum, overflow, the unicode or whitespace input.
+- **State and ordering**: the uninitialized state, the partial-write state, the concurrent caller, the retry that runs twice, the out-of-order arrival.
+- **Exit and failure**: every path that can throw, time out, or return early, and what is left half-done when it does.
+
+For each path, decide one thing only: is it handled, explicitly, in scope? Report the unhandled ones with `file:line` and the trigger condition; discard the handled ones silently. No editorializing, no restating handled paths to show you looked. This pass is exhaustive where step 3 is targeted, and it catches the opposite defect: step 1's simpler-alternative question finds the wrong thing built, this pass finds the un-handled case in the right thing. Run both; neither subsumes the other.
+
+### 5. Report
 
 One tight section per finding, ordered by severity (blocker, then major, then nit):
 
@@ -80,5 +93,6 @@ Close with a one-line verdict: ship / fix-then-ship / rework / reject, and the s
 
 - **The simpler-alternative pass is the value.** Jumping straight to line-level correctness turns scrutinize into a slower review-pull-request. The question "should this exist" is the one no other skill asks.
 - **Diff-local reading misses the seam bugs.** The unchanged code on either side of the change is in scope, because that is where the new behavior actually lands.
+- **Attitude and enumeration catch different defects.** The adversarial passes find the wrong thing built; the path-enumeration pass finds the un-handled case in an otherwise sound change. A confident reviewer running on intuition skips the boring branch that holds the bug, which is exactly why step 4 is mechanical rather than adversarial.
 - **Confidence is not correctness.** The artifact reads as right because its author was sure and you have absorbed their context. The adversarial stance exists to counter exactly that pull.
 - **Social pressure manufactures rubber-stamps.** A polished artifact from a trusted author invites "looks good". Trace it anyway; the stamp is not a finding.

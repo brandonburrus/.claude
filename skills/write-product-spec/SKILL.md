@@ -37,7 +37,8 @@ Product Spec Progress:
 - [ ] 4. Output shape and location confirmed
 - [ ] 5. Spec drafted
 - [ ] 6. Self-review passed
-- [ ] 7. User approved
+- [ ] 7. Silent assumptions surfaced (optional)
+- [ ] 8. User approved
 ```
 
 ### 1. Mine context, then declare a hypothesis
@@ -107,7 +108,13 @@ Use the template below. Omit sections that genuinely do not apply; never write "
 
 Check the draft against the Completion Criteria and fix gaps before presenting. Verify internal consistency: persona names, journey names, and feature names match across all sections, and every feature traces to a journey.
 
-### 7. Present and get approval
+### 7. Surface the silent assumptions (optional)
+
+Self-review checks the spec against itself; this checks the spec against reality. For a spec carrying real cost or uncertainty, run one focused pass before the approval gate: imagine it is six months post-launch and the product failed, then work backward to the 3-5 load-bearing assumptions the spec never states but silently rests on. These are the bets, not the features everyone is already arguing about: "this persona exists in the volume we need", "activation is the constraint, not retention", "users will switch from the tool they have". For each, name the cheapest test that would falsify it before engineering commits (a landing page, five user calls, a query against existing data, a concierge run). List them in the spec's Open Questions section as assumptions-to-test, or close the cheap ones now.
+
+Keep it lightweight: this is a sub-step, not a second review. Specs fail on the unstated bet that turns out wrong, not on the parts under active debate, and the cheapest moment to kill a wrong bet is before the build, not after the launch.
+
+### 8. Present and get approval
 
 Present the spec and wait for explicit approval. The PRD is a living document: when product decisions change during design or implementation, update the spec first. Commit it to version control. Hand off to write-tech-spec for the technical design.
 

@@ -28,6 +28,24 @@ Symptom patches written before understanding are how one bug becomes two. **Viol
 
 **Stop the line.** When something unexpected breaks mid-task, stop feature work and fix it before continuing. Errors compound: a wrong result in step 3 silently corrupts steps 4 through 10, and pushing past a red test normalizes a broken baseline.
 
+## Triage Gate
+
+Run this before the full Workflow on every failure. It exists so a one-line typo does not get the heavy method swung at it, and so a real bug never gets a guess swung at it instead of the method. It is a router, not a shortcut: most failures route to the full Workflow.
+
+1. **STOP.** Do not re-run the same command, retry, bump a timeout, or edit anything yet. Blind retries burn the signal and normalize the failure.
+2. **Observe.** Read the actual error, stack trace, or wrong output in full. The text usually names the answer; skimming it is the most common wasted hour.
+3. **Hypothesize.** State 2 to 3 candidate causes. If you cannot, you do not understand the failure: go to the full Workflow.
+
+Then route. Take the fast path (apply the minimal fix directly, still with a regression test per step 5) ONLY when every condition holds:
+
+- The failure reproduces deterministically and you have seen it with your own eyes this session
+- One observe-hypothesize cycle fully explains it, and the explanation accounts for the entire symptom, not most of it
+- The fix is mechanical and self-evident (a typo, a wrong import path, a swapped argument, an off-by-one you can point to), not a guess you want to try
+- It touches no state, concurrency, persistence, or data correctness
+- It is local: one obvious site, no tracing a bad value backward through layers
+
+Otherwise escalate to the full Workflow below. Escalate, specifically, on anything that reproduces inconsistently, touches state, concurrency, or data, is not fully understood after one observe-hypothesize cycle, or where the "obvious" fix is a guess rather than a thing you can point at. When in doubt, escalate; the cost of routing a typo through the full method is a few minutes, the cost of routing a real bug through the fast path is a symptom patch that spawns a second bug.
+
 ## Workflow
 
 Copy this checklist and track progress:

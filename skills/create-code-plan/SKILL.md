@@ -203,6 +203,26 @@ A placeholder is a signal you lack information. Ask the user instead of writing 
 **Risks**: only real risks specific to this change, with a mitigation that names an action, not "be careful".
 **Open Questions**: questions blocking implementation belong here only if the user deferred them; otherwise resolve them in step 3.
 
+## Replanning Mid-Flight
+
+Requirements move while a build is in progress: a constraint surfaces, an assumption proves false, a stakeholder changes the target. A plan that cannot absorb that change gets abandoned wholesale or silently drifts from what the code now needs to do. Neither is acceptable; replan deliberately instead.
+
+When a change lands mid-build, run a change-impact assessment before touching the plan. Identify what the change disturbs:
+
+- **Plan items**: which tasks, File Summary entries, and Approach decisions no longer hold.
+- **Assumptions**: which recorded decisions or Open Questions the change invalidates.
+- **Completed work**: which finished tasks the change contradicts, and whether their output must be reverted, reworked, or kept.
+
+Then classify the scope and act accordingly:
+
+| Scope | Trigger | Action |
+| ----- | ------- | ------ |
+| Minor | One task's details shift; Approach and dependencies hold | Adjust the affected task in place, note the change in its row, continue. |
+| Moderate | A slice of related tasks is affected; the rest of the plan stands | Replan only the affected slice (re-run steps 4-6 for those tasks), preserve unaffected tasks and their order. |
+| Major | The Approach, data model, or task ordering no longer holds | Stop. Escalate to the user with the impact assessment and replan from step 1; do not patch a plan whose foundation moved. |
+
+Record the assessment and the chosen scope in the plan so the divergence is visible and approved, never silent. When the scope is unclear between two levels, treat it as the higher one; under-scoping a replan reintroduces the silent-drift failure this guards against.
+
 ## Guardrails
 
 - Every task must trace directly to the user's request. Tasks adding unrequested flexibility, configurability, or future-proofing are scope creep in plan form; cut them, or surface them as explicit options for the user to accept.

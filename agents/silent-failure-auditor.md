@@ -29,6 +29,15 @@ The delegation message names the target: a diff range, a PR number, file paths, 
 - **Log-and-continue on a critical path.** Caught, logged, then execution proceeds as though it succeeded; or logged at the wrong severity (a data-loss path at `debug`) so the signal never reaches anyone.
 - **Missing handling where failure is expected.** No error/timeout handling around a network, file, IPC, or DB call; no rollback around transactional work; an unawaited promise or unchecked error return that discards a failure entirely.
 
+## Judging a handler
+
+A handler that is not an obvious empty catch still fails along one of four axes; check each against what sound handling looks like, and let the gap set severity.
+
+- **Logging.** Sound: the failure is recorded at a severity that reaches someone, with the context (operation, ids, state) to debug it later. Failed: silent, logged below the threshold anyone reads, or a bare message that drops the cause and the failing input.
+- **Caller/user feedback.** Sound: the failure propagates so the caller can react, or a user-facing path surfaces an actionable signal. Failed: the failure is converted to a success-shaped value and no one downstream can tell it happened.
+- **Catch specificity.** Sound: catches the error it can actually handle. Failed: a broad catch swallows unrelated failures (a bug, a cancellation, an OOM) along with the expected one.
+- **Fallback.** Sound: the degraded path is intentional, recorded, and cannot pass corrupt or partial data off as good. Failed: a default-on-error masks a real outage or feeds a plausible-but-wrong value downstream.
+
 ## The bar (this is what keeps the report trustworthy)
 
 A finding is real only when you can name the concrete bad outcome it produces: which failure gets hidden, and what wrong behavior or mystery symptom results downstream. "This catch is broad" is not a finding; "this catch swallows the DB write failure and the caller treats the record as saved, so the user's edit is silently lost" is.

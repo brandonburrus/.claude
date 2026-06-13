@@ -40,6 +40,21 @@ CONFIDENCE: ~35% - missing: <what must still surface>
 - **The floor rule.** Several rounds without confidence visibly rising means you are asking the wrong questions, and that is information about the ask. Stop and say: "I've asked N questions and still can't predict your answers; something foundational is missing. Want to step back?"
 - **Gate on an explicit yes.** "Sounds good", "sure, let's go", and silence are not yes; follow with "anything you'd refine?". "Whatever you think is best" is delegation, not decision; re-ask as a choice between two concrete options.
 
+## Elicitation Methods (pick one to match the ambiguity)
+
+Different ambiguities yield to different techniques; a single monolithic interview blunts on the ones that need a sharper instrument. Read the situation, pick the method that fits, then return to the one-question-at-a-time mechanics above. These compose: a stuck Socratic line often hands off to inversion or first-principles.
+
+| Method | Pick this when |
+|---|---|
+| Socratic questioning | The user holds the answer but has not examined it; questions surface it faster than you guessing |
+| First-principles decomposition | The ask is tangled in inherited assumptions ("we always do X"); strip to fundamentals and rebuild |
+| Inversion | Success is fuzzy but failure is vivid; ask what would guarantee the wrong outcome, then avoid it |
+| Red-team / devil's advocate | The user is over-committed to one answer; argue the opposing case to test whether it holds |
+| Pre-mortem | A plan feels settled and risks are unspoken; imagine it has already failed and trace the causes |
+| Constraint removal | A stated constraint may be artificial; ask "what if X weren't a limit?" to find the real boundary |
+| Analogy / expert-lens | The user lacks vocabulary for the domain; map to a domain they know, or ask what an expert would find obvious |
+| Stakeholder round-table | Competing interests are unnamed; voice each affected party in turn to reveal whose needs are being overlooked |
+
 ## Mode: Interview
 
 For underspecified requests. Stop condition: you can predict the user's reaction to the next three questions you would ask. That is a checkable test, not a vibe.
