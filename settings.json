@@ -80,6 +80,16 @@
             "timeout": 5
           }
         ]
+      },
+      {
+        "matcher": "AskUserQuestion",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/hooks/auto-resolve-questions.py",
+            "timeout": 5
+          }
+        ]
       }
     ],
     "SessionStart": [
@@ -122,6 +132,16 @@
             "timeout": 15
           }
         ]
+      },
+      {
+        "matcher": "Read|Bash|Grep|Glob|WebFetch|Agent|Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/hooks/warn-context-budget.py",
+            "timeout": 5
+          }
+        ]
       }
     ],
     "Stop": [
@@ -157,7 +177,7 @@
   "channelsEnabled": false,
   "prefersReducedMotion": false,
   "showThinkingSummaries": true,
-  "theme": "custom:neon-chalk",
+  "theme": "dark",
   "editorMode": "vim",
   "preferredNotifChannel": "ghostty",
   "autoCompactEnabled": false,

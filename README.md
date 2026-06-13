@@ -32,7 +32,7 @@ A planner drafts the plan, a reviewer vets it, an implementer builds each task t
 
 ## The enforcement layer
 
-Hooks are the rules that cannot be talked out of: they fire deterministically on harness events, wired in `settings.json`. They surface project `AGENTS.md` context Claude Code would otherwise miss, gate verify-before-done (a turn that changes code without running a check is blocked at stop), block secrets and hook-bypass flags, scan ingested content for prompt injection, and stop commands that hang the agent or burn API quota.
+Hooks are the rules that cannot be talked out of: they fire deterministically on harness events, wired in `settings.json`. They surface project `AGENTS.md` context Claude Code would otherwise miss, gate verify-before-done (a turn that changes code without running a check is blocked at stop), block secrets and hook-bypass flags, scan ingested content for prompt injection, stop commands that hang the agent or burn API quota, and warn before the context window runs out.
 
 ## Where the rules live
 
