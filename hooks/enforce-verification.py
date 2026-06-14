@@ -60,7 +60,10 @@ CODE_EXTENSIONS = {
 # not have been) is cheap, while a false "unverified" (blocking a turn where
 # checks did run) is the annoying case that erodes trust in the gate. The
 # boundary anchor keeps the token out of quoted text like a commit message.
-_BOUNDARY = r"(?:^|[;&|(]|&&|\|\|)\s*"
+# A newline counts as a boundary too: verification commands routinely sit on
+# their own line in a multi-line Bash script, and without this the gate misses
+# them and falsely reports the turn as unverified.
+_BOUNDARY = r"(?:^|[;&|(\n\r]|&&|\|\|)\s*"
 _VERIFY_TOKENS = [
     r"pytest",
     r"tox\b",
@@ -248,14 +251,69 @@ def handle_bash(event):
         save_state(spath, state)
 
 
+def prune_resolved(pending, cwd):
+    """Keep only files that still differ from git HEAD in the working tree.
+
+    A pending file that is clean in git was committed or reverted since it was
+    edited, so there is no unverified working-tree change left to gate. Pruning
+    these also stops the gate re-nagging on later no-op turns after the work was
+    committed (the failure the user hit). Untracked-but-present new files show up
+    in `git status --porcelain` and so correctly stay pending. Fails safe: if git
+    status cannot be determined (not a repo, git missing, timeout), every file is
+    kept, preserving the pre-existing behavior in non-git projects.
+    """
+    if not cwd:
+        return pending
+    realcwd = os.path.realpath(cwd)
+    try:
+        top = subprocess.run(
+            ["git", "-C", realcwd, "rev-parse", "--show-toplevel"],
+            capture_output=True, text=True, timeout=5,
+        )
+        if top.returncode != 0:
+            return pending
+        repo_root = top.stdout.strip()
+        status = subprocess.run(
+            ["git", "-C", realcwd, "status", "--porcelain"],
+            capture_output=True, text=True, timeout=5,
+        )
+        if status.returncode != 0:
+            return pending
+    except (OSError, subprocess.TimeoutExpired):
+        return pending
+    dirty = set()
+    for line in status.stdout.splitlines():
+        if len(line) < 4:
+            continue
+        path = line[3:]
+        if " -> " in path:  # rename: the destination is the live file
+            path = path.split(" -> ", 1)[1]
+        path = path.strip().strip('"')
+        dirty.add(os.path.normpath(os.path.join(repo_root, path)))
+    kept = []
+    for f in pending:
+        absf = os.path.normpath(f if os.path.isabs(f) else os.path.join(realcwd, f))
+        if absf in dirty:
+            kept.append(f)
+    return kept
+
+
 def handle_stop(event):
     # stop_hook_active is set once a Stop hook has already blocked this turn;
     # returning here caps the gate at one block so it nudges without wedging.
     if event.get("stop_hook_active"):
         return
     cleanup_stale_state()
-    state = load_state(state_path(event))
+    spath = state_path(event)
+    state = load_state(spath)
     pending = state.get("pending") or []
+    if not pending:
+        return
+    resolved = prune_resolved(pending, event.get("cwd"))
+    if resolved != pending:
+        state["pending"] = resolved
+        save_state(spath, state)
+        pending = resolved
     if not pending:
         return
     listed = pending[:MAX_PENDING_LISTED]
