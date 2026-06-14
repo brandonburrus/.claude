@@ -82,6 +82,7 @@ Touch only what you must; clean up only your own mess. The test: every changed l
 - Code should always be written with the expectation that it will be tested in an automated fashion. Prefer clear lines of separation between code dependencies to make testing easier.
 - All code should have at bare minimum white box unit tests covering its core logic. Business logic should have 100% code coverage.
 - Module-level code should have black box integration tests that test the module as a whole with its interactions with other modules mocked out.
+- Cover every behavior with at least three tests: the golden path (valid input under expected conditions, proving it works at all), the error case (invalid input or a failure condition handled as designed, rejected/returned/thrown/degraded rather than swallowed or crashed, proving it fails safely), and the edge case (the boundary most likely to break: empty, null, zero, the maximum, the off-by-one, the concurrent call, the duplicate). This is a floor, not a ceiling: logic with several branches or failure modes needs an error and an edge test per branch. Skipping a category is a decision to state ("no error case because the type system makes invalid input unrepresentable"), never a silent default of testing only the golden path.
 
 # Git Conventions
 
