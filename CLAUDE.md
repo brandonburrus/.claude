@@ -85,6 +85,7 @@ Touch only what you must; clean up only your own mess. The test: every changed l
 
 Apply these rules to every git operation:
 
+- Commit automatically when you finish a coherent unit of work, without being asked. A unit is a self-contained change that leaves the tree in a working, verified state (a feature, a fix, a refactor, a doc update), so progress stays recoverable and the history reads as one logical step per commit. Make one focused commit per unit with a conventional-commit message, grouped by topic; never bundle unrelated changes into a single commit, and when the working tree already holds several unrelated units, stage them into separate topical commits by path. Commit only, never push, unless the user asks: a push is outward-facing and remains the user's call. Do not commit work that is unverified, mid-iteration, experimental, or that the user is still actively shaping, and never commit secrets.
 - When you don't know the codebase git commit conventions, review the most recent 5 commits and follow the established patterns. If there is no established pattern or the existing pattern is erratic, follow conventional commits.
 - Prefer short and direct commit messages that convey the "what" of what is being committed based on the code itself. Avoid commits like "addressing PR comments" or generic "refactored code" commit messages.
 

@@ -35,7 +35,7 @@ This repository is Brandon's personal Claude Code configuration directory (`~/.c
 - Always-on rule sets go in `CLAUDE.md`, never the skills library; a skill marked "ALWAYS use" is a routing bet CLAUDE.md does not have to make.
 - Skills that teach exact harness or protocol formats (agent frontmatter, hook events, MCP) ground them in a fresh official-docs digest captured under `references/`; these formats are hallucination-prone.
 - Agents in `agents/` are thin role wrappers: they preload library skills via the `skills` frontmatter field, and the body carries only identity, tool limits, autonomous overrides (subagents cannot ask the user or act outward), and the output contract.
-- Git commits follow conventional commit style (`feat(skills): ...`, `chore: ...`); commit only when asked.
+- Git commits follow conventional commit style (`feat(skills): ...`, `chore: ...`); commit automatically on completing a unit of work (per the CLAUDE.md git rule), and do not push unless asked.
 
 ## Key Decisions
 
