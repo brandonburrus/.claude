@@ -4,8 +4,10 @@ description: Use this skill when planning any non-trivial code implementation, i
   new features, bug fixes, refactors, or architectural changes. Use when the user says
   "plan this", "let's plan before coding", "what's the approach", "how should we
   approach X", or describes a multi-step code change without explicitly asking for
-  a plan. Do not use for trivial single-line changes or tasks already fully specified
-  with no design decisions remaining.
+  a plan. Do not use for trivial single-line changes, for tasks already fully specified
+  with no design decisions remaining, or for designing a new system or significant
+  architecture from scratch (use write-tech-spec; this skill then plans the
+  implementation of that design).
 ---
 
 ## Purpose
