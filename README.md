@@ -14,6 +14,8 @@ flowchart TD
   V -. rework .-> B
 ```
 
+The `orchestrate-delivery` skill walks this whole arc end to end for a substantial effort, invoking the right skill at each stage and stopping at the evidence gate between them; the individual skills still auto-load on their own for smaller work, and `analyze-product-metrics` closes the loop by measuring a launch against the spec's success metrics so the next cycle starts from evidence.
+
 What the boxes do not show: specs and designs interrogate before they draft, built work is validated by actually running it (a real browser, real requests) because a green suite is necessary but never sufficient, and releases get a rollback plan but never auto-deploy to production. Around the arc sit data, document, and writing skills, plus a meta layer that maintains the library itself.
 
 ## The agent pipeline
