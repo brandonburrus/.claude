@@ -7,7 +7,9 @@ description: >-
   the parameters first, then shows the assumptions and arithmetic behind the
   number. Use when the user says "estimate the cost", "how much would this cost
   at scale", "ballpark this", "napkin math", "rough numbers for", "what's the
-  monthly cost if", "how much storage for X users", or "size this". Do not use
+  monthly cost if", "how much storage for X users", "size this", "how many servers or connections do
+  I need", "size the thread or connection pool", "what QPS can this handle", or
+  "capacity planning". Do not use
   for computing over a real dataset you already have (use analyze-data), for
   designing the system being estimated (use write-tech-spec), or for diagnosing
   why something is slow (use optimize-performance or fix).
@@ -49,6 +51,17 @@ Name the one or two terms that drive the number; that is where accuracy matters 
 
 Lead with the headline figure, rounded. Then the assumptions table, then the step-by-step breakdown, then a low / expected / high band and the one or two assumptions the answer is most sensitive to. If the user will re-run this with different inputs, offer to save it as a small reusable model (a table or a short script).
 
+## Patterns beyond the arithmetic
+
+A flat multiply (volume x unit price) is the easy half, and the half a strong estimator already does by reflex. Capacity, scaling, peak, and availability questions need techniques a quick mental pass skips; reach for these whenever the question is "how many" or "how big", not just "how much". Formulas and detail are in `references/estimation-patterns.md`.
+
+- **Size capacity with Little's Law.** Concurrent in-flight work = throughput x latency. This is how a request rate plus a latency becomes a count of servers, threads, connections, or pool slots (2,000 req/s x 50 ms = 100 in flight). Estimating capacity without it is guessing.
+- **Capacity is the bottleneck resource, not an average.** A service's ceiling is whichever of CPU, memory, IOPS, connections, threads, or network saturates first. Estimate each dimension and report the smallest; a healthy average hides the one resource about to run out.
+- **Size for peak, then leave headroom.** Provision for peak (roughly 2-5x average for diurnal traffic, more for spikes), and never to 100% utilization: queue wait grows like rho/(1-rho), so latency stays flat to about 70% and then explodes. Target ~70% sustained.
+- **Estimate at the horizon, not today.** Apply the growth factor over the provisioning window before sizing, since you provision ahead of demand; a number with no growth applied is obsolete on day one. Doubling time is about 70 / (percent growth per period).
+- **Adding machines is sub-linear.** N servers rarely give Nx throughput; contention and coordination cause diminishing then retrograde returns (the Universal Scalability Law). Never extrapolate linearly to a large N, and never assume a relational primary or a stateful tier scales horizontally at all.
+- **Derive the headline two independent ways.** Estimate top-down (from volume or DAU) and bottom-up (from per-resource limits) and reconcile; divergence localizes a bad assumption better than a single anchor check does.
+
 ## Handy stable constants
 
 These do not drift, so they are safe to use from memory. Prices do drift and are not listed here on purpose; pin them live in step 1.
@@ -60,6 +73,8 @@ These do not drift, so they are safe to use from memory. Prices do drift and are
 | Powers | 2^10 ~ 10^3; 2^20 ~ 10^6 (1 Mi); 2^30 ~ 10^9 (1 Gi) |
 | Sizes | UUID 16 B; typical DB row 0.1-1 KB; 1 KB JSON event; 1 KB x 1M = 1 GB |
 | Latency ladder | memory ref ~100 ns; SSD random read ~16 us; same-DC round trip ~0.5 ms; disk seek ~10 ms; cross-continent round trip ~150 ms |
+| Availability | 99.9% ~ 8.8h down/yr; 99.99% ~ 53m/yr; serial deps multiply (0.999^3 ~ 99.7%); peak QPS ~ 2-5x average |
+| Little's Law | in-flight = throughput x latency (1k req/s x 20 ms = 20 concurrent) |
 
 ## Gotchas
 
