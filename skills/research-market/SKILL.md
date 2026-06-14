@@ -95,7 +95,7 @@ An opportunity brief: target segment and job; market size with assumptions and c
 - **Interest is not demand.** "Cool idea" and survey thumbs-up are cheap; demand is revealed by what people already pay for and search for. Weight spend over sentiment.
 - **Pitch mode finds what it wants.** Research run to justify a decision already made surfaces only confirming signal. Hunt the disconfirming evidence and be willing to write the no-go.
 - **Whole-TAM thinking has no door.** A market read that cannot name a wedge segment has found a market without an entry. Beachhead first.
-- **Memory is not a source.** The market shifts faster than training data; ground claims in current sources via `deep-research`, not a recalled impression of who the players are.
+- **Memory is not a source, and neither is an unopened link.** The market shifts faster than training data, so ground every load-bearing claim in a current source you actually fetched and read via `deep-research`, not a recalled impression of who the players are or a search snippet you never opened.
 
 ## Example
 

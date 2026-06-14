@@ -36,10 +36,10 @@ df["revenue"] = (
 df["region"] = df["region"].str.strip().str.title()
 by_region = df.groupby("region", dropna=False)["revenue"].sum()
 print(by_region)
-print("reconcile:", by_region.sum(), "==", df["revenue"].sum())
+assert abs(by_region.sum() - df["revenue"].sum()) < 1e-6, "region sums do not reconcile to grand total"
 ```
 
-4. **Sanity-check before reporting.** Group sums reconcile to the grand total, row counts in plus rows excluded equals rows out, percentages sum to ~100, and a spot check of one group computed by hand from the raw rows matches. An aggregate that fails reconciliation is a bug, not an answer.
+4. **Sanity-check before reporting.** Group sums reconcile to the grand total, row counts in plus rows excluded equals rows out, percentages sum to ~100, and a spot check of one group computed by hand from the raw rows matches. An aggregate that fails reconciliation is a bug, not an answer. Write these checks as `assert` statements in the script so a violation halts loudly rather than scrolling past in the output; a quality check you only eyeball is one you will miss.
 5. **Report numbers with their methodology.** The answer, then in brief: rows used vs excluded and why, cleaning applied, and any caveat that changes interpretation (tiny n, missing periods, one group dominating a mean). Keep it to a few lines; the point is reproducibility, not ceremony.
 
 ## Tool routing
