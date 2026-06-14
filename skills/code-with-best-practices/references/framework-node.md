@@ -1,87 +1,156 @@
-Apply these practices whenever planning, writing, or reviewing Node.js code.
+Apply these practices whenever planning, writing, or reviewing Node.js code. Targets Node.js 22 LTS (and 24; version-specific items are flagged). Generic clean-code, general-JavaScript async, and dependency rules live in CLAUDE.md; this reference is the Node-runtime-specific, version-current, and easy-to-get-wrong material. On conflict, the project's own conventions win.
 
 ## Contents
 
-- Event Loop and Blocking
-- Streams and Large Data
-- Process Lifecycle and Graceful Shutdown
-- Environment and Configuration
-- Async Error Propagation
-- Dependency Hygiene
-- Runtime Gotchas
-- Source Verification
+- [Modules and runtime](#modules-and-runtime)
+- [Built-in tooling](#built-in-tooling)
+- [Cancellation and timeouts](#cancellation-and-timeouts)
+- [Event loop and scheduling](#event-loop-and-scheduling)
+- [Buffers and binary data](#buffers-and-binary-data)
+- [Filesystem](#filesystem)
+- [Streams and large data](#streams-and-large-data)
+- [EventEmitter](#eventemitter)
+- [Process lifecycle and shutdown](#process-lifecycle-and-shutdown)
+- [Networking](#networking)
+- [Configuration and security](#configuration-and-security)
+- [Gotchas](#gotchas)
+- [Sources](#sources)
 
-## Event Loop and Blocking
-
-| Practice | Detail |
-|---|---|
-| Never block the event loop | A single Node process serves all connections from one thread, so any long synchronous operation (sync I/O, CPU-heavy loops, large JSON.parse) stalls every other request until it finishes. This is the defining constraint of the runtime. |
-| Prefer async file APIs over sync | Use `fs.promises` over `readFileSync`/`writeFileSync` in any code that serves requests, because the sync variants hold the thread for the entire OS operation while async variants yield. Sync is acceptable only in startup or CLI scripts that do nothing concurrently. |
-| Offload CPU-bound work to worker threads | Hashing, image processing, compression of large payloads, and similar CPU work belong in `worker_threads` or a child process, since running them inline freezes request handling for all clients. |
-| Parallelize independent async work | Use `Promise.all()` for operations with no data dependency between them, because awaiting them one at a time wastes idle I/O time and inflates latency for no benefit. |
-
-## Streams and Large Data
+## Modules and runtime
 
 | Practice | Detail |
 |---|---|
-| Stream large payloads instead of buffering | Reading a whole large file or response into memory grows heap usage with input size and risks OOM under load, whereas `createReadStream` processes bounded chunks at constant memory. |
-| Use `stream.pipeline()` over `.pipe()` | `pipeline()` from `node:stream/promises` propagates errors from every stage, applies backpressure, and destroys all streams on failure, while a raw `.pipe()` chain leaks file descriptors and sockets when a stage errors. |
-| Attach an error listener to every standalone stream | Any `Readable` or `Writable` not wrapped by `pipeline()` must handle its `error` event, because an unhandled stream error is thrown and crashes the process. |
-| Iterate readables with `for await` | `for await (const chunk of readable)` integrates with normal try/catch and is harder to get wrong than manual `data`/`end`/`error` wiring. |
+| Default to ESM, not CommonJS | New projects set `"type": "module"`. The `"type"` field decides whether a `.js` file is parsed as ESM or CJS, before reading its contents, so a wrong value makes Node parse the opposite format and fail. As of 22.12 `require()` can load a synchronous ESM graph, but it throws `ERR_REQUIRE_ASYNC_MODULE` if any module in that graph uses top-level await. |
+| There is no `__dirname` in ESM | Use `import.meta.dirname` and `import.meta.filename` (21.2+, decoded and platform-aware), not `fileURLToPath(import.meta.url)` boilerplate. Never derive a path from `new URL(...).pathname`: it is URL-encoded (a space becomes `%20`) and breaks on Windows. |
+| Treat `"exports"` as the package's real API boundary | Once a package declares `"exports"`, an undocumented subpath throws `ERR_PACKAGE_PATH_NOT_EXPORTED` even though the file exists. In conditional exports Node takes the first matching condition top to bottom, so order `"types"` first and `"default"` last, or later branches (`"require"`/`"import"`) become unreachable. |
+| Use `#`-prefixed subpath imports for internal modules | Map `#utils` via the package's `"imports"` field instead of `../../../util`; the map is scope-local and monorepo-safe. ESM requires explicit file extensions (`import './x.js'`, not `'./x'`). |
+| Beware the dual-package hazard | When `"import"` and `"require"` resolve to different files, each loader evaluates its own copy, duplicating singleton state and breaking `instanceof`. Collapse shared-state packages to one implementation. |
+| Always prefix built-ins with `node:` | Import `node:fs`, `node:crypto`, `node:test`. The prefix cannot be shadowed by a userland package of the same name and is mandatory for newer modules like `node:test`. |
+| Use native `fetch`, no `node-fetch`/`axios` | `fetch`, `Headers`, `Request`, `Response`, `FormData`, and `WebSocket` are global and stable (fetch since 18, WebSocket client on by default since 22). Also prefer in-runtime `structuredClone`, `Array.fromAsync`, `Object.groupBy`, and `fs.glob` (22) over a polyfill. |
+| Check the floor version before using an API | Read `engines`/`.nvmrc`. Even lines (22, 24) are LTS; odd lines (23) never reach LTS, so do not target them in production. Do not recommend an API unavailable on the floor. |
 
-## Process Lifecycle and Graceful Shutdown
-
-| Practice | Detail |
-|---|---|
-| Handle SIGTERM and SIGINT for clean shutdown | Orchestrators (Docker, Kubernetes, systemd) send SIGTERM and expect the process to stop accepting work, drain in-flight requests, then exit, so dropping these signals causes killed requests and corrupted state on every deploy. |
-| Set `process.exitCode`, do not call `process.exit()` in library code | `process.exit()` terminates immediately and truncates pending stdout, logs, and I/O flushes, while setting `exitCode` lets the loop drain naturally. Reserve explicit `process.exit()` for top-level CLI entry points. |
-| Bound the shutdown with a timeout | Wrap drain logic in a timer that force-exits if cleanup hangs, because a stuck connection or pending promise can otherwise leave the process alive indefinitely and block a rolling deploy. |
-| Call `.unref()` on background timers | `setInterval`/`setTimeout` handles used for housekeeping keep the process alive after real work is done; `.unref()` lets the process exit once nothing meaningful remains. |
-| Log `uncaughtException` and `unhandledRejection`, then exit | After either fires the process is in an unknown state, so the safe response is to log for diagnosis and exit to let the supervisor restart cleanly rather than continue serving from corrupted state. |
-
-## Environment and Configuration
+## Built-in tooling
 
 | Practice | Detail |
 |---|---|
-| Never read `process.env` inline | Every `process.env` value is `string | undefined`, so reading it at the point of use scatters string coercion and missing-value bugs through the code. Parse it once into a typed config object instead. |
-| Validate and fail fast at startup | Validate all env and config (shape, types, required keys) before the server binds a port, so a misconfigured deploy crashes immediately and visibly instead of failing on the first request that touches the missing value. |
-| Do not commit secrets or `.env` files | Secrets in the repo leak through git history and clones; inject them at runtime via the environment or a secrets manager and keep `.env` out of version control. |
-| Treat config as immutable after load | Read config into a frozen object at startup and pass it explicitly, because mutating shared config at runtime creates ordering bugs that are hard to reproduce. |
+| Test with `node:test` + `node:assert`, no runner dep | Stable since 20. Import from `node:test` and `node:assert/strict`; run `node --test`. Covers spies, method mocks, and fake timers, auto-restored at test end. Reach for Vitest/Jest only for their richer ecosystem. |
+| Always `await` subtests | A parent `test()` does not wait for `t.test(...)` unless awaited; un-awaited subtests are cancelled and reported as failures. The single most common built-in-runner mistake. |
+| Native TypeScript runs, with limits | Node strips types from `.ts` since 22.6 (`--experimental-strip-types`, default in 23.6+), but enums, parameter properties (`constructor(public id)`), and value-producing namespaces throw `ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX` because they emit code; only `--experimental-transform-types` handles them. Set tsconfig `erasableSyntaxOnly` + `verbatimModuleSyntax` to catch these at edit time (Node ignores tsconfig at runtime), and write `import type` for type-only imports. |
+| Speed up startup with the compile cache | `NODE_COMPILE_CACHE=<dir>` (or `module.enableCompileCache()`) persists V8 bytecode across restarts; prefer the env var so it reaches preloads and CLIs. Set `NODE_DISABLE_COMPILE_CACHE=1` for coverage runs, since V8 coverage is imprecise on code deserialized from cache. |
+| Use `--watch` and `node --run`, not `nodemon`/npm | `node --watch` restarts on change; `node --run <script>` runs a `package.json` script without spawning npm. `--require` preloads run before `--import`; use `--import` for ESM loader hooks. |
 
-## Async Error Propagation
-
-| Practice | Detail |
-|---|---|
-| Handle every promise rejection | An unhandled rejection crashes the process on modern Node, so each `async` call must be awaited inside try/catch or have a `.catch()`. A fire-and-forget promise with no handler is a latent crash. |
-| Never swallow errors in an empty catch | An empty `catch` hides failures and produces silent data loss; always log, rethrow, or translate the error into a caller-visible result. |
-| Do not leak internal details to users | Stack traces, absolute paths, and connection strings in user-facing output expose internals to attackers; log them internally and return a safe generic message. |
-| Promisify legacy callback APIs | Wrap older callback-style APIs with `util.promisify` so their errors flow through the same async/await path, rather than mixing callback error handling with promise handling. |
-
-## Dependency Hygiene
+## Cancellation and timeouts
 
 | Practice | Detail |
 |---|---|
-| Prefer `node:` built-ins with the protocol prefix | Use `node:fs`, `node:crypto`, `node:path`, and similar over npm wrappers, importing with the explicit `node:` prefix. Built-ins add no install cost, no supply-chain risk, and the prefix removes ambiguity with user-land packages. |
-| Treat each dependency as a liability | You own your entire transitive tree, including packages you never chose, so every addition widens attack surface and breakage risk. Justify necessity before adding one. |
-| Commit the lockfile | Commit `package-lock.json`, `pnpm-lock.yaml`, or `yarn.lock` so installs are reproducible across machines and CI, and so a mutated upstream version cannot silently enter a build. |
-| Pin security-sensitive packages | Use exact versions (no `^` or `~`) for auth, crypto, and authorization packages, because a caret range can pull a compromised patch release into those exact code paths automatically. |
-| Audit on every CI build | Run `npm audit` (or the equivalent) in CI and resolve high and critical findings before merge, so known vulnerabilities are caught at the gate rather than in production. |
+| Cancel async work with `AbortController` | Pass `controller.signal` to `fetch`, `fs.promises`, timers, and streams; `controller.abort()` cancels. The standard mechanism, replacing ad-hoc flags. |
+| Time out with `AbortSignal.timeout(ms)` | `fetch(url, { signal: AbortSignal.timeout(5000) })`. Aborted work rejects with an `AbortError`; branch on `err.name === 'AbortError'`, not the message. |
+| Combine signals with `AbortSignal.any([...])` | Merge a request signal and a timeout signal so either cancels (since 20). A `Promise.race` timeout does NOT cancel the slow operation; pair it with an `AbortController` or it leaks the loser. |
+| Sleep with `node:timers/promises` | `await setTimeout(1000, undefined, { signal })` is a cancellable promise-based delay. |
 
-## Runtime Gotchas
-
-| Gotcha | Resolution |
-|---|---|
-| The libuv thread pool defaults to 4 | Filesystem, `dns.lookup`, and crypto/zlib work share a 4-thread pool, so a workload with many concurrent such operations serializes behind it. Raise `UV_THREADPOOL_SIZE` before the first async I/O call if needed. |
-| Network I/O does not use the thread pool | TCP and HTTP sockets use the OS non-blocking facilities (epoll/kqueue/IOCP) directly, so the thread pool is irrelevant to network scaling. Do not tune `UV_THREADPOOL_SIZE` expecting more network throughput. |
-| `dns.lookup` blocks a pool thread | `dns.lookup` calls `getaddrinfo` on the thread pool, one thread per call, so high-volume resolution starves the pool. Use `dns.resolve` instead, which uses non-blocking OS DNS. |
-| Edge runtimes are not full Node | V8-isolate environments (Cloudflare Workers, Vercel Edge) omit many APIs, so `node:fs` and parts of `node:crypto` may be absent. Confirm availability against the target runtime before relying on a built-in. |
-
-## Source Verification
-
-Do not implement Node.js runtime patterns from memory; training data carries outdated APIs from older versions.
+## Event loop and scheduling
 
 | Practice | Detail |
 |---|---|
-| Verify against official docs | Check the API signature and behavior at nodejs.org for streams, crypto, worker threads, and process handling, because these surfaces change across major versions. |
-| Check the target version first | Read `engines` in `package.json` or `.node-version` to find the minimum supported version, and do not recommend an API unavailable there. |
-| Flag unverified patterns explicitly | If you cannot confirm a behavior in official docs, say so plainly rather than presenting a guess as fact, so the developer knows to verify before shipping. |
+| Never block the event loop | One thread serves all connections, so any long synchronous operation (sync I/O, a CPU loop, a large `JSON.parse`) stalls every request until it returns. The defining runtime constraint. |
+| No sync `fs` in a request path | Use `fs.promises`; `readFileSync`/`writeFileSync` hold the thread for the whole OS call. Sync is fine only in startup or CLI scripts doing nothing concurrently. |
+| Offload CPU work to `worker_threads` | Hashing, image processing, large compression belong in `node:worker_threads`; inline they freeze handling for all clients. |
+| Size pools with `os.availableParallelism()`, not `os.cpus().length` | `availableParallelism()` respects cgroup/container CPU quotas; `cpus().length` reports the host's inventory (e.g. 64) and causes thread thrashing in a 2-CPU container. |
+| Mind the libuv thread pool (default 4) | Filesystem, `dns.lookup`, `crypto`, and `zlib` share one global 4-thread pool (network sockets do not), so a slow `fs` op can starve `crypto.pbkdf2` auth latency. Raise `UV_THREADPOOL_SIZE` before the first async I/O if measured pressure justifies it. |
+| Prefer `queueMicrotask`/`setImmediate` over `process.nextTick` | The nextTick queue drains completely between every loop phase, so recursive nextTick starves timers and I/O (nextTick is now documented "legacy"). Inside an I/O callback `setImmediate()` reliably fires before the next timer; use it to yield between large batches. |
+| Detect stalls with `monitorEventLoopDelay()` | Use `perf_hooks.monitorEventLoopDelay()` rather than a manual `setInterval` drift hack; note GC stop-the-world pauses show up as the same tail-latency spikes. |
+
+## Buffers and binary data
+
+| Practice | Detail |
+|---|---|
+| Prefer `Buffer.alloc`; `allocUnsafe` returns uninitialized memory | `allocUnsafe(n)` hands back un-zeroed bytes that may contain old data (keys, tokens from a prior request); only use it if you overwrite every byte before any read, otherwise `Buffer.alloc(n)`. Never use the deprecated `new Buffer()`. |
+| A slice/subarray is a view, not a copy | `buf.subarray()`/`slice()` alias the parent's memory, so mutating the view mutates the original, and a retained tiny view keeps the entire parent backing buffer alive (a real leak). Copy with `Buffer.from(buf.subarray(s, e))` for anything stored in a cache, closure, or Map, or crossing an async boundary. |
+| Account for off-heap Buffer memory | Buffer bytes live outside the V8 heap and appear in `process.memoryUsage().external`/`.arrayBuffers`, not `heapUsed`; `--max-old-space-size` does not bound them, so a process can exhaust RAM with a small-looking heap. Monitor `rss`, `external`, and `arrayBuffers` together (rising `arrayBuffers` with a flat heap signals retained views). |
+| Decode chunked text with `StringDecoder` | A multibyte UTF-8 character split across stream chunks corrupts if each chunk is `toString()`'d independently; `node:string_decoder` buffers the partial sequence across chunks. Read binary with no encoding arg; invalid bytes decoded as UTF-8 become `�` irreversibly. |
+| Size text buffers with `Buffer.byteLength` | `string.length` counts UTF-16 code units, not bytes; use `Buffer.byteLength(str, 'utf8')`. For wire protocols use explicit `readUInt16BE`/`writeUInt16BE` (TypedArray views use platform-native endianness). |
+
+## Filesystem
+
+| Practice | Detail |
+|---|---|
+| Close every `FileHandle` in `finally` (or `await using`) | A `FileHandle` from `fs/promises.open()` is not reclaimed promptly by GC; leaks accumulate to a process-wide `EMFILE`. Use `await using fh = await open(...)` (Symbol.asyncDispose, 24.2+) or a `finally { await fh.close() }`. |
+| Write files atomically: temp then rename | Write to a temp file in the SAME directory, then `rename()` over the target, so readers see old-or-new, never partial (the default `'w'` truncates first, so a mid-write crash leaves an empty file). `rename()` is atomic only within one filesystem: a temp in `os.tmpdir()` fails with `EXDEV` when `/tmp` is a separate mount (common in Docker), so keep the temp adjacent to the target. |
+| Fsync when durability matters | A resolved `write`/`writeFile` is not yet on disk; for ledgers and state call `fh.sync()` (or `{ flush: true }`, 20.10+), and fsync the parent directory after a rename for full crash safety. |
+| Create exclusively with `'wx'`, do not preflight with `fs.access` | The `'wx'` flag (`O_EXCL`) replaces a check-then-write TOCTOU race with one atomic op. `fs.access()` as a preflight is a TOCTOU antipattern (and checks real UID while ops use effective UID); just attempt the operation and branch on `err.code` (`ENOENT`/`EACCES`/`EEXIST`). |
+| Treat `fs.watch` events as hints, not facts | They are coalesced, duplicated, and platform-divergent; watch the parent directory and filter by basename (inotify follows the old inode through an atomic rename and misses the new file), and debounce, since one editor save fires several events. Atomic writes surface as `'rename'`, not `'change'`. |
+| Honor `bytesRead`/`bytesWritten` and bound fs concurrency | A raw `read()` can return fewer bytes than requested near EOF; consume only `buf.subarray(0, bytesRead)`. All async fs work shares the 4-thread pool, so fanning out tens of thousands of opens causes queuing and `EMFILE`; cap with a concurrency limiter (~50-100). |
+
+## Streams and large data
+
+| Practice | Detail |
+|---|---|
+| Stream large payloads, do not buffer | Reading a whole large file or response into memory grows the heap with input size; `createReadStream` processes bounded chunks at constant memory. |
+| Use `pipeline()` from `node:stream/promises` | It propagates errors from every stage, applies backpressure, and destroys all streams on failure. A raw `.pipe()` chain leaks descriptors and ignores backpressure on error. |
+| `pipeline()` cleans up streams, not application state | A failed pipeline can leave a partial file or partial DB write; pair it with the temp-then-rename or commit-on-success pattern. Stream instances are single-use after end/error, so retry by building fresh instances from a factory, not by reusing them. |
+| Backpressure: `write()`/`push()` returning `false` is advisory | The chunk is still buffered (peak memory is roughly 2x `highWaterMark`), so do not assume HWM caps memory. On `false`, pause the source and resume on a single `drain` (`.once`, never `.on`); never run two concurrent writers on one writable, since `drain` wakes them all. In `objectMode`, `highWaterMark` counts objects (default 16), not bytes. |
+| Iterate readables with `for await`, but mind early exit | `for await (const chunk of readable)` integrates with try/catch; pass an `AbortSignal` to stop. Breaking or returning early destroys the stream, to peek without destroying use `readable.iterator({ destroyOnReturn: false })`. |
+| In a custom transform, call the callback exactly once and implement `_flush` | A returned promise from `_transform`/`_read` is not awaited; a missed `callback` hangs the stream forever. If the transform buffers partial state (lines, frames), `_flush` must emit the remainder or it is silently dropped at EOF. |
+| For file-to-file copies, use `copyFile`, not stream-through-buffers | `createReadStream().pipe(dest)` does ordinary `write()` syscalls (no kernel `sendfile`); `copyFile(src, dst, COPYFILE_FICLONE)` uses a reflink with silent fallback. |
+| Attach an `error` handler to any standalone stream | A `Readable`/`Writable` not wrapped by `pipeline()` must handle `error`; an unhandled stream error crashes the process. |
+
+## EventEmitter
+
+| Practice | Detail |
+|---|---|
+| An unhandled `'error'` event crashes the process | Any failable emitter (server, socket, stream, child process) MUST have an `'error'` listener, or an `EADDRINUSE`-class failure takes the process down. |
+| `emit()` is fully synchronous | Listeners run on the current stack in registration order, so CPU work in a listener blocks the loop and stalls the source; keep listeners light. |
+| Route async-listener rejections | A rejecting async listener silently becomes an unhandled rejection unless the emitter is constructed `new EventEmitter({ captureRejections: true })`, which sends it to the `'error'` handler. |
+| Treat `MaxListenersExceededWarning` as a leak alarm | The warning at the 11th listener usually means a listener is added per request without removal; fix the leak (remove via `off()`/cleanup) rather than raising `setMaxListeners`. Prefer `events.once(emitter, evt)` and `events.on(emitter, evt, { signal })`, which self-clean. |
+
+## Process lifecycle and shutdown
+
+| Practice | Detail |
+|---|---|
+| Shut down in the right order on SIGTERM | Stop accepting work (`server.close()`), drain in-flight requests, then close DB/Redis, then set `exitCode`. Closing the DB before requests finish turns a graceful shutdown into a cascade of errors. Also `child.kill()` spawned children (else they reparent to init and leak). |
+| A signal handler replaces Node's default exit | Installing any SIGTERM/SIGINT listener removes the default `128+signo` exit, so the process keeps running (and ignores Ctrl+C) unless your handler explicitly exits. As container PID 1, terminating signals are not applied without a handler, so run with `--init`/tini. Bound the drain with a force-exit timer so a stuck connection cannot block a rolling deploy. |
+| Set `process.exitCode`, avoid `process.exit()` | `process.exit()` truncates pending async work and unflushed stdout/logs (libuv callbacks never fire); set `exitCode` and let the loop drain. Reserve explicit `process.exit()` for fatal startup failures and the shutdown timeout. Emit honest exit codes; orchestrators restart on any non-zero. |
+| Log `unhandledRejection`/`uncaughtException`, then crash | After either fires the process is in an unknown state; log, then exit so the supervisor restarts cleanly. Do not resume from the handler. |
+| `.unref()` background timers and handles | A housekeeping `setInterval`, monitor socket, or open handle keeps the process alive; `.unref()` lets it exit once real work is done. `process.getActiveResourcesInfo()` enumerates what is still keeping the loop alive when a shutdown hangs. |
+| Read `process.env` once at startup | Each access crosses into native code (slow in hot loops) and every value is a string, so `'false'` is truthy: parse explicitly (`=== 'true'`). Watch stdout: it is async to a pipe on POSIX, so a final line is lost if you `process.exit()` right after writing, and downstream early-exit raises `EPIPE`, which a producer CLI should treat as a clean exit. In containers use `process.constrainedMemory()`, since `os.totalmem()` reports host memory. |
+
+## Networking
+
+| Practice | Detail |
+|---|---|
+| Prefer `dns.resolve*` over `dns.lookup`, and cache | `dns.lookup` (used by `http`/`fetch` under the hood) runs `getaddrinfo` on the libuv pool, competing with fs/crypto; a burst starves them. `dns.resolve*` uses c-ares off-pool. Node does no DNS caching by default, so cache application-side and honor the record TTL; after a deploy uncached lookups return mixed answers. |
+| `socket.setTimeout()` only notifies | The `'timeout'` event does not close the socket; you must `socket.destroy()`. A handler that merely logs leaks descriptors under steady traffic. App timeout, TCP keep-alive (`setKeepAlive`), and HTTP keep-alive are three independent layers. |
+| Pool connections, and account for TIME-WAIT | Repeated short-lived connections pile up TIME-WAIT sockets that exhaust ephemeral ports; use a keep-alive `Agent`. Pooling also hides DNS changes (the pool serves old IPs until sockets retire), so a migration needs a lowered TTL plus active draining, `server.close()` only stops new accepts; track and `end()` existing sockets. |
+| Frame your own messages; disable Nagle for small ones | TCP does not preserve `write()` boundaries, so a protocol needs explicit framing (length prefix or delimiter). For small latency-sensitive messages use `setNoDelay(true)`, but the real fix is batching writes app-side. A successful `write`/`send` means the local kernel accepted the bytes, never that the peer received them. |
+| Handle errors on accepted sockets | A missing socket-level `'error'` handler crashes the process; server-level and socket-level errors are separate emitters. Do per-connection cleanup (clear timers, drop from tracking sets) in `'close'`, not `'end'`. |
+
+## Configuration and security
+
+| Practice | Detail |
+|---|---|
+| Parse `process.env` once into validated config | Validate shape, types, and required keys with a schema (zod/valibot) at startup, before the server binds, then pass a frozen config. A misconfigured deploy should crash immediately, not on the first request. |
+| Use structured (JSON) logging | Emit machine-parseable JSON with a fast logger (pino), not `console.log` strings; include levels, request IDs, and fields. Never log secrets, tokens, or full PII. |
+| Consider the permission model for untrusted code | Stable since 22.13/23.5: `node --permission` denies fs/child_process/worker/net, granted back via `--allow-*`. It is a seat belt, not a sandbox for hostile code, is NOT inherited by `worker_threads`, and follows symlinks. |
+| Do not leak internals in errors, and audit deps | Stack traces, absolute paths, and connection strings in user-facing output expose internals; log internally, return a generic message. Run `npm audit` in CI and pin exact versions for auth/crypto packages. |
+
+## Gotchas
+
+- A parent `test()` does not await `t.test()` subtests; un-awaited subtests are cancelled and fail.
+- `Buffer.allocUnsafe` and a retained `subarray()` view both leak: uninitialized bytes can expose old data, and a small view pins its whole parent buffer.
+- `process.exit()` drops queued stdout and pending async; set `process.exitCode` instead.
+- An emitter `'error'` event with no listener crashes the process; add one to every server, socket, and stream.
+- A `FileHandle` not closed leaks an fd to `EMFILE`; `rename()` across mounts fails with `EXDEV`.
+- ESM has no `__dirname`; use `import.meta.dirname`. ESM imports need explicit file extensions.
+- `--env-file` does not validate, does not expand `$VAR`, does not coerce types, and an already-set parent variable blocks the file value.
+- The permission model is not inherited by `worker_threads` and follows symlinks.
+- Tuning `UV_THREADPOOL_SIZE` does nothing for network throughput; sockets do not use the pool.
+- Edge runtimes (Cloudflare Workers, Vercel Edge) are not full Node; `node:fs` and parts of `node:crypto` may be absent.
+- Do not implement runtime patterns from memory; stream, fs, crypto, and process APIs change across majors. Verify the signature at nodejs.org against the floor version.
+
+## Sources
+
+- [Node.js API docs](https://nodejs.org/api/) - official reference; authoritative on `node:test`, `permissions`, `stream/promises`, `process`, `fs`, `dns`, and CLI flags. Check the version selector against your floor.
+- [Node.js releases/LTS schedule](https://nodejs.org/en/about/previous-releases) - official; what is stable vs experimental per version and which lines reach LTS.
+- [The NodeBook](https://www.thenodebook.com/) - deep, architecture-first treatment of the Node runtime; the basis for the buffers (off-heap accounting, retained views), filesystem (FileHandle leaks, atomic writes, TOCTOU), stream-internals, event-loop scheduling, EventEmitter, and networking depth here.
+- [Node.js Best Practices (goldbergyoni)](https://github.com/goldbergyoni/nodebestpractices) - the most-cited community best-practices list; async error handling, graceful shutdown, operational vs programmer errors.
+- [OWASP Node.js Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html) - OWASP; dependency auditing, not leaking internals, safe error handling.

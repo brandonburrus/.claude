@@ -1,96 +1,99 @@
-Apply these practices whenever planning, writing, or reviewing TypeScript code.
+Apply these practices whenever planning, writing, or reviewing TypeScript code. Targets TypeScript 5.x. Generic clean-code and naming rules live in CLAUDE.md; this reference is the TypeScript-specific, version-current, and easy-to-get-wrong material. On conflict, the project's own conventions win.
 
-## Type Safety
+## Contents
 
-| Practice | Detail |
-|---|---|
-| Enable `"strict": true` in tsconfig | Strict mode catches whole classes of null and type errors at compile time. Do not silence checks with `// @ts-ignore` or `// @ts-nocheck` except in rare cases documented with a reason. |
-| Type external data as `unknown`, then validate | Data from `JSON.parse`, HTTP responses, `process.env`, CLI arguments, DOM reads, and file contents has no guaranteed shape, so typing it `any` lets bad data flow unchecked through the program. Validate at the boundary before use. |
-| Use `readonly` where mutation is unintended | Marking properties and parameters `readonly` communicates intent and lets the compiler prevent accidental mutation bugs that are otherwise silent. |
-| Model variants with discriminated unions, not `as` | A discriminated union (`{ type: 'ok'; value: T } \| { type: 'error'; message: string }`) lets the compiler narrow safely, whereas `as` assertions bypass the type checker and hide mismatches until runtime. |
-| Use `const` assertions and `satisfies` | `as const` freezes literals into their narrowest type for exhaustive unions, and `satisfies` validates a value against a type without widening it, so you keep both checking and precise inference. |
+- [Type system](#type-system)
+- [tsconfig](#tsconfig)
+- [Tooling and lint](#tooling-and-lint)
+- [Modern idioms](#modern-idioms)
+- [Validation and errors](#validation-and-errors)
+- [Utility types](#utility-types)
+- [Gotchas](#gotchas)
+- [Sources](#sources)
 
-## Utility Types
-
-Prefer built-in utility types over reimplementing the same transformation, because hand-rolled equivalents drift out of sync and obscure intent. Split a type into nested sub-types only when the domain structure warrants it, since aggressive splitting hides the shape and makes code completion harder to follow.
-
-| Type | Use case |
-|---|---|
-| `Partial<T>` | All properties optional, useful for patch and update payloads. |
-| `Required<T>` | All properties required, the inverse of `Partial`. |
-| `Readonly<T>` | All properties `readonly` to prevent mutation. |
-| `Pick<T, K>` / `Omit<T, K>` | Select or exclude a subset of properties without redefining the rest. |
-| `Record<K, V>` | Map type with keys `K` and values `V`. |
-| `NonNullable<T>` | Remove `null` and `undefined` from `T`. |
-| `ReturnType<T>` / `Parameters<T>` | Extract a function's return type or parameter tuple to stay coupled to the source signature. |
-| `Awaited<T>` | Unwrap a `Promise<T>` to `T`, recursively. |
-
-## Callbacks and Overloads
+## Type system
 
 | Practice | Detail |
 |---|---|
-| Type ignored callback returns as `void` | An `any` return lets a caller accidentally consume a value that was meant to be discarded, while `void` signals the intent and the compiler enforces it. |
-| Make callback parameters non-optional when always supplied | An optional parameter implies the callback may be invoked with fewer arguments. If the caller always provides both, make both required since an implementor can always ignore a parameter. |
-| Order specific overloads before general ones | TypeScript resolves the first matching overload, so a general signature placed first shadows a more specific one and makes it unreachable. |
+| Prefer `unknown` over `any` | `any` disables checking and propagates silently; `unknown` is the type-safe top type that forces narrowing before use. `strict` turns on `useUnknownInCatchVariables`, so `catch (err)` is `unknown`: narrow with `err instanceof Error`. |
+| Use `satisfies` to check without widening | A `:` annotation makes the type beat the value and discards literal info; `satisfies` makes the value beat the type, keeping the narrow inferred shape while still validating it. Use `as const satisfies T` for immutability + literal keys + validation together. Prefer it over `as`, which lets you lie to the compiler. (4.9+) |
+| Replace `enum` with `as const` objects | Numeric enums accept arbitrary numbers, emit a reverse mapping, and are nominally typed (two identical enums are not interchangeable). Use `const Status = { Draft: "draft" } as const; type Status = typeof Status[keyof typeof Status]`. If an enum is unavoidable, use a string enum and never `const enum`. |
+| Model variants with discriminated unions | A shared literal discriminant (`kind`/`type`) lets the compiler narrow each branch with no assertions, replacing bags of optional fields. |
+| Enforce exhaustiveness with `never` | In an exhaustive `switch`, the value narrows to `never` in `default`; pass it to `assertNever(x: never)` so a new unhandled variant is a compile error, not a silent fallthrough. Optionally back with eslint `switch-exhaustiveness-check`. |
+| `const` type params need a `readonly` constraint | `<const T>` (5.0) preserves literal/tuple inference without callers writing `as const`, but `<const T extends string[]>` silently does nothing; the constraint must be `readonly string[]`. |
+| Avoid bare `{}`, `object`, `Object` | `{}` means "any non-nullish value", not "empty object". Use `Record<string, unknown>` for arbitrary objects, `Record<PropertyKey, never>` for a truly empty one. The one good use is the `<T extends {}>` constraint (excludes null/undefined). |
+| `type` vs `interface` | Interfaces for extensible object shapes, public API contracts, and class `implements` (the Handbook's default, and `extends` can be faster to typecheck than `&`). `type` for unions, intersections, mapped/conditional types, and tuples, which interfaces cannot express. Beware interface declaration merging: useful for ambient augmentation, a silent footgun for app types. |
+| Mark `readonly` where mutation is unintended | Communicates intent and lets the compiler block accidental mutation. |
 
-## Function Design
+## tsconfig
+
+`strict: true` is the floor, not the ceiling. It bundles `noImplicitAny`, `strictNullChecks`, `strictFunctionTypes`, `strictBindCallApply`, `strictPropertyInitialization`, `noImplicitThis`, `alwaysStrict`, and `useUnknownInCatchVariables`. Add these, which `strict` does NOT include:
+
+| Flag | Why |
+|---|---|
+| `noUncheckedIndexedAccess` | Adds `\| undefined` to `arr[i]` and `record[key]`, catching the most common "assumed present" bug. The single highest-value flag beyond `strict`, and the one most often omitted. |
+| `exactOptionalPropertyTypes` | Makes `prop?: T` mean "T or absent", not "T \| undefined", so assigning `undefined` to an optional prop is an error. Can be noisy against some library types; recommend it but expect friction. |
+| `noImplicitOverride` | Requires the `override` keyword, so renaming a base method surfaces broken overrides instead of silent new methods. |
+| `noFallthroughCasesInSwitch` | Catches a missing `break`. |
+| `verbatimModuleSyntax` | Forces a 1:1 source-to-emit mapping and stops import elision, so type-only imports must say `import type`; fixes ESM/CJS interop and tree-shaking. (5.0) |
+| `isolatedModules` | Required for any non-`tsc` transpiler (esbuild, swc, Babel, Vite); forbids constructs that cannot compile file-by-file, preventing builds that pass `tsc` but break under the bundler. |
+
+Pick `moduleResolution` by target: `"nodenext"` (with `module: "nodenext"`) for code or libraries that run in Node; `"bundler"` (with `module: "esnext"`/`"preserve"`) only when a bundler emits the code. `"bundler"` is infectious: it green-lights extensionless imports that crash in raw Node, so prefer `"nodenext"` for portability.
+
+## Tooling and lint
 
 | Practice | Detail |
 |---|---|
-| Each function does one thing | If describing a function needs the word "and", it does two things, which makes it harder to compose, test, and reason about. Split it. |
-| Avoid flag parameters | A boolean that switches code paths means the function does two things; two named functions are clearer about which behavior the caller wants. |
-| Keep functions short | Aim for roughly 5 to 10 lines, because longer functions usually hide extractable operations that deserve their own name and tests. |
-| Prefer pure functions | When a return value depends only on inputs with no side effects, the function is trivial to test, compose, and memoize. |
-| Centralize side effects at the boundaries | Keeping file I/O, network calls, and global mutation at the edges keeps core logic predictable and avoids shared mutable state scattered through the middle. |
-| Use parameter defaults | A default value (`function logNumber(num = 25)`) is clearer than checking for `undefined` inside the body and keeps the call site simpler. |
+| Layer typescript-eslint configs deliberately | `recommended` (likely bugs, no type info), `strict` (more opinionated bug-catching, NOT semver-stable), `stylistic` (consistency). The `*-type-checked` variants need `parserOptions.project` and carry the highest-value type-aware rules. |
+| Enable `no-floating-promises` | In `recommended-type-checked`; catches un-awaited promises that cause out-of-order execution and unhandled rejections. |
+| Enforce `import type`, one mechanism only | Use either `verbatimModuleSyntax` (build fails, manual fix) OR eslint `consistent-type-imports` (auto-fixes), never both; they conflict. |
+| Format with Prettier, not ESLint | Keep formatting rules out of ESLint; let Prettier own formatting and ESLint own correctness. |
 
-## Naming and Readability
+## Modern idioms
 
 | Practice | Detail |
 |---|---|
-| Name for behavior, not implementation | `isLegalDrinkingAge(age)` survives a rule change that `isOverEighteen(age)` does not, because the name states the purpose rather than the current threshold. |
-| Prefix booleans with `is` or `has` | `isActive` or `hasPermission` makes a boolean recognizable at a glance without checking its type or a comment. |
-| Write identifiers in English | The language keywords are English, so mixing languages in identifiers makes code harder to search and excludes part of the team. |
-| Avoid deep nesting | Logic nested past two or three levels is hard to follow; early returns, guard clauses, and extracted helpers flatten it. |
-| Avoid global variables and functions | Globals share a scope with every module, creating hidden coupling. Prefer module-scoped constants and explicit dependency passing. |
+| `using` / `await using` for cleanup (5.2) | Deterministic resource cleanup via `Symbol.dispose`/`Symbol.asyncDispose`, running at scope exit (including early return and throw) in LIFO order; replaces try/finally for files, connections, locks. Use `DisposableStack` for ad-hoc cleanup. Needs `target`/`lib` es2022 + `esnext.disposable` and usually a runtime polyfill, so it does not yet work everywhere. |
+| Prefer native decorators (5.0) for new code | Stage-3 ECMAScript decorators need no flag. Do not mix with legacy `experimentalDecorators` + `emitDecoratorMetadata`, which NestJS, Angular, and TypeORM still require; verify per framework before choosing the native flavor. |
+| Named exports, never default | Uniform names across imports, better refactors and auto-import. Also avoid `export let`; expose a getter instead. |
+| No `namespace` | Use ES modules and files; the only modern exception is `declare global` / ambient module augmentation. |
+| Promises over callbacks | `async/await` composes with `Promise.all`/`race` and propagates errors cleanly; wrap legacy callback APIs with `util.promisify`. |
 
-## Code Structure
-
-| Practice | Detail |
-|---|---|
-| Prefer named exports over default exports | Named exports rename safely, produce better auto-import suggestions, and avoid letting each consumer invent its own local name. |
-| Avoid circular dependencies | Cycles signal a missing abstraction or wrong responsibility boundary and can break module initialization order. Detect them with a linter or `madge` in CI. |
-| One concept per file | One primary export and one concern per file keeps code findable and avoids `utils.ts` catch-alls that accumulate unrelated logic. |
-
-## Documentation
+## Validation and errors
 
 | Practice | Detail |
 |---|---|
-| Use TSDoc for public APIs | Exported functions, classes, and types should carry `/** ... */` doc comments describing purpose, parameters, return value, and thrown errors, since these surface in IDE tooltips and generated docs for consumers who never read the source. |
-| Never commit commented-out code | Others cannot tell whether it was left intentionally and will hesitate to remove it. Delete it and recover from version control if needed. |
+| Validate external input at the boundary as `unknown` | `JSON.parse`, HTTP responses, file reads, CLI args, and DOM values are untrusted and untyped. Validate shape with a schema library (zod, valibot) that narrows `unknown` to a typed value in one step, keeping the type and the runtime check in sync. |
+| Never read `process.env` directly | Values are `string \| undefined`; access through a validated config object so missing or malformed vars fail loudly at startup. |
+| Define typed error classes | Extend `Error` with domain classes for `instanceof` checks and structured metadata instead of parsing message strings. Never swallow an error in an empty `catch`. |
 
-## Error Handling
+## Utility types
 
-| Practice | Detail |
+Prefer built-ins over re-implementing a transformation; hand-rolled equivalents drift and obscure intent.
+
+| Type | Use |
 |---|---|
-| Define typed error classes | Extending `Error` with domain classes (`class NotFoundError extends Error`) enables `instanceof` checks and structured metadata instead of fragile parsing of message strings. |
-| Never swallow errors silently | An empty `catch` hides failures and makes incidents undiagnosable. Always log, rethrow, or propagate to the caller. |
-| Prefer `async/await` and promises over callbacks | Promises compose cleanly, integrate with `Promise.all` and `Promise.race` for parallelism, and give clean error propagation without callback nesting. Wrap legacy callback APIs with `util.promisify`. |
+| `Partial<T>` / `Required<T>` | All properties optional / required (patch payloads and their inverse). |
+| `Readonly<T>` | All properties `readonly`. |
+| `Pick<T, K>` / `Omit<T, K>` | Select or exclude a property subset. |
+| `Record<K, V>` | Map type with keys `K`, values `V`. |
+| `NonNullable<T>` | Remove `null` and `undefined`. |
+| `ReturnType<T>` / `Parameters<T>` | Stay coupled to a function's return type or parameter tuple. |
+| `Awaited<T>` | Unwrap `Promise<T>` recursively. |
 
-## Input Validation
+## Gotchas
 
-| Practice | Detail |
-|---|---|
-| Validate all external input | CLI arguments, environment variables, config files, request bodies, DOM values, and file contents are untrusted, so validate shape and types before use rather than relying on client-side checks. |
-| Never read `process.env` directly | Its values are always `string \| undefined`. Access them through a validated config object so missing or malformed vars fail loudly at startup, not silently deep in the code. |
-| Treat DOM-sourced data as untrusted | Attributes, `innerHTML`, `dataset`, and form fields can be tampered with, so validate them before use as you would any user input. |
-| Use a schema library at runtime boundaries | `JSON.parse`, HTTP responses, and file reads yield `unknown`. A library like zod or valibot validates and narrows to a typed value in one step, keeping the type and the runtime check in sync. |
+- `{}` is "any non-nullish value", not "empty object"; reach for `Record<string, unknown>` or `Record<PropertyKey, never>`.
+- `void`-ing a promise satisfies the linter but leaves the rejection unhandled at runtime.
+- `<const T extends string[]>` silently does nothing; the constraint must be `readonly string[]`.
+- A `:` annotation discards literal types (`as const`/`satisfies` keep them); annotating a config object too eagerly loses key autocomplete.
+- `as` is an unchecked assertion that can break at runtime; reserve it for cases where you genuinely know more than the compiler (DOM, loose libs).
+- `verbatimModuleSyntax` and eslint `consistent-type-imports` fight if both are on; choose one.
 
-## Performance
+## Sources
 
-| Practice | Detail |
-|---|---|
-| Use `for` loops only in hot paths | A `for` loop with a cached length is the fastest construct and worth it in server-side hot loops. For small arrays and client code, prefer readable `map`, `filter`, and `find`, since the difference is negligible. |
-| Prefer `Map` and `Set` for dynamic collections | `Map` gives O(1) keyed access with any key type and `Set` gives O(1) membership tests, both faster than plain objects for frequent dynamic insertion and lookup. |
-| Avoid object allocations in tight loops | Creating objects inside a tight loop applies GC pressure, so reuse or hoist allocations outside the loop where feasible. |
-| Do not mutate `array.length` directly | Setting `.length` to truncate is a non-obvious side effect; `slice` or `splice` communicates the intent clearly. |
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html), [5.0](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-0.html) and [5.2](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-2.html) release notes, [TSConfig reference](https://www.typescriptlang.org/tsconfig/) - official, authoritative on language and flag semantics.
+- [typescript-eslint configs](https://typescript-eslint.io/users/configs/) and rule docs ([no-floating-promises](https://typescript-eslint.io/rules/no-floating-promises/), [consistent-type-imports](https://typescript-eslint.io/rules/consistent-type-imports/)) - the canonical TS linting project.
+- [Google TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html) - major maintained style guide; enum/namespace/any/exports conventions.
+- [Total TypeScript](https://www.totaltypescript.com/) (Matt Pocock) - recognized educator; `satisfies`, enum, and empty-object guidance.
+- [Andrew Branch on nodenext](https://blog.andrewbran.ch/is-nodenext-right-for-libraries-that-dont-target-node-js/) - TS-team member; module-resolution trade-offs.

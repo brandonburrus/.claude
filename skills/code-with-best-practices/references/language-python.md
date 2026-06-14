@@ -1,83 +1,71 @@
-Apply these practices whenever planning, writing, or reviewing Python code.
+Apply these practices whenever planning, writing, or reviewing Python code. Targets Python 3.12+ (version-specific items are flagged). Generic clean-code rules live in CLAUDE.md; this reference is the Python-specific, version-current, and easy-to-get-wrong material. On conflict, the project's own conventions win.
 
-## Pythonic Idioms
+## Contents
 
-| Practice | Detail |
-|---|---|
-| Use context managers for resource cleanup | `with open(...)` closes the file even when an exception is raised, so resources never leak. Write custom managers (`__enter__`/`__exit__` or `@contextmanager`) for any acquire/release pair such as locks, connections, or temp directories. |
-| Prefer comprehensions over manual append loops | A comprehension states the transformation in one place and runs faster than building a list element by element. Keep it to a single level of nesting; extract a helper for anything deeper so it stays readable. |
-| Use `enumerate` and `zip` instead of index bookkeeping | `enumerate(items)` and `zip(names, scores)` remove fragile counter variables and index math that silently go out of sync. Pass `zip(strict=True)` when mismatched lengths should be an error rather than a silent truncation. |
-| Unpack sequences directly | `x, y, z = point` documents the shape of the data and fails loudly if it changes, unlike positional indexing. Bind throwaway values to `_` so intent is explicit. |
-| Use `in` for membership against sets and dicts | Membership on a set or dict is O(1), while scanning a list is O(n) and degrades quietly as data grows. Choose the container based on how you query it. |
-| Use f-strings for interpolation | f-strings are the most readable and fastest interpolation and evaluate inline, so avoid `%` and `.format()` in new code. |
-| Compare to `None` with `is` / `is not` | `None` is a singleton, so identity is the semantically correct check, and `== None` can be subverted by a custom `__eq__`. |
-| Use truthiness for empty collections | `if not items:` works uniformly across sequences, dicts, sets, and strings and reads as intent, where `len(items) == 0` is noisier and easy to get wrong on non-sized objects. |
+- [Typing](#typing)
+- [Idioms and stdlib](#idioms-and-stdlib)
+- [Tooling](#tooling)
+- [Errors](#errors)
+- [Gotchas](#gotchas)
+- [Sources](#sources)
 
-## Function Design
+## Typing
 
 | Practice | Detail |
 |---|---|
-| Keep `*args` and `**kwargs` rare | They erase the signature, so callers and type checkers lose all guidance. Reserve them for decorators, wrappers, and genuinely variable-arity functions; otherwise spell out parameters. |
-| Prefer keyword arguments at call sites | `connect(host="localhost", port=5432)` is self-documenting where bare positionals are not. Make parameters keyword-only with `*` on public APIs so call sites cannot drift into ambiguous ordering. |
-| Return early with guard clauses | Handling invalid conditions up front keeps the happy path flat and unnested, which is far easier to follow than a pyramid of conditionals. |
-| Avoid mutable default arguments | `def f(items=[])` evaluates the default once at definition, so every call shares and mutates the same list. Default to `None` and create a fresh collection inside the body. |
-| Prefer pure functions | Output that depends only on inputs is trivial to test and reason about with no setup. Push I/O, global mutation, and network calls to the system boundaries so the core stays deterministic. |
+| Use built-in generics, not `typing` aliases | `list[int]`, `dict[str, int]`, `tuple[int, ...]`, `type[Foo]`, not `typing.List`/`Dict`/`Tuple`/`Type`. PEP 585 deprecated the aliases (removal targeted for 3.18). The deprecation is silent at runtime; only a checker/linter flags it. |
+| Use `X \| None` and `A \| B`, not `Optional`/`Union` | PEP 604 shorthand (3.10+); put `None` last. |
+| Return `Self`, not the class name | `typing.Self` (3.11+) makes a subclass's `return self` infer as the subclass. Use it for fluent methods, `classmethod` constructors, and `__enter__`. |
+| Prefer `Protocol` over ABCs for "has these methods" | Structural subtyping (`typing.Protocol`) beats nominal inheritance when you only need a shape. `@runtime_checkable` enables `isinstance`, but it checks only that attributes exist, not their signatures. |
+| Use PEP 695 syntax on 3.12 | `def first[T](x: list[T]) -> T:` and `class Box[T]:` instead of module-level `TypeVar`s; `type Point = tuple[float, float]` instead of `typing.TypeAlias` (deprecated). Aliases are lazily evaluated, so forward refs work. On 3.11, fall back to explicit `TypeVar`. |
+| Annotate overrides and precise kwargs | `@typing.override` (PEP 698, 3.12) catches a renamed base method. Type `**kwargs` with `Unpack[SomeTypedDict]` (PEP 692) and preserve wrapped signatures with `ParamSpec` instead of `**kwargs: Any`. |
+| Prefer `object` over `Any` for "accepts anything" | `Any` disables checking and propagates; `object` keeps it sound and forces narrowing. Reserve `Any` for genuinely inexpressible types. |
+| Pick the data model by trust boundary | `@dataclass` for internal trusted data (no deps, no validation); Pydantic v2 when data crosses a boundary (API, config, user input: runtime validation, coercion, serialization, JSON Schema; Rust core); `attrs` for fine-grained validators/converters and slotted classes without full serialization. Use `frozen=True` / `NamedTuple` for immutable values. |
+| Type-hint public signatures | Hints are documentation the checker verifies. Annotate parameters, returns, and attributes. |
 
-## Data Structures and Types
-
-| Practice | Detail |
-|---|---|
-| Use `@dataclass` or `NamedTuple` for structured data | They give named fields, annotations, and generated `__init__`, `__repr__`, and `__eq__`, removing the guesswork of ad-hoc dicts and tuples. Reach for `NamedTuple` or `frozen=True` when the value should be immutable. |
-| Prefer `dict.get()` over key-existence checks | `d.get("key", default)` avoids `KeyError` and collapses a check-then-access pair into one expression with no race between the two steps. |
-| Reach for `collections` types when they fit | `defaultdict`, `Counter`, and `deque` are built for their jobs and signal intent, unlike reimplementing the same accumulation by hand with plain dicts and lists. |
-| Prefer `Enum` over magic strings and integers | An `Enum` lists every valid value in one place, blocks typos, and enables completion, where bare literals scatter the valid set across the codebase. |
-| Type-hint public signatures | Hints are documentation the type checker actually verifies, catching mismatches before runtime. Annotate parameters, returns, and attributes, and use `from __future__ import annotations` for forward references. |
-
-## Error Handling
+## Idioms and stdlib
 
 | Practice | Detail |
 |---|---|
-| Raise specific exceptions | A precise `ValueError` lets callers handle one failure mode without catching everything, while bare `Exception` forces them to swallow unrelated errors too. |
-| Define domain exception classes when useful | A named class like `InsufficientFundsError` lets callers branch on the failure type instead of parsing message strings, which break the moment wording changes. |
-| Never silently swallow exceptions | `except: pass` hides the bug and leaves no trace to debug. Always log, re-raise, or handle the failure in a way the caller can observe. |
-| Choose EAFP vs LBYL deliberately | Prefer `try`/`except` when failure is rare and a pre-check would race with the operation; check first only when the check is cheap and failure is the common case. |
-| Use `else` and `finally` on `try` blocks | `else` runs only when no exception fired, keeping the happy path out of the protected block. `finally` guarantees cleanup whether or not something failed. |
+| `match` for destructuring, not as a switch | Pattern matching (3.10+) shines for structural decomposition of nested data; a plain `if`/`elif` is clearer for simple value checks, so do not force it. |
+| `pathlib.Path` over `os.path` | Object-oriented, OS-agnostic path handling with `/` joining. Not a strict drop-in (trailing-slash/`.` normalization differs) and pure-Python, so `os.path` remains valid for byte paths and hot loops. |
+| f-strings over `%` and `.format()` | Most readable and fastest. On 3.12 (PEP 701) f-strings can reuse the outer quote inside braces, nest arbitrarily, span lines, and use backslashes; those features raise `SyntaxError` on older versions. |
+| Comprehensions and generators, capped | Prefer comprehensions over `map`/`filter`; keep to two control subexpressions or fewer, then extract a helper. Use generator expressions for large inputs to avoid materializing the full list. |
+| `enumerate`, `zip`, extended unpacking | `enumerate(items)` and `zip(a, b)` over index bookkeeping; pass `zip(..., strict=True)` to error on length mismatch. `first, *rest = seq` and `a, b = b, a` over indexing. |
+| Walrus to bind-and-test | `while (chunk := f.read(8192)):` removes the duplicated read; use `:=` where it cuts a repeated expression. |
+| `contextlib` over hand-rolled managers | `@contextmanager` for generator-based managers, `suppress(Exc)` instead of `try/except/pass`, `ExitStack` for a variable number of contexts. Always bound resource lifetimes with `with`. |
 
-## Classes and Object-Oriented Design
-
-| Practice | Detail |
-|---|---|
-| Prefer composition over inheritance | Inheritance hard-wires subclasses to a base class's internals. Composing collaborators keeps the pieces swappable when the relationship is "has-a" rather than "is-a". |
-| Use `@property` for computed attributes | A property exposes a clean attribute interface while running validation or computation behind it, so callers never see getter/setter boilerplate. |
-| Keep `__init__` to assignment | I/O or heavy computation in a constructor makes objects slow and awkward to build in tests. Move complex creation into a `@classmethod` such as `User.from_dict(data)`. |
-| Define interfaces with abstract base classes | `ABC` plus `@abstractmethod` makes the contract explicit and fails fast on a missing method, which is clearer than relying on duck typing when several methods are required. |
-| Use `__slots__` for high-volume classes | `__slots__` cuts per-instance memory and blocks accidental attribute creation, which matters when a class is instantiated many thousands of times. |
-
-## Testing
+## Tooling
 
 | Practice | Detail |
 |---|---|
-| Name tests as specifications | `test_transfer_fails_when_balance_insufficient` states the scenario and expected outcome so a failure is self-explaining, unlike `test_transfer_3`. |
-| Isolate tests from external systems | Mocking databases, APIs, and the filesystem keeps tests fast and deterministic, since real network and disk I/O make CI slow and flaky. |
-| Prefer factories over shared fixtures for data | Factories build fresh, per-test objects, avoiding the hidden coupling where one test's mutation of a shared fixture breaks another. |
-| Test behavior, not implementation | Asserting on outputs and observable effects survives refactors, whereas asserting on internal calls or private state breaks on every cleanup. |
-| Use `pytest.mark.parametrize` for variants | Parametrizing turns each input set into an independent case with its own pass/fail, instead of one test that masks which variant failed. |
+| `uv` for environments, deps, and Python versions | Single Rust-based tool over `pyproject.toml` + `uv.lock` + `.python-version`, replacing pip/pip-tools/pipx/poetry/pyenv/virtualenv. Flow: `uv init`, `uv add`, `uv sync`, `uv run`, `uv lock`; `uvx` for ephemeral CLIs; `uv python install/pin`. |
+| `ruff` for lint and format | `ruff format` is a Black-compatible drop-in (88 cols, double quotes, magic trailing comma); `ruff check` replaces Flake8 + isort + pyupgrade. |
+| Know what Ruff enforces by default | Defaults are minimal: Pyflakes (`F`) plus non-stylistic pycodestyle (`E`). Modernization and import sorting are NOT on by default; explicitly select `UP` (pyupgrade, rewrites to `list[...]`/`X \| None`), `I` (isort), `B` (bugbear), `SIM`. "Ruff is on" does not mean idiom rewrites or import sorting are on. |
+| Run a type checker in strict mode | `mypy --strict` (bundles `disallow_untyped_defs`, `disallow_any_generics`, `warn_return_any`, `warn_unused_ignores`, `strict_equality`, ...) or pyright `typeCheckingMode: "strict"`; adopt per-module for gradual rollout. |
+| Inline script metadata | PEP 723 (`# /// script`) lets a single file declare its deps so `uv run` executes it in an isolated environment with no project setup. |
 
-## Documentation
-
-| Practice | Detail |
-|---|---|
-| Pick one docstring style project-wide | Consistent Google-style or NumPy-style docstrings let tooling parse them and readers scan them; mixing styles defeats both. Document parameters, returns, and raised exceptions. |
-| Write docstrings in the imperative mood | `"""Return the user's full name."""` matches PEP 257 and reads as a command, keeping summaries uniform across the codebase. |
-| Document constructor parameters in the class docstring | Describing the class and its `__init__` parameters together gives one place to learn how to build the object, rather than splitting the story across two docstrings. |
-
-## Concurrency and Tooling
+## Errors
 
 | Practice | Detail |
 |---|---|
-| Use `asyncio` for I/O-bound concurrency | `async`/`await` is the standard model for overlapping HTTP calls, queries, and file reads. Avoid mixing threads with asyncio in one path, since it reintroduces the locking hazards async was meant to avoid. |
-| Use `concurrent.futures` for CPU-bound parallelism | `ProcessPoolExecutor` sidesteps the GIL for CPU-heavy work; `ThreadPoolExecutor` suits I/O-bound work when asyncio is not an option. |
-| Synchronize all shared mutable state across threads | Use `threading.Lock`, `queue.Queue`, or immutable data, because unguarded races stay invisible in testing and surface only under production load. |
-| Prefer `pathlib` over `os.path` | `Path` objects give an object-oriented, OS-agnostic API with operators like `/` for joining, replacing brittle manual string concatenation of paths. |
-| Use structural pattern matching judiciously | `match`/`case` (3.10+) reads well for dispatching on the shape of structured data, but a plain `if`/`elif` chain is clearer for simple value checks, so do not force it. |
-| Know inline script metadata | PEP 723 (`# /// script`) lets a single-file script declare its dependencies so tools like `uv run` execute it in an isolated environment without a separate project setup. |
+| Raise specific exceptions; define domain classes | A precise `ValueError` or `InsufficientFundsError` lets callers branch on the failure instead of catching everything or parsing messages. |
+| Never silently swallow | `except: pass` hides the bug. Log, re-raise, or handle observably. |
+| EAFP vs LBYL deliberately | Prefer `try`/`except` when failure is rare or a pre-check would race; check first only when the check is cheap and failure is common. Use `try`/`else`/`finally` to keep the happy path and cleanup separated. |
+| `__slots__` for high-volume classes | Cuts per-instance memory and blocks accidental attribute creation when a class is instantiated many thousands of times. |
+
+## Gotchas
+
+- Mutable default arguments evaluate once at definition: `def f(acc=[])` shares one list across calls. Default to `None` and create inside the body.
+- `@runtime_checkable` `isinstance` checks only that attributes exist, not their signatures, so it can pass for objects that fail static checking.
+- PEP 585/604 deprecations are silent at runtime: `typing.List`/`Optional` keep working, so "it runs" is not evidence the typing is current; lean on the checker.
+- `ruff format` does not sort imports; run `ruff check --select I --fix` (or `ruff check --fix`) for that.
+
+## Sources
+
+- [Python docs: What's New in 3.12](https://docs.python.org/3/whatsnew/3.12.html), [typing](https://docs.python.org/3/library/typing.html), [pathlib](https://docs.python.org/3/library/pathlib.html) - official; current language and stdlib behavior.
+- [Typing best practices](https://typing.python.org/en/latest/reference/best_practices.html) and [PEP 585](https://peps.python.org/pep-0585/) - official typing project and standard; generics, `X | None`, deprecation timeline.
+- [Astral: uv](https://docs.astral.sh/uv/), [Ruff rules](https://docs.astral.sh/ruff/rules/) and [formatter](https://docs.astral.sh/ruff/formatter/); [Black style](https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html) - tool vendors; the de facto modern toolchain and its defaults.
+- [mypy strict mode](https://mypy.readthedocs.io/en/stable/existing_code.html) and [pyright configuration](https://github.com/microsoft/pyright/blob/main/docs/configuration.md) - official; what strict mode enforces.
+- [Effective Python, 3rd ed.](https://effectivepython.com/) (Brett Slatkin) - authoritative expert book; match, f-strings, comprehensions, dataclasses.
+- [Hitchhiker's Guide to Python](https://docs.python-guide.org/writing/style/) - well-regarded community reference; idioms and the mutable-default warning.
