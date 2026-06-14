@@ -9,7 +9,7 @@ description: >-
   flow", or "verify it end to end in a browser". The deliverable is a
   pass/fail-with-evidence report, not a test file. Do not use for authoring an
   automated e2e suite (use Playwright via follow-tdd), for API-only validation
-  (use validate-api), or for visual design work (use design-ui).
+  (use validate-api), or for visual design work (use design-ui), or for a quality and accessibility critique (use audit-ui).
 ---
 
 ## Purpose

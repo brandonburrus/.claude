@@ -4,7 +4,7 @@ description: Use this skill when a request, idea, or direction is ambiguous, und
   or vague and needs clarification before any work starts, especially when the ask is
   missing who it is for, why now, what success looks like, or the binding constraint.
   Also use when the user says "grill me", "interview me", "clarify this", "stress-test
-  my thinking", "refine this idea", "ideate", "poke holes in this", or "am I missing
+  my thinking", "refine this idea", "ideate", "poke holes in my idea", or "am I missing
   something". Do not use for writing the resulting PRD (use write-product-spec), system
   design (use write-tech-spec), rewriting text to read more clearly, or single-fact
   ambiguities that one direct question resolves.

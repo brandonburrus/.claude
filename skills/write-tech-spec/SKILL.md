@@ -2,11 +2,11 @@
 name: write-tech-spec
 description: Use this skill when defining how a system or feature should be designed
   and built, writing a technical specification, system design document, architecture
-  spec, design doc, or RFC, or capturing technical constraints, interfaces, and
+  spec, design doc, or a design RFC, or capturing technical constraints, interfaces, and
   performance requirements. Also use when the user says "tech spec", "system design",
   "spec this out", or "how should we build this". Do not use for implementation
   task planning (use create-code-plan), product requirements or PRDs, or documenting
-  an existing system without design changes.
+  an existing system without design changes, or a persuasive RFC arguing to adopt an approach rather than specify the design (use write-proposal).
 ---
 
 ## Purpose

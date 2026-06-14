@@ -4,7 +4,7 @@ description: Use this skill when building, styling, or redesigning any kind of U
   Interface, including web components, pages, landing pages, dashboards, or frontend
   interfaces. Also use when the user says "make this look better", "style this",
   "design a page for X", or asks for UI polish. Do not use for auditing existing
-  UI without changing it, writing backend logic with no visual output, or generating
+  UI without changing it (use audit-ui), writing backend logic with no visual output, or generating
   design tokens without an actual UI component.
 ---
 

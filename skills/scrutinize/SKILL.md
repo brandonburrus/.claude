@@ -5,7 +5,7 @@ description: >-
   decision from an outsider's perspective: first whether it should exist at all
   or a simpler path reaches the same goal, then tracing the real end-to-end path
   to verify it does what it claims. Use when the user says "scrutinize this",
-  "sanity-check this", "poke holes in this", "second opinion", or "is this the
+  "sanity-check this", "poke holes in this plan", "second opinion", or "is this the
   right approach". Do not use for line-level code review of a PR (use review-pull-request), for
   verifying a finished task meets its spec with fresh evidence (use the
   completion-verifier agent), for whole-system architecture evaluation (use

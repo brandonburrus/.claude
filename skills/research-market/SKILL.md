@@ -6,7 +6,7 @@ description: >-
   landscape, real demand signals, and where a wedge to fit might be. Use when
   the user says "market research", "is there a market for this", "product-market
   fit", "PMF", "market size", "TAM", "competitive landscape", "who are the
-  competitors", "is this worth building", or "validate the market". The
+  competitors", or "validate the market". The
   deliverable is an evidence-grounded opportunity brief with a go, refine, or
   no-go read. Do not use for defining the product once the market is validated
   (use write-product-spec), for synthesizing feedback from existing users (use
