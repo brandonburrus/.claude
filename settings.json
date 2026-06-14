@@ -15,7 +15,8 @@
       "Edit",
       "Bash",
       "Agent",
-      "WebFetch"
+      "WebFetch",
+      "mcp__claude_ai_Second_Brain"
     ],
     "deny": [
       "Bash(cat .env)",
