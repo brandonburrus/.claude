@@ -3,6 +3,7 @@ Apply these practices whenever planning, writing, or reviewing TypeScript code. 
 ## Contents
 
 - [Type system](#type-system)
+- [Generics and classes](#generics-and-classes)
 - [tsconfig](#tsconfig)
 - [Tooling and lint](#tooling-and-lint)
 - [Modern idioms](#modern-idioms)
@@ -24,6 +25,17 @@ Apply these practices whenever planning, writing, or reviewing TypeScript code. 
 | Avoid bare `{}`, `object`, `Object` | `{}` means "any non-nullish value", not "empty object". Use `Record<string, unknown>` for arbitrary objects, `Record<PropertyKey, never>` for a truly empty one. The one good use is the `<T extends {}>` constraint (excludes null/undefined). |
 | `type` vs `interface` | Interfaces for extensible object shapes, public API contracts, and class `implements` (the Handbook's default, and `extends` can be faster to typecheck than `&`). `type` for unions, intersections, mapped/conditional types, and tuples, which interfaces cannot express. Beware interface declaration merging: useful for ambient augmentation, a silent footgun for app types. |
 | Mark `readonly` where mutation is unintended | Communicates intent and lets the compiler block accidental mutation. |
+| Use `Array<T>` for complex element types | `T[]` and `readonly T[]` read fine for simple elements, but switch to `Array<string \| number>` / `ReadonlyArray<T>` for unions and complex elements, where the bracket form gets visually ambiguous. |
+| Keep nullability out of type aliases | Do not bake `\| null`/`\| undefined` into a reusable `type`/`interface`; add it at the point of use, and prefer an optional `field?: T` over `field: T \| undefined` so absence is handled close to its origin. |
+
+## Generics and classes
+
+| Practice | Detail |
+|---|---|
+| Constrain type parameters; avoid return-only generics | A type parameter used only in the return position cannot be inferred from arguments and forces the caller to guess, so make sure each appears in an argument position and `extends`-constrain it rather than leaving it open. |
+| Reach for advanced type features only when needed | Mapped, conditional, and template-literal types are powerful but hard to read and slow to typecheck; use the simplest construct that expresses the shape, preferring a discriminated union or a plain generic over a clever conditional type. |
+| Use parameter properties for fields | `constructor(private readonly repo: Repo) {}` declares and assigns the field in one place; initialize fields at their declaration and avoid empty constructors. |
+| Prefer TS `private` over JS `#private` | The `#name` runtime-private field adds cost and bundle weight for no real gain when static checking already enforces access; use the `private` keyword. |
 
 ## tsconfig
 
@@ -54,7 +66,7 @@ Pick `moduleResolution` by target: `"nodenext"` (with `module: "nodenext"`) for 
 | Practice | Detail |
 |---|---|
 | `using` / `await using` for cleanup (5.2) | Deterministic resource cleanup via `Symbol.dispose`/`Symbol.asyncDispose`, running at scope exit (including early return and throw) in LIFO order; replaces try/finally for files, connections, locks. Use `DisposableStack` for ad-hoc cleanup. Needs `target`/`lib` es2022 + `esnext.disposable` and usually a runtime polyfill, so it does not yet work everywhere. |
-| Prefer native decorators (5.0) for new code | Stage-3 ECMAScript decorators need no flag. Do not mix with legacy `experimentalDecorators` + `emitDecoratorMetadata`, which NestJS, Angular, and TypeORM still require; verify per framework before choosing the native flavor. |
+| Prefer native decorators (5.0) for new code | Stage-3 ECMAScript decorators need no flag. Do not mix with legacy `experimentalDecorators` + `emitDecoratorMetadata`, which NestJS, Angular, and TypeORM still require; verify per framework before choosing the native flavor. Consume framework-provided decorators rather than authoring your own, and place a JSDoc comment before the decorator, not between it and the symbol. |
 | Named exports, never default | Uniform names across imports, better refactors and auto-import. Also avoid `export let`; expose a getter instead. |
 | No `namespace` | Use ES modules and files; the only modern exception is `declare global` / ambient module augmentation. |
 | Promises over callbacks | `async/await` composes with `Promise.all`/`race` and propagates errors cleanly; wrap legacy callback APIs with `util.promisify`. |
@@ -87,13 +99,15 @@ Prefer built-ins over re-implementing a transformation; hand-rolled equivalents 
 - `void`-ing a promise satisfies the linter but leaves the rejection unhandled at runtime.
 - `<const T extends string[]>` silently does nothing; the constraint must be `readonly string[]`.
 - A `:` annotation discards literal types (`as const`/`satisfies` keep them); annotating a config object too eagerly loses key autocomplete.
-- `as` is an unchecked assertion that can break at runtime; reserve it for cases where you genuinely know more than the compiler (DOM, loose libs).
+- `as` is an unchecked assertion that can break at runtime; reserve it for cases where you genuinely know more than the compiler (DOM, loose libs). Use `as` syntax, never angle-bracket `<T>x` (it clashes with JSX), and prefer a type annotation over `as` on an object literal so excess or missing properties are still caught.
+- Spread only objects into objects and iterables into arrays; spreading a primitive, `null`, or `undefined` is a bug the type checker is configured to flag.
 - `verbatimModuleSyntax` and eslint `consistent-type-imports` fight if both are on; choose one.
 
 ## Sources
 
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html), [5.0](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-0.html) and [5.2](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-2.html) release notes, [TSConfig reference](https://www.typescriptlang.org/tsconfig/) - official, authoritative on language and flag semantics.
 - [typescript-eslint configs](https://typescript-eslint.io/users/configs/) and rule docs ([no-floating-promises](https://typescript-eslint.io/rules/no-floating-promises/), [consistent-type-imports](https://typescript-eslint.io/rules/consistent-type-imports/)) - the canonical TS linting project.
-- [Google TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html) - major maintained style guide; enum/namespace/any/exports conventions.
+- [Google TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html) (also published at [ts.dev/style](https://ts.dev/style/), the same document) - major maintained style guide; enum/namespace/any/exports conventions, `Array<T>` for complex elements, parameter properties, `private` over `#`, nullability-at-use, and the spread/assertion rules.
+- [Mastering TypeScript (TypeScriptWorld)](https://typescriptworld.com/mastering-typescript-a-comprehensive-guide-to-best-practices-and-advanced-patterns) - applied best-practices and advanced-pattern guide; generics constraints and the return-only-generic caution.
 - [Total TypeScript](https://www.totaltypescript.com/) (Matt Pocock) - recognized educator; `satisfies`, enum, and empty-object guidance.
 - [Andrew Branch on nodenext](https://blog.andrewbran.ch/is-nodenext-right-for-libraries-that-dont-target-node-js/) - TS-team member; module-resolution trade-offs.
