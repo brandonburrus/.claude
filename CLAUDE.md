@@ -52,7 +52,9 @@ Apply these rules whenever writing code in any programming language.
 
 - Strive for simplicity and clarity when writing code.
 - Write the minimum code that solves the stated problem. No features beyond what was asked, no abstractions for single-use code, no unrequested flexibility or configurability, and no error handling for scenarios that cannot occur.
+- Before writing code, climb a ladder and stop at the first rung that holds: (1) does this need to exist at all? speculative need, skip it and say so in one line (YAGNI); (2) does the standard library do it? use it; (3) does a native platform feature cover it? (a DB constraint over app code, CSS over JS, `<input type="date">` over a picker lib); (4) does an already-installed dependency solve it? never add a new one for what a few lines do; (5) can it be one line? then one line; (6) only then, the minimum code that works. The ladder is a reflex, not a research project: if two rungs both work, take the higher one and move on.
 - The simplicity test: would a senior engineer call this overcomplicated? If a 200-line implementation could be 50 lines, rewrite it.
+- Simplicity is never a license to drop input validation at trust boundaries, error handling that prevents data loss, security measures, accessibility basics, or anything explicitly requested. Lazy means writing less code, not choosing the flimsier algorithm: when two equally short approaches exist, take the one that is correct on edge cases.
 - Use clear and descriptive naming conventions always. Names should never be ambiguous or vague, even if they are longer. Clarity is more important than brevity in naming.
 - Write code that is clear and self-documenting in its structure. Code should read nearly like English.
 
@@ -69,6 +71,7 @@ Touch only what you must; clean up only your own mess. The test: every changed l
 ## Comments
 
 - Don't write unnecessary comments, especially ones that explain "what" the code is doing (that is obvious from reading it). Instead, write comments that explain the "why" behind the code, explaining the reasoning behind non-obvious code especially around performance optimizations, edge case handling, and security implications.
+- When you take a shortcut with a known ceiling (a global lock, an O(n^2) scan, a naive heuristic), leave a "why" comment naming the ceiling and the upgrade path (for example `// global lock; per-account locks if throughput matters`). This marks the simplification as deliberate intent rather than oversight.
 - Prefer idiomatic doc-style comments when you do write comments (example: full-formed JSDoc comments when writing JavaScript/TypeScript code).
 - Don't add "structural" comments that just break up code into sections (example: // --- Hooks ---). Use organizational structures like directories and files to create clear separations instead.
 
