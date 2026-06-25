@@ -26,3 +26,5 @@ daemon/
 jobs/
 _refs/
 .last-update-result.json
+gh-pr-status-cache.json
+skills/visual-plan/
