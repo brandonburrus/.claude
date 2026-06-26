@@ -2,14 +2,14 @@
 name: validate-web
 description: >-
   This skill should be used to validate a web change by driving a real browser with the
-  agent-browser CLI, confirming user-visible behavior and capturing evidence
-  (screenshots, console, network). Use after implementing a frontend change, or
-  when the user says "validate this in the browser", "check the UI works",
-  "smoke-test the page", "does the form actually submit", "click through the
-  flow", or "verify it end to end in a browser". The deliverable is a
-  pass/fail-with-evidence report, not a test file. Do not use for authoring an
-  automated e2e suite (use Playwright via follow-tdd), for API-only validation
-  (use validate-api), or for visual design work (use design-ui), or for a quality and accessibility critique (use audit-ui).
+  agent-browser CLI, confirming user-visible behavior and capturing evidence (screenshots,
+  console, network). It applies after implementing a frontend change, or when the user says
+  "validate this in the browser", "check the UI works", "smoke-test the page", "does the form
+  actually submit", "click through the flow", or "verify it end to end in a browser". The
+  deliverable is a pass/fail-with-evidence report, not a test file. It should not be used for
+  authoring an automated e2e suite (use Playwright via follow-tdd), for API-only validation (use
+  validate-api), or for visual design work (use design-ui), or for a quality and accessibility
+  critique (use audit-ui).
 ---
 
 ## Purpose

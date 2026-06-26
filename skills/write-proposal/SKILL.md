@@ -1,13 +1,15 @@
 ---
 name: write-proposal
 description: >-
-  This skill should be used when writing persuasive technical documents (spikes,
-  proposals, RFCs, or vendor evaluations) where the goal is to convince
-  stakeholders to adopt a recommended approach. Use when the user says "write a proposal", "make the case for", "pitch this", "convince the team to", "write an RFC to adopt X", or "spike writeup"; this is the persuade-to-adopt RFC, whereas a design RFC that specifies how to build is write-tech-spec. Do not use for pure
-  documentation, reference material, or educational content where the goal is
-  reader understanding rather than persuasion, for recording a decision
-  already made (use write-adr), or for the staged migration plan itself (use
-  create-migration-plan; this skill writes the pitch that gets it adopted).
+  This skill should be used when writing persuasive technical documents (spikes, proposals, RFCs,
+  or vendor evaluations) where the goal is to convince stakeholders to adopt a recommended
+  approach. It applies when the user says "write a proposal", "make the case for", "pitch this",
+  "convince the team to", "write an RFC to adopt X", or "spike writeup"; this is the
+  persuade-to-adopt RFC, whereas a design RFC that specifies how to build is write-tech-spec. It
+  should not be used for pure documentation, reference material, or educational content where the
+  goal is reader understanding rather than persuasion, for recording a decision already made (use
+  write-adr), or for the staged migration plan itself (use create-migration-plan; this skill
+  writes the pitch that gets it adopted).
 ---
 
 ## Purpose

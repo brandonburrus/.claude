@@ -1,14 +1,13 @@
 ---
 name: execute-code-plan
 description: >-
-  This skill should be used to execute or carry out an already-approved code plan, running
-  its tasks to completion through the subagent pipeline. Use when the user says
-  "execute the plan", "run the plan", "implement this plan", "build out the
-  plan", "carry out the code plan", "run the pipeline on this plan", or hands
-  over an approved plan and says to build it. Do not use for creating or
-  designing the plan (use create-code-plan, or the implementation-planner
-  agent), for a single isolated task with no plan (dispatch the task-implementer
-  agent directly), or when no approved plan exists yet.
+  This skill should be used to execute or carry out an already-approved code plan, running its
+  tasks to completion through the subagent pipeline. It applies when the user says "execute the
+  plan", "run the plan", "implement this plan", "build out the plan", "carry out the code plan",
+  "run the pipeline on this plan", or hands over an approved plan and says to build it. It should
+  not be used for creating or designing the plan (use create-code-plan, or the
+  implementation-planner agent), for a single isolated task with no plan (dispatch the
+  task-implementer agent directly), or when no approved plan exists yet.
 ---
 
 ## Purpose

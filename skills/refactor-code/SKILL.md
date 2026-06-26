@@ -1,12 +1,12 @@
 ---
 name: refactor-code
-description: This skill should be used when refactoring or simplifying working code without
-  changing its behavior, including reducing complexity, improving names, removing
-  duplication, untangling nested logic, or cleaning up after a feature lands. Use
-  when the user says "refactor this", "simplify this", "clean this up", "this code
-  is a mess", or "make this readable". Do not use for fixing bugs (use fix), adding
-  features, or architectural rewrites that change behavior (plan those with
-  create-code-plan).
+description: >-
+  This skill should be used when refactoring or simplifying working code without changing its
+  behavior, including reducing complexity, improving names, removing duplication, untangling
+  nested logic, or cleaning up after a feature lands. It applies when the user says "refactor
+  this", "simplify this", "clean this up", "this code is a mess", or "make this readable". It
+  should not be used for fixing bugs (use fix), adding features, or architectural rewrites that
+  change behavior (plan those with create-code-plan).
 ---
 
 ## Purpose

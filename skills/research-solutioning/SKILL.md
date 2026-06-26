@@ -2,16 +2,15 @@
 name: research-solutioning
 description: >-
   This skill should be used to research and compare specific external technical solutions
-  (libraries, frameworks, SaaS, databases, managed services, or commercial
-  vendors) against your requirements and choose one. Use when the user says
-  "compare X vs Y", "evaluate these tools", "which database, library, framework,
-  or service should we use", "vendor comparison", "which auth provider",
-  "Postgres vs Mongo", "shortlist tools for", or "pick a tool for". The
-  deliverable is an evidence-grounded comparison matrix and a recommendation
-  with trade-offs. Do not use for deciding the overall approach or whether to
-  build versus buy at all (use explore-solutions), for digesting the docs of a
-  tool already chosen (use ground-in-docs), for assessing a product's market
-  (use research-market), or for general fact-finding (use deep-research).
+  (libraries, frameworks, SaaS, databases, managed services, or commercial vendors) against your
+  requirements and choose one. It applies when the user says "compare X vs Y", "evaluate these
+  tools", "which database, library, framework, or service should we use", "vendor comparison",
+  "which auth provider", "Postgres vs Mongo", "shortlist tools for", or "pick a tool for". The
+  deliverable is an evidence-grounded comparison matrix and a recommendation with trade-offs. It
+  should not be used for deciding the overall approach or whether to build versus buy at all (use
+  explore-solutions), for digesting the docs of a tool already chosen (use ground-in-docs), for
+  assessing a product's market (use research-market), or for general fact-finding (use
+  deep-research).
 ---
 
 ## Purpose

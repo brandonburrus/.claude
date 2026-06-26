@@ -1,12 +1,12 @@
 ---
 name: code-with-best-practices
 description: >-
-  This skill should be used when planning, writing, or reviewing code in TypeScript,
-  JavaScript, Python, Go, Rust, SQL, or Bash, or when working with React,
-  Node.js, Vitest, Playwright, Terraform, AWS CDK, pandas, NumPy, polars,
-  marimo, or Jupyter notebooks. Use for any implementation work in these stacks
-  even when the user never says "best practices". Do not use for API contract design (use design-api), database
-  schema design (use design-data-schema), or UI visual design (use design-ui).
+  This skill should be used when planning, writing, or reviewing code in TypeScript, JavaScript,
+  Python, Go, Rust, SQL, or Bash, or when working with React, Node.js, Vitest, Playwright,
+  Terraform, AWS CDK, pandas, NumPy, polars, marimo, or Jupyter notebooks. It applies to any
+  implementation work in these stacks even when the user never says "best practices". It should
+  not be used for API contract design (use design-api), database schema design (use
+  design-data-schema), or UI visual design (use design-ui).
 ---
 
 ## Purpose

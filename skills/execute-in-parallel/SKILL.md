@@ -1,18 +1,16 @@
 ---
 name: execute-in-parallel
 description: >-
-  This skill should be used to structure work across multiple concurrent subagents for speed
-  or quality: fanning out genuinely independent tasks, generating several
-  competing solutions and judging them, or adversarially verifying findings with
-  independent skeptics. Use when the user says "run these in parallel",
-  "parallelize this", "fan out agents", "do these at the same time", "generate a
-  few versions and pick the best", "competitive generation", "judge multiple
-  approaches", "use worktrees for parallel work", or "speed this up with
-  concurrency". Do not use for executing an already-approved code plan's
-  implement/verify pipeline (use execute-code-plan), for the line-by-line
-  mechanics of authoring a Workflow orchestration script (that is the Workflow
-  tool's own surface), or for reasoning through solution options as a one-time
-  analytical decision without spawning agents (use explore-solutions).
+  This skill should be used to structure work across multiple concurrent subagents for speed or
+  quality: fanning out genuinely independent tasks, generating several competing solutions and
+  judging them, or adversarially verifying findings with independent skeptics. It applies when the
+  user says "run these in parallel", "parallelize this", "fan out agents", "do these at the same
+  time", "generate a few versions and pick the best", "competitive generation", "judge multiple
+  approaches", "use worktrees for parallel work", or "speed this up with concurrency". It should
+  not be used for executing an already-approved code plan's implement/verify pipeline (use
+  execute-code-plan), for the line-by-line mechanics of authoring a Workflow orchestration script
+  (that is the Workflow tool's own surface), or for reasoning through solution options as a
+  one-time analytical decision without spawning agents (use explore-solutions).
 ---
 
 ## Purpose

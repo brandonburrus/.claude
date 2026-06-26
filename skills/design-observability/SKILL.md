@@ -1,16 +1,15 @@
 ---
 name: design-observability
 description: >-
-  This skill should be used when designing how a service is monitored before an incident:
-  choosing what metrics, logs, and traces to emit, defining SLIs/SLOs and error
-  budgets, designing alerts and on-call paging, building service-health
-  dashboards, or instrumenting code for visibility. Use when the user says "set up
-  monitoring", "add observability", "what should we track", "define SLOs", "design
-  the alerts", "we have no visibility into X", "we got paged for the wrong thing",
-  or "alert fatigue". Do not use for running an active outage (use
-  respond-to-incident), release-day readiness and the rollback plan (use
-  prepare-for-deploy), making something measured faster (use optimize-performance),
-  or writing the post-incident RCA (use write-post-mortem).
+  This skill should be used when designing how a service is monitored before an incident: choosing
+  what metrics, logs, and traces to emit, defining SLIs/SLOs and error budgets, designing alerts
+  and on-call paging, building service-health dashboards, or instrumenting code for visibility. It
+  applies when the user says "set up monitoring", "add observability", "what should we track",
+  "define SLOs", "design the alerts", "we have no visibility into X", "we got paged for the wrong
+  thing", or "alert fatigue". It should not be used for running an active outage (use
+  respond-to-incident), release-day readiness and the rollback plan (use prepare-for-deploy),
+  making something measured faster (use optimize-performance), or writing the post-incident RCA
+  (use write-post-mortem).
 ---
 
 ## Purpose

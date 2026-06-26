@@ -1,14 +1,13 @@
 ---
 name: design-cli
 description: >-
-  This skill should be used when designing or building a command-line tool: a durable CLI
-  that wraps an API, SDK, service, or script and exposes composable commands
-  with stable output. Use when the user says "build a CLI for X", "make a
-  command-line tool", "wrap this API in a CLI", "turn this script into a real
-  tool", or wants reusable read/write commands with auth and JSON output. Do
-  not use for designing the HTTP or GraphQL contract a service exposes (use
-  design-api), for a throwaway one-off script that solves a single task in
-  place, or for general code implementation (use code-with-best-practices).
+  This skill should be used when designing or building a command-line tool: a durable CLI that
+  wraps an API, SDK, service, or script and exposes composable commands with stable output. It
+  applies when the user says "build a CLI for X", "make a command-line tool", "wrap this API in a
+  CLI", "turn this script into a real tool", or wants reusable read/write commands with auth and
+  JSON output. It should not be used for designing the HTTP or GraphQL contract a service exposes
+  (use design-api), for a throwaway one-off script that solves a single task in place, or for
+  general code implementation (use code-with-best-practices).
 ---
 
 ## Purpose

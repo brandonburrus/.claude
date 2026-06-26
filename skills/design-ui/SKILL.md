@@ -1,11 +1,12 @@
 ---
 name: design-ui
-description: This skill should be used when building, styling, or redesigning any kind of User
-  Interface, including web components, pages, landing pages, dashboards, or frontend
-  interfaces. Also use when the user says "make this look better", "style this",
-  "design a page for X", or asks for UI polish. Do not use for auditing existing
-  UI without changing it (use audit-ui), writing backend logic with no visual output, or generating
-  design tokens without an actual UI component.
+description: >-
+  This skill should be used when building, styling, or redesigning any kind of User Interface,
+  including web components, pages, landing pages, dashboards, or frontend interfaces. It also
+  applies when the user says "make this look better", "style this", "design a page for X", or asks
+  for UI polish. It should not be used for auditing existing UI without changing it (use
+  audit-ui), writing backend logic with no visual output, or generating design tokens without an
+  actual UI component.
 ---
 
 ## Purpose

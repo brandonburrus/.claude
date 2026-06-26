@@ -1,12 +1,12 @@
 ---
 name: fix
-description: This skill should be used when anything breaks or behaves unexpectedly and before
-  proposing any fix. Use for bug reports, failing or flaky tests, build failures,
-  crashes, regressions, performance degradation, and pasted stack traces or error
-  logs. Also use when the user says "debug this", "fix this bug", "why is this
-  failing", "it worked before", or "something is broken". Do not use for building
-  new features (use follow-tdd) or for troubleshooting Claude Code
-  itself (use the bundled /debug).
+description: >-
+  This skill should be used when anything breaks or behaves unexpectedly and before proposing any
+  fix. It applies to bug reports, failing or flaky tests, build failures, crashes, regressions,
+  performance degradation, and pasted stack traces or error logs. It also applies when the user
+  says "debug this", "fix this bug", "why is this failing", "it worked before", or "something is
+  broken". It should not be used for building new features (use follow-tdd) or for troubleshooting
+  Claude Code itself (use the bundled /debug).
 ---
 
 ## Purpose

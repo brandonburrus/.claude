@@ -1,12 +1,12 @@
 ---
 name: write-post-mortem
-description: This skill should be used when writing a post-mortem, postmortem, RCA, or root
-  cause analysis for a fixed and validated bug. Use when the user says "write the
-  post-mortem", "document this fix", "write up the root cause", "close out this bug
-  with a writeup", or when a debugging session has landed a validated fix worth
-  recording. Do not use for customer-facing incident reports (timeline, blast
-  radius, and comms scope), for bugs not yet fixed and validated, or for trivial
-  one-line fixes where the PR description is the record.
+description: >-
+  This skill should be used when writing a post-mortem, postmortem, RCA, or root cause analysis
+  for a fixed and validated bug. It applies when the user says "write the post-mortem", "document
+  this fix", "write up the root cause", "close out this bug with a writeup", or when a debugging
+  session has landed a validated fix worth recording. It should not be used for customer-facing
+  incident reports (timeline, blast radius, and comms scope), for bugs not yet fixed and
+  validated, or for trivial one-line fixes where the PR description is the record.
 ---
 
 ## Purpose

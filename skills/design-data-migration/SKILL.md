@@ -1,17 +1,16 @@
 ---
 name: design-data-migration
 description: >-
-  This skill should be used when writing or running a database migration: adding, altering,
-  or dropping a column or index on a live table, backfilling or transforming data
-  at scale, making a schema change zero-downtime, or authoring migration files in
-  Prisma, Drizzle, Kysely, Django, Alembic, Rails, or golang-migrate. Use when the
-  user says "write the migration", "add a column without downtime", "this
-  migration locks the table", "create the index concurrently", "backfill this
-  column", or "the migration tool wraps it in a transaction". Do not use for
-  planning the staged rollout and deprecation sequence (use create-migration-plan,
-  which decides the stages this skill then writes), designing the target tables,
-  keys, and indexes (use design-data-schema), or writing ordinary application
-  queries (use code-with-best-practices with the SQL reference).
+  This skill should be used when writing or running a database migration: adding, altering, or
+  dropping a column or index on a live table, backfilling or transforming data at scale, making a
+  schema change zero-downtime, or authoring migration files in Prisma, Drizzle, Kysely, Django,
+  Alembic, Rails, or golang-migrate. It applies when the user says "write the migration", "add a
+  column without downtime", "this migration locks the table", "create the index concurrently",
+  "backfill this column", or "the migration tool wraps it in a transaction". It should not be used
+  for planning the staged rollout and deprecation sequence (use create-migration-plan, which
+  decides the stages this skill then writes), designing the target tables, keys, and indexes (use
+  design-data-schema), or writing ordinary application queries (use code-with-best-practices with
+  the SQL reference).
 ---
 
 ## Purpose

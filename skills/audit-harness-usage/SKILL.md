@@ -1,16 +1,14 @@
 ---
 name: audit-harness-usage
 description: >-
-  This skill should be used to mine your own Claude Code session history for signals that
-  improve the harness: which skills never fire in real use, which fire most, and
-  where repeated manual corrections point to a missing hook or skill. Use when the
-  user says "which skills never fire", "audit harness usage", "analyze my
-  transcripts", "what should I turn into a hook", "find repeated corrections",
-  "is my harness actually working", or "what skills are unused". Do not use for
-  testing whether a skill changes behavior via baseline runs (use
-  audit-skill-efficacy), for auditing AGENTS.md coverage in a codebase (use
-  audit-agent-context), or for capturing a single learning from the current
-  session (use learn-from-context).
+  This skill should be used to mine your own Claude Code session history for signals that improve
+  the harness: which skills never fire in real use, which fire most, and where repeated manual
+  corrections point to a missing hook or skill. It applies when the user says "which skills never
+  fire", "audit harness usage", "analyze my transcripts", "what should I turn into a hook", "find
+  repeated corrections", "is my harness actually working", or "what skills are unused". It should
+  not be used for testing whether a skill changes behavior via baseline runs (use
+  audit-skill-efficacy), for auditing AGENTS.md coverage in a codebase (use audit-agent-context),
+  or for capturing a single learning from the current session (use learn-from-context).
 ---
 
 ## Purpose

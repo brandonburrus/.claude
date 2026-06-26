@@ -1,14 +1,13 @@
 ---
 name: edit-pdf
 description: >-
-  This skill should be used when creating, editing, or reading PDF files, including
-  extracting text and tables, merging or splitting documents, rotating pages,
-  filling form fields, adding watermarks or page numbers, and generating new
-  PDFs such as reports or invoices. Use when the user says "read this PDF",
-  "fill out this form", "merge these PDFs", "make a PDF of", or references a
-  .pdf file. Do not use for Word documents (use edit-word-doc), for rendering
-  Markdown to PDF when a site generator or pandoc pipeline already exists, or
-  for OCR of scanned documents (flag it; OCR is out of scope).
+  This skill should be used when creating, editing, or reading PDF files, including extracting
+  text and tables, merging or splitting documents, rotating pages, filling form fields, adding
+  watermarks or page numbers, and generating new PDFs such as reports or invoices. It applies when
+  the user says "read this PDF", "fill out this form", "merge these PDFs", "make a PDF of", or
+  references a .pdf file. It should not be used for Word documents (use edit-word-doc), for
+  rendering Markdown to PDF when a site generator or pandoc pipeline already exists, or for OCR of
+  scanned documents (flag it; OCR is out of scope).
 ---
 
 ## Purpose

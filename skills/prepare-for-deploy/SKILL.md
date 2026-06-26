@@ -1,15 +1,13 @@
 ---
 name: prepare-for-deploy
 description: >-
-  This skill should be used when preparing a release or deployment: cutting a version,
-  changelog and version bumps, pre-deploy gates, staging deploys, rollback
-  plans, or when the user says "get this ready to deploy", "prep the
-  release", "cut a release", "ship this", or asks to deploy anything. The
-  skill prepares everything and hands the user the exact production deploy
-  step; it never executes a production deploy itself. Do not use for planning
-  schema or API migrations (use create-migration-plan), for fixing failures
-  the gates surface (use fix), or for live production incidents (stabilize
-  first, then write-post-mortem).
+  This skill should be used when preparing a release or deployment: cutting a version, changelog
+  and version bumps, pre-deploy gates, staging deploys, rollback plans, or when the user says "get
+  this ready to deploy", "prep the release", "cut a release", "ship this", or asks to deploy
+  anything. The skill prepares everything and hands the user the exact production deploy step; it
+  never executes a production deploy itself. It should not be used for planning schema or API
+  migrations (use create-migration-plan), for fixing failures the gates surface (use fix), or for
+  live production incidents (stabilize first, then write-post-mortem).
 ---
 
 ## Purpose

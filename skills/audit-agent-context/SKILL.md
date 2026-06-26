@@ -1,18 +1,16 @@
 ---
 name: audit-agent-context
 description: >-
-  This skill should be used to audit a codebase or project for proper AGENTS.md coverage
-  and conformance against the CLAUDE.md contextual-documentation standard:
-  whether the root and key subsystems have AGENTS.md files, whether each carries
-  the required sections, whether the content still matches the code, and whether
-  any decision logs follow the format and the gates. Use when the user says
-  "audit the AGENTS.md files", "audit agent context", "check AGENTS.md
-  coverage", "are the AGENTS.md files proper", "is this project documented for
-  agents", or "review the agent context docs". The deliverable is an audit
-  report with per-file findings and fixes. Do not use for writing a project's
-  first AGENTS.md (use onboard-codebase), for tightening the always-on context
-  to cut bloat (use tune-context), for capturing a new learning into AGENTS.md
-  (use learn-from-context), or for general architecture review (use
+  This skill should be used to audit a codebase or project for proper AGENTS.md coverage and
+  conformance against the CLAUDE.md contextual-documentation standard: whether the root and key
+  subsystems have AGENTS.md files, whether each carries the required sections, whether the content
+  still matches the code, and whether any decision logs follow the format and the gates. It
+  applies when the user says "audit the AGENTS.md files", "audit agent context", "check AGENTS.md
+  coverage", "are the AGENTS.md files proper", "is this project documented for agents", or "review
+  the agent context docs". The deliverable is an audit report with per-file findings and fixes. It
+  should not be used for writing a project's first AGENTS.md (use onboard-codebase), for
+  tightening the always-on context to cut bloat (use tune-context), for capturing a new learning
+  into AGENTS.md (use learn-from-context), or for general architecture review (use
   audit-architecture).
 ---
 

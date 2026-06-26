@@ -1,14 +1,13 @@
 ---
 name: triage-backlog
 description: >-
-  This skill should be used when triaging incoming issues, bug reports, or feature
-  requests on any tracker (GitHub Issues, Jira, Rally, Linear), including
-  evaluating new issues, requesting missing information, marking work ready
-  for implementation, or closing out-of-scope requests. Use when the user says
-  "triage the backlog", "what needs my attention", "look at issue #42", or
-  "prep these issues for agents". Do not use for creating work breakdowns from
-  specs (use decompose-into-tasks), for fixing the bug itself (use fix), or
-  for prioritization roadmapping across quarters.
+  This skill should be used when triaging incoming issues, bug reports, or feature requests on any
+  tracker (GitHub Issues, Jira, Rally, Linear), including evaluating new issues, requesting
+  missing information, marking work ready for implementation, or closing out-of-scope requests. It
+  applies when the user says "triage the backlog", "what needs my attention", "look at issue #42",
+  or "prep these issues for agents". It should not be used for creating work breakdowns from specs
+  (use decompose-into-tasks), for fixing the bug itself (use fix), or for prioritization
+  roadmapping across quarters.
 ---
 
 ## Purpose

@@ -1,16 +1,14 @@
 ---
 name: ground-in-docs
 description: >-
-  This skill should be used before coding against an unfamiliar, fast-moving, or
-  version-sensitive API, library, or framework: fetch and digest the official
-  documentation for the actually installed version instead of trusting
-  training data. Use when the user says "check the docs", "verify against the
-  documentation", "is this API still current", "ground this in the docs",
-  when a plan relies on a library whose API may have shifted since training,
-  or when an external API call keeps failing in ways that suggest a stale
-  signature. Do not use for Claude Code, Agent SDK, or Anthropic API
-  questions (the claude-code-guide agent owns those), or for research
-  unrelated to code being written (use deep-research).
+  This skill should be used before coding against an unfamiliar, fast-moving, or version-sensitive
+  API, library, or framework: fetch and digest the official documentation for the actually
+  installed version instead of trusting training data. It applies when the user says "check the
+  docs", "verify against the documentation", "is this API still current", "ground this in the
+  docs", when a plan relies on a library whose API may have shifted since training, or when an
+  external API call keeps failing in ways that suggest a stale signature. It should not be used
+  for Claude Code, Agent SDK, or Anthropic API questions (the claude-code-guide agent owns those),
+  or for research unrelated to code being written (use deep-research).
 ---
 
 ## Purpose

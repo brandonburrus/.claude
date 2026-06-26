@@ -1,12 +1,13 @@
 ---
 name: create-diagram
-description: This skill should be used when creating any kind of diagram, including architecture,
-  infrastructure, and cloud diagrams (AWS, Azure, GCP, Kubernetes, on-prem), network
-  topology, C4 models, flowcharts, sequence diagrams, state machines, ER diagrams,
-  class diagrams, Gantt charts, and git graphs. Use when the user says "diagram this",
-  "draw the architecture", "visualize this flow", or wants any visual representation
-  of a system or process. Do not use for UI mockups or wireframes (use design-ui), editing
-  existing images, or plotting charts from datasets.
+description: >-
+  This skill should be used when creating any kind of diagram, including architecture,
+  infrastructure, and cloud diagrams (AWS, Azure, GCP, Kubernetes, on-prem), network topology, C4
+  models, flowcharts, sequence diagrams, state machines, ER diagrams, class diagrams, Gantt
+  charts, and git graphs. It applies when the user says "diagram this", "draw the architecture",
+  "visualize this flow", or wants any visual representation of a system or process. It should not
+  be used for UI mockups or wireframes (use design-ui), editing existing images, or plotting
+  charts from datasets.
 ---
 
 ## Purpose

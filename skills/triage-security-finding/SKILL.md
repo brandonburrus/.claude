@@ -1,19 +1,17 @@
 ---
 name: triage-security-finding
 description: >-
-  This skill should be used to triage an incoming security finding to a disposition: a
-  dependency or scanner alert (Dependabot, Snyk, npm audit), a CVE advisory, a
-  SAST or DAST result, or a pentest or bug-bounty report. It decides whether the
-  finding is real, whether it is reachable and exploitable in your context, its
-  contextual severity, and the action. Use when the user says "triage this
-  security finding", "is this CVE exploitable", "Dependabot flagged this", "Snyk
-  alert", "npm audit found", "is this vulnerability real", "assess this pentest
-  finding", "is this reachable", or "what's the real severity". Do not use for
-  building security into a feature as you write it (use harden-security), for
-  auditing your own diff for new vulnerabilities (use the security-reviewer
-  agent or the bundled /security-review), for reproducing and fixing a confirmed
-  issue once triaged (use fix, then follow-tdd), or for responding to an active
-  breach (use respond-to-incident).
+  This skill should be used to triage an incoming security finding to a disposition: a dependency
+  or scanner alert (Dependabot, Snyk, npm audit), a CVE advisory, a SAST or DAST result, or a
+  pentest or bug-bounty report. It decides whether the finding is real, whether it is reachable
+  and exploitable in your context, its contextual severity, and the action. It applies when the
+  user says "triage this security finding", "is this CVE exploitable", "Dependabot flagged this",
+  "Snyk alert", "npm audit found", "is this vulnerability real", "assess this pentest finding",
+  "is this reachable", or "what's the real severity". It should not be used for building security
+  into a feature as you write it (use harden-security), for auditing your own diff for new
+  vulnerabilities (use the security-reviewer agent or the bundled /security-review), for
+  reproducing and fixing a confirmed issue once triaged (use fix, then follow-tdd), or for
+  responding to an active breach (use respond-to-incident).
 ---
 
 ## Purpose

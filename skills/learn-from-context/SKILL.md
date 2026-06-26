@@ -1,15 +1,14 @@
 ---
 name: learn-from-context
 description: >-
-  This skill should be used when extracting durable learnings from the current session,
-  including after the user corrects the same behavior, when a hard-won lesson,
-  gotcha, or convention surfaces mid-work, at natural wrap-up points, or when
-  the user says "what did we learn", "remember this", "make sure this sticks",
-  "don't make that mistake again", or "capture this for next time". Also use
-  proactively when noticing a repeated correction. Do not use for facts only
-  relevant to this conversation, for creating the skill itself once routing
-  says skill (use create-skill), or for wiring automation (use
-  create-claude-hook or update-config).
+  This skill should be used when extracting durable learnings from the current session, including
+  after the user corrects the same behavior, when a hard-won lesson, gotcha, or convention
+  surfaces mid-work, at natural wrap-up points, or when the user says "what did we learn",
+  "remember this", "make sure this sticks", "don't make that mistake again", or "capture this for
+  next time". It should also be used proactively when noticing a repeated correction. It should
+  not be used for facts only relevant to this conversation, for creating the skill itself once
+  routing says skill (use create-skill), or for wiring automation (use create-claude-hook or
+  update-config).
 ---
 
 ## Purpose

@@ -2,14 +2,13 @@
 name: run-retrospective
 description: >-
   This skill should be used to run a retrospective on a work period (a sprint, a project, a
-  release cycle, a quarter) and turn it into a few concrete, owned, dated actions
-  grounded in evidence. Use when the user says "run a retro", "retrospective",
-  "sprint retro", "project retro", "post-sprint review", "what went well and what
-  didn't", "let's reflect on the last cycle", or "start/stop/continue". Do not use
-  for the root-cause analysis of a single incident or outage (use
-  write-post-mortem), for extracting durable agent-behavior learnings into memory
-  (use learn-from-context), or for reporting status or outcomes up to leadership
-  (use translate-for-leadership).
+  release cycle, a quarter) and turn it into a few concrete, owned, dated actions grounded in
+  evidence. It applies when the user says "run a retro", "retrospective", "sprint retro", "project
+  retro", "post-sprint review", "what went well and what didn't", "let's reflect on the last
+  cycle", or "start/stop/continue". It should not be used for the root-cause analysis of a single
+  incident or outage (use write-post-mortem), for extracting durable agent-behavior learnings into
+  memory (use learn-from-context), or for reporting status or outcomes up to leadership (use
+  translate-for-leadership).
 ---
 
 ## Purpose

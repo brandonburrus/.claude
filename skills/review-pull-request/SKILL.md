@@ -1,13 +1,12 @@
 ---
 name: review-pull-request
 description: >-
-  This skill should be used when reviewing someone else's pull request or proposed
-  code changes. Use when the user says "review PR #42", "review this pull request",
-  "take a look at this PR", "what do you think of these changes", or asks for a
-  second opinion on a branch, diff, or commit range. Also use for reviewing a local
-  branch against a base when no PR exists. Do not use for opening a PR (use
-  open-pull-request), reviewing your own in-progress work mid-task, or rewriting
-  code for clarity (use refactor-code).
+  This skill should be used when reviewing someone else's pull request or proposed code changes.
+  It applies when the user says "review PR #42", "review this pull request", "take a look at this
+  PR", "what do you think of these changes", or asks for a second opinion on a branch, diff, or
+  commit range. It also applies to reviewing a local branch against a base when no PR exists. It
+  should not be used for opening a PR (use open-pull-request), reviewing your own in-progress work
+  mid-task, or rewriting code for clarity (use refactor-code).
 ---
 
 ## Purpose

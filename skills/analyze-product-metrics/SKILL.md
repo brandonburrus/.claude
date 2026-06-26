@@ -1,17 +1,16 @@
 ---
 name: analyze-product-metrics
 description: >-
-  This skill should be used after a feature or product ships, to turn usage and product
-  data into a ship / iterate / roll-back decision with statistical honesty. Use
-  when the user says "did the launch work", "analyze the metrics", "read the A/B
-  test", "is this experiment significant", "should we ship the variant",
-  "funnel analysis", "retention / cohort analysis", "why did activation drop",
-  "what's our north-star metric", "the feature is live, now what", or "are these
-  numbers real". Do not use for generic tabular data crunching with no product
-  decision attached (use analyze-data), for pre-launch market sizing from desk
-  research (use research-market), for pre-build demand validation before anything
-  exists (use validate-idea), or for building a dashboard or custom visualization
-  as the deliverable (use visualize-data).
+  This skill should be used after a feature or product ships, to turn usage and product data into
+  a ship / iterate / roll-back decision with statistical honesty. It applies when the user says
+  "did the launch work", "analyze the metrics", "read the A/B test", "is this experiment
+  significant", "should we ship the variant", "funnel analysis", "retention / cohort analysis",
+  "why did activation drop", "what's our north-star metric", "the feature is live, now what", or
+  "are these numbers real". It should not be used for generic tabular data crunching with no
+  product decision attached (use analyze-data), for pre-launch market sizing from desk research
+  (use research-market), for pre-build demand validation before anything exists (use
+  validate-idea), or for building a dashboard or custom visualization as the deliverable (use
+  visualize-data).
 ---
 
 ## Purpose

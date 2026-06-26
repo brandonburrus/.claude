@@ -1,12 +1,13 @@
 ---
 name: create-skill
-description: This skill should be used when the user wants to create a new personal skill, update
-  or improve an existing skill, add a skill to their skills library, teach the agent
-  a new reusable behavior, or capture domain expertise as a skill. Also use when the
-  user says "make this a skill", "create a skill for X", "improve my X skill", "update
-  the skill", "add X to the skill", "the skill got this wrong", "I want to always
-  do Y", or pastes instructions and asks to invoke them on demand. Not for
-  configuring automated hooks (use update-config) or for AGENTS.md and CLAUDE.md files.
+description: >-
+  This skill should be used when the user wants to create a new personal skill, update or improve
+  an existing skill, add a skill to their skills library, teach the agent a new reusable behavior,
+  or capture domain expertise as a skill. It also applies when the user says "make this a skill",
+  "create a skill for X", "improve my X skill", "update the skill", "add X to the skill", "the
+  skill got this wrong", "I want to always do Y", or pastes instructions and asks to invoke them
+  on demand. Not for configuring automated hooks (use update-config) or for AGENTS.md and
+  CLAUDE.md files.
 ---
 
 ## Purpose

@@ -1,15 +1,14 @@
 ---
 name: audit-architecture
 description: >-
-  This skill should be used when evaluating a codebase's architecture and surfacing
-  improvement candidates, including finding refactoring opportunities,
-  consolidating tightly-coupled modules, making code more testable, or when
-  the user says "audit the architecture", "review the structure of this
-  codebase", "why is this so hard to change", or "find tech debt". Also use
-  when the fix skill escalates after repeated failed fixes in one area. Do not
-  use for designing new systems (use write-tech-spec), for implementing the
-  improvements it proposes (use create-code-plan then refactor-code), or for
-  reviewing a single change (use review-pull-request).
+  This skill should be used when evaluating a codebase's architecture and surfacing improvement
+  candidates, including finding refactoring opportunities, consolidating tightly-coupled modules,
+  making code more testable, or when the user says "audit the architecture", "review the structure
+  of this codebase", "why is this so hard to change", or "find tech debt". It also applies when
+  the fix skill escalates after repeated failed fixes in one area. It should not be used for
+  designing new systems (use write-tech-spec), for implementing the improvements it proposes (use
+  create-code-plan then refactor-code), or for reviewing a single change (use
+  review-pull-request).
 ---
 
 ## Purpose

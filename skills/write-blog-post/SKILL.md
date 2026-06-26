@@ -1,8 +1,9 @@
 ---
 name: write-blog-post
-description: This skill should be used when drafting, editing, or writing blog posts for blog.brandonburrus.com.
-  Do not use for Confluence docs, READMEs, internal technical writing, or any writing
-  not destined for the blog.
+description: >-
+  This skill should be used when drafting, editing, or writing blog posts for
+  blog.brandonburrus.com. It should not be used for Confluence docs, READMEs, internal technical
+  writing, or any writing not destined for the blog.
 ---
 
 ## Purpose

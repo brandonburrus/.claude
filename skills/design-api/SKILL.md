@@ -1,12 +1,12 @@
 ---
 name: design-api
-description: This skill should be used when designing or reviewing an API contract, including
-  REST endpoints, GraphQL schemas, resource naming, pagination, error formats,
-  versioning, auth scopes, or typed interfaces between modules. Use when the user
-  says "design the API", "add an endpoint", "what should this endpoint look like",
-  "model this in GraphQL", or is about to expose any new public interface surface.
-  Do not use for database schema design (use design-data-schema) or for
-  implementing an endpoint whose contract already exists.
+description: >-
+  This skill should be used when designing or reviewing an API contract, including REST endpoints,
+  GraphQL schemas, resource naming, pagination, error formats, versioning, auth scopes, or typed
+  interfaces between modules. It applies when the user says "design the API", "add an endpoint",
+  "what should this endpoint look like", "model this in GraphQL", or is about to expose any new
+  public interface surface. It should not be used for database schema design (use
+  design-data-schema) or for implementing an endpoint whose contract already exists.
 ---
 
 ## Purpose

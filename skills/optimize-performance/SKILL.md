@@ -1,13 +1,12 @@
 ---
 name: optimize-performance
 description: >-
-  This skill should be used when making code, pages, queries, or services faster, when
-  performance budgets or SLAs exist, when Core Web Vitals need improvement, or
-  when the user says "make this faster", "this is slow", "optimize this",
-  "reduce the bundle size", "speed up this query", or "improve load time". Do
-  not use for diagnosing a performance regression where something got slow
-  after a change (use fix to find the root cause first), or for refactoring
-  for readability without a speed goal (use refactor-code).
+  This skill should be used when making code, pages, queries, or services faster, when performance
+  budgets or SLAs exist, when Core Web Vitals need improvement, or when the user says "make this
+  faster", "this is slow", "optimize this", "reduce the bundle size", "speed up this query", or
+  "improve load time". It should not be used for diagnosing a performance regression where
+  something got slow after a change (use fix to find the root cause first), or for refactoring for
+  readability without a speed goal (use refactor-code).
 ---
 
 ## Purpose

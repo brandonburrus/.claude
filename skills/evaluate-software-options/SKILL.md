@@ -1,18 +1,16 @@
 ---
 name: evaluate-software-options
 description: >-
-  This skill should be used when finding, comparing, or choosing a commercial or
-  open-source software application to adopt for a business or team need,
-  including CRM, ITSM, project management, document management, data
-  visualization, HR, helpdesk, analytics, and similar product categories. Use
-  when the user says "what CRM/tool should we buy", "find software for X",
-  "compare these apps", "evaluate options for", "which platform should we use",
-  "what's the best tool for", or does not yet know which products exist in a
-  category. Do not use for selecting engineering building blocks a developer
-  integrates such as libraries, frameworks, databases, or managed services (use
-  research-solutioning), for deciding the overall approach or whether to build
-  versus buy (use explore-solutions), or for assessing a product's own market
-  opportunity (use research-market).
+  This skill should be used when finding, comparing, or choosing a commercial or open-source
+  software application to adopt for a business or team need, including CRM, ITSM, project
+  management, document management, data visualization, HR, helpdesk, analytics, and similar
+  product categories. It applies when the user says "what CRM/tool should we buy", "find software
+  for X", "compare these apps", "evaluate options for", "which platform should we use", "what's
+  the best tool for", or does not yet know which products exist in a category. It should not be
+  used for selecting engineering building blocks a developer integrates such as libraries,
+  frameworks, databases, or managed services (use research-solutioning), for deciding the overall
+  approach or whether to build versus buy (use explore-solutions), or for assessing a product's
+  own market opportunity (use research-market).
 ---
 
 ## Purpose

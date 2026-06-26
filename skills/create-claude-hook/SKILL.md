@@ -1,15 +1,13 @@
 ---
 name: create-claude-hook
 description: >-
-  This skill should be used when creating, editing, debugging, or improving a Claude Code
-  hook, meaning the scripts and settings entries that run automatically on
-  harness events such as PreToolUse, PostToolUse, SessionStart, Stop, or
-  UserPromptSubmit. Use when the user says "create a hook", "block X
-  automatically", "run the formatter after every edit", "inject context at
-  session start", "guard against Y before it happens", or "the hook isn't
-  firing". Do not use for skills (use create-skill), agents (use
-  create-claude-agent), or settings changes with no hook script involved (use
-  the bundled update-config).
+  This skill should be used when creating, editing, debugging, or improving a Claude Code hook,
+  meaning the scripts and settings entries that run automatically on harness events such as
+  PreToolUse, PostToolUse, SessionStart, Stop, or UserPromptSubmit. It applies when the user says
+  "create a hook", "block X automatically", "run the formatter after every edit", "inject context
+  at session start", "guard against Y before it happens", or "the hook isn't firing". It should
+  not be used for skills (use create-skill), agents (use create-claude-agent), or settings changes
+  with no hook script involved (use the bundled update-config).
 ---
 
 ## Purpose

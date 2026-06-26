@@ -1,13 +1,13 @@
 ---
 name: write-adr
-description: This skill should be used when recording an architecture decision record, capturing
-  why a significant technical choice was made, what alternatives were considered,
-  and when to revisit it. Use when the user says "ADR", "record this decision",
-  "document why we chose X", or asks "why did we choose X" about a past decision,
-  when a tech spec flags an ADR candidate, or when a significant technology, pattern,
-  or infrastructure choice gets settled mid-conversation. Do not use for full system
-  design (use write-tech-spec), implementation planning (use create-code-plan), or
-  project conventions (use AGENTS.md).
+description: >-
+  This skill should be used when recording an architecture decision record, capturing why a
+  significant technical choice was made, what alternatives were considered, and when to revisit
+  it. It applies when the user says "ADR", "record this decision", "document why we chose X", or
+  asks "why did we choose X" about a past decision, when a tech spec flags an ADR candidate, or
+  when a significant technology, pattern, or infrastructure choice gets settled mid-conversation.
+  It should not be used for full system design (use write-tech-spec), implementation planning (use
+  create-code-plan), or project conventions (use AGENTS.md).
 ---
 
 ## Purpose

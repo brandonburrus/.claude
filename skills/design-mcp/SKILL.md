@@ -1,13 +1,12 @@
 ---
 name: design-mcp
 description: >-
-  This skill should be used when designing or reviewing an MCP (Model Context Protocol)
-  server, including deciding what becomes a tool versus a resource versus a
-  prompt, tool naming and schemas, transport and authorization choices, and
-  server security. Use when the user says "build an MCP server", "expose X to
-  Claude over MCP", "design the MCP integration", or "should this be a tool or
-  a resource". Do not use for consuming MCP servers in harness config (use the
-  bundled update-config), for designing the agent that uses the server (use
+  This skill should be used when designing or reviewing an MCP (Model Context Protocol) server,
+  including deciding what becomes a tool versus a resource versus a prompt, tool naming and
+  schemas, transport and authorization choices, and server security. It applies when the user says
+  "build an MCP server", "expose X to Claude over MCP", "design the MCP integration", or "should
+  this be a tool or a resource". It should not be used for consuming MCP servers in harness config
+  (use the bundled update-config), for designing the agent that uses the server (use
   design-llm-agent), or for plain HTTP APIs consumed by code (use design-api).
 ---
 

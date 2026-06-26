@@ -1,14 +1,12 @@
 ---
 name: humanize
 description: >-
-  This skill should be used when editing text to remove signs of AI-generated writing and
-  make it read as natural and human-written. Use when the user says "humanize
-  this", "make this sound less like AI", "remove the AI-isms", "this reads like
-  ChatGPT", "de-slop this", or "make this sound natural", and as a final pass
-  over prose the user will publish under their own name. Do not use for
-  drafting new content from scratch (use the writing skills), for code, or for
-  detecting whether a third party used AI (this skill edits, it does not
-  accuse).
+  This skill should be used when editing text to remove signs of AI-generated writing and make it
+  read as natural and human-written. It applies when the user says "humanize this", "make this
+  sound less like AI", "remove the AI-isms", "this reads like ChatGPT", "de-slop this", or "make
+  this sound natural", and as a final pass over prose the user will publish under their own name.
+  It should not be used for drafting new content from scratch (use the writing skills), for code,
+  or for detecting whether a third party used AI (this skill edits, it does not accuse).
 ---
 
 ## Purpose

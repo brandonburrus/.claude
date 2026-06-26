@@ -1,17 +1,15 @@
 ---
 name: synthesize-feedback
 description: >-
-  This skill should be used to turn raw product feedback into themes, the pain behind each,
-  and the opportunities they point to. Use for user interviews, support tickets,
-  app reviews, survey free-text, sales notes, or churn comments, and when the
-  user says "synthesize the feedback", "what are users saying", "themes in this
-  feedback", "go through these support tickets", "what are the top pain points",
-  "make sense of these reviews", or "cluster this feedback". The deliverable is
-  signal-ranked themes grounded in quoted evidence. Do not use for quantitative
-  analysis of a dataset (use analyze-data), for code-review feedback on your own
-  PR (use triage-review-feedback), for writing the spec a theme leads to (use
-  write-product-spec), or for deciding build order across themes (use
-  prioritize-roadmap).
+  This skill should be used to turn raw product feedback into themes, the pain behind each, and
+  the opportunities they point to. It applies to user interviews, support tickets, app reviews,
+  survey free-text, sales notes, or churn comments, and when the user says "synthesize the
+  feedback", "what are users saying", "themes in this feedback", "go through these support
+  tickets", "what are the top pain points", "make sense of these reviews", or "cluster this
+  feedback". The deliverable is signal-ranked themes grounded in quoted evidence. It should not be
+  used for quantitative analysis of a dataset (use analyze-data), for code-review feedback on your
+  own PR (use triage-review-feedback), for writing the spec a theme leads to (use
+  write-product-spec), or for deciding build order across themes (use prioritize-roadmap).
 ---
 
 ## Purpose

@@ -3,15 +3,14 @@ name: rubber-duck
 disable-model-invocation: true
 description: >-
   This skill should be used when the goal is the user's own understanding of a concept or a
-  problem, not a finished answer or a solved task: helping them learn something
-  new, or thinking through a problem of their own out loud. Use when the user
-  says "help me understand X", "explain X to me", "rubber-duck this", "I don't
-  get X", "ELI5", "teach me X", "walk me through how X works", "talk me through
-  this problem", or "I'm trying to wrap my head around X". Do not use for
-  sharpening a vague request before doing a task (use clarify-ambiguity), for
-  writing a tutorial or explainer document for an audience (use
-  teach-through-writing), for understanding a specific repository (use
-  onboard-codebase), or for actually fixing the bug yourself (use fix).
+  problem, not a finished answer or a solved task: helping them learn something new, or thinking
+  through a problem of their own out loud. It applies when the user says "help me understand X",
+  "explain X to me", "rubber-duck this", "I don't get X", "ELI5", "teach me X", "walk me through
+  how X works", "talk me through this problem", or "I'm trying to wrap my head around X". It
+  should not be used for sharpening a vague request before doing a task (use clarify-ambiguity),
+  for writing a tutorial or explainer document for an audience (use teach-through-writing), for
+  understanding a specific repository (use onboard-codebase), or for actually fixing the bug
+  yourself (use fix).
 ---
 
 ## Purpose

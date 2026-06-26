@@ -1,16 +1,14 @@
 ---
 name: write-eval
 description: >-
-  This skill should be used when writing evaluations for an LLM-powered feature, agent,
-  or prompt: building eval datasets, choosing graders (code checks, pattern
-  matching, LLM-as-judge, human review), setting pass thresholds, and wiring
-  evals into the development loop. Use when the user says "write evals",
-  "add evals for this", "how do I know the agent actually works", "test my
-  prompt", "the agent feels unreliable, measure it", or before changing a
-  prompt that has no eval coverage. Do not use for designing the agent
-  itself (use design-llm-agent), for testing conventional code (use
-  follow-tdd), or for Claude API mechanics (use the bundled claude-api
-  reference).
+  This skill should be used when writing evaluations for an LLM-powered feature, agent, or prompt:
+  building eval datasets, choosing graders (code checks, pattern matching, LLM-as-judge, human
+  review), setting pass thresholds, and wiring evals into the development loop. It applies when
+  the user says "write evals", "add evals for this", "how do I know the agent actually works",
+  "test my prompt", "the agent feels unreliable, measure it", or before changing a prompt that has
+  no eval coverage. It should not be used for designing the agent itself (use design-llm-agent),
+  for testing conventional code (use follow-tdd), or for Claude API mechanics (use the bundled
+  claude-api reference).
 ---
 
 ## Purpose

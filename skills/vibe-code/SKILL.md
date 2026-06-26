@@ -1,13 +1,12 @@
 ---
 name: vibe-code
 description: >-
-  This skill should be used when building a throwaway prototype or quick spike to answer
-  a design question before committing to it, including sanity-checking a data
-  model or state machine, mocking up UI directions, or exploring options. Use
-  when the user says "vibe code", "prototype this", "spike it", "quick and
-  dirty", "just hack something together", "let me play with it", or "try a few
-  designs". Do not use for production code of any kind (use follow-tdd), for
-  fixing bugs (use fix), or for work the user has not explicitly framed as
+  This skill should be used when building a throwaway prototype or quick spike to answer a design
+  question before committing to it, including sanity-checking a data model or state machine,
+  mocking up UI directions, or exploring options. It applies when the user says "vibe code",
+  "prototype this", "spike it", "quick and dirty", "just hack something together", "let me play
+  with it", or "try a few designs". It should not be used for production code of any kind (use
+  follow-tdd), for fixing bugs (use fix), or for work the user has not explicitly framed as
   disposable.
 ---
 

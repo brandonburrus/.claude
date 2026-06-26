@@ -1,10 +1,11 @@
 ---
 name: open-pull-request
-description: This skill should be used when opening, creating, or submitting a pull request
-  for the current branch. Use when the user says "open a PR", "create a pull
-  request", "submit this for review", "put this up", "push this up and open a PR",
-  or asks to get the branch ready for review. Do not use for reviewing an existing
-  PR (use review-pull-request), merging or managing PRs, or committing without a PR.
+description: >-
+  This skill should be used when opening, creating, or submitting a pull request for the current
+  branch. It applies when the user says "open a PR", "create a pull request", "submit this for
+  review", "put this up", "push this up and open a PR", or asks to get the branch ready for
+  review. It should not be used for reviewing an existing PR (use review-pull-request), merging or
+  managing PRs, or committing without a PR.
 ---
 
 ## Purpose

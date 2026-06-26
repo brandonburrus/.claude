@@ -1,14 +1,13 @@
 ---
 name: edit-powerpoint-slides
 description: >-
-  This skill should be used when creating, editing, or reading PowerPoint presentations
-  (.pptx), including slides, layouts, placeholders, text, images, tables,
-  charts, speaker notes, and click-to-reveal builds and animations. Use when
-  the user says "make a slide deck", "create a presentation", "update these
-  slides", "add a slide", "reveal the bullets one at a time", or references
-  a .pptx file. Do not use for diagrams as standalone artifacts (use
-  create-diagram), for visual design direction of non-slide UIs (use
-  design-ui), or for legacy .ppt files without converting to .pptx first.
+  This skill should be used when creating, editing, or reading PowerPoint presentations (.pptx),
+  including slides, layouts, placeholders, text, images, tables, charts, speaker notes, and
+  click-to-reveal builds and animations. It applies when the user says "make a slide deck",
+  "create a presentation", "update these slides", "add a slide", "reveal the bullets one at a
+  time", or references a .pptx file. It should not be used for diagrams as standalone artifacts
+  (use create-diagram), for visual design direction of non-slide UIs (use design-ui), or for
+  legacy .ppt files without converting to .pptx first.
 ---
 
 ## Purpose

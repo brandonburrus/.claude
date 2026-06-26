@@ -1,14 +1,12 @@
 ---
 name: onboard-codebase
 description: >-
-  This skill should be used when building an understanding of an unfamiliar codebase or
-  orienting in a new repository. Use when the user says "onboard me", "help me
-  understand this codebase", "walk me through this repo", "how does this
-  project work", "zoom out", or "where does X happen in here", and when
-  starting substantial work in a repo with no AGENTS.md. Do not use for
-  evaluating architecture quality (use audit-architecture), for generating a
-  CLAUDE.md (use the bundled init), or for locating one specific symbol (just
-  search).
+  This skill should be used when building an understanding of an unfamiliar codebase or orienting
+  in a new repository. It applies when the user says "onboard me", "help me understand this
+  codebase", "walk me through this repo", "how does this project work", "zoom out", or "where does
+  X happen in here", and when starting substantial work in a repo with no AGENTS.md. It should not
+  be used for evaluating architecture quality (use audit-architecture), for generating a CLAUDE.md
+  (use the bundled init), or for locating one specific symbol (just search).
 ---
 
 ## Purpose

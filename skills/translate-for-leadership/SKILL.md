@@ -1,15 +1,13 @@
 ---
 name: translate-for-leadership
 description: >-
-  This skill should be used when rewriting engineering content for engineering-org
-  leadership (VPs, directors, PMs, release managers) and shaping it for its
-  channel: ticket comment, Slack post, async standup line, email, or meeting
-  talking points. Use when the user says "write this up for management",
-  "exec summary", "leadership update", "status update", "make this less
-  technical", or asks for a slack/email/standup version of engineering work.
-  Do not use for marketing or customer-facing copy, true ELI5 audiences
-  (different rewrite, flag it), or the engineering record itself (use
-  write-post-mortem).
+  This skill should be used when rewriting engineering content for engineering-org leadership
+  (VPs, directors, PMs, release managers) and shaping it for its channel: ticket comment, Slack
+  post, async standup line, email, or meeting talking points. It applies when the user says "write
+  this up for management", "exec summary", "leadership update", "status update", "make this less
+  technical", or asks for a slack/email/standup version of engineering work. It should not be used
+  for marketing or customer-facing copy, true ELI5 audiences (different rewrite, flag it), or the
+  engineering record itself (use write-post-mortem).
 ---
 
 ## Purpose

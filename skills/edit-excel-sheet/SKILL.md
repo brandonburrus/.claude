@@ -1,13 +1,12 @@
 ---
 name: edit-excel-sheet
 description: >-
-  This skill should be used when creating, editing, or reading Excel spreadsheets (.xlsx,
-  .xlsm) including cell values, formulas, formatting, multiple sheets, tables,
-  and charts. Use when the user says "create a spreadsheet", "update this
-  Excel file", "read the xlsx", "add a column to the sheet", or references a
-  .xlsx/.xlsm file. Do not use for plain .csv files (edit them as text), for
-  legacy .xls files without converting first, or for analyzing tabular data
-  where the spreadsheet is only the container (load it and analyze directly).
+  This skill should be used when creating, editing, or reading Excel spreadsheets (.xlsx, .xlsm)
+  including cell values, formulas, formatting, multiple sheets, tables, and charts. It applies
+  when the user says "create a spreadsheet", "update this Excel file", "read the xlsx", "add a
+  column to the sheet", or references a .xlsx/.xlsm file. It should not be used for plain .csv
+  files (edit them as text), for legacy .xls files without converting first, or for analyzing
+  tabular data where the spreadsheet is only the container (load it and analyze directly).
 ---
 
 ## Purpose

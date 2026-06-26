@@ -1,16 +1,14 @@
 ---
 name: explore-solutions
 description: >-
-  This skill should be used when a decision has more than one viable direction and you need
-  to choose: generate several genuinely distinct approaches, weigh them against
-  explicit criteria, and converge on a recommendation with the rejected
-  alternatives named. Use when the user says "what are the options", "explore
-  solutions", "which approach should we take", "help me decide between", or "buy
-  vs build". Do not use for picking among approaches inside a code
-  implementation plan (use create-code-plan), for documenting an
-  already-chosen design (use write-tech-spec), for building a throwaway
-  prototype to feel out one direction (use vibe-code), or for clarifying a vague
-  problem before any solutions exist (use clarify-ambiguity).
+  This skill should be used when a decision has more than one viable direction and you need to
+  choose: generate several genuinely distinct approaches, weigh them against explicit criteria,
+  and converge on a recommendation with the rejected alternatives named. It applies when the user
+  says "what are the options", "explore solutions", "which approach should we take", "help me
+  decide between", or "buy vs build". It should not be used for picking among approaches inside a
+  code implementation plan (use create-code-plan), for documenting an already-chosen design (use
+  write-tech-spec), for building a throwaway prototype to feel out one direction (use vibe-code),
+  or for clarifying a vague problem before any solutions exist (use clarify-ambiguity).
 ---
 
 ## Purpose

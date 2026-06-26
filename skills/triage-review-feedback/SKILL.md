@@ -1,15 +1,13 @@
 ---
 name: triage-review-feedback
 description: >-
-  This skill should be used when handling code-review feedback received on your own pull
-  request or change: triaging reviewer comments, deciding what to accept
-  versus push back on, implementing the accepted fixes, and replying to
-  reviewers. Use when the user says "address the review comments", "respond
-  to the PR feedback", "the reviewer asked for changes", "handle the
-  CodeRabbit comments", or pastes reviewer feedback to act on. Do not use for
-  reviewing someone else's PR (use review-pull-request), for working an issue
-  tracker (use triage-backlog), or for creating the PR itself (use
-  open-pull-request).
+  This skill should be used when handling code-review feedback received on your own pull request
+  or change: triaging reviewer comments, deciding what to accept versus push back on, implementing
+  the accepted fixes, and replying to reviewers. It applies when the user says "address the review
+  comments", "respond to the PR feedback", "the reviewer asked for changes", "handle the
+  CodeRabbit comments", or pastes reviewer feedback to act on. It should not be used for reviewing
+  someone else's PR (use review-pull-request), for working an issue tracker (use triage-backlog),
+  or for creating the PR itself (use open-pull-request).
 ---
 
 ## Purpose

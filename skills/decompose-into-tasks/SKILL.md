@@ -1,14 +1,13 @@
 ---
 name: decompose-into-tasks
 description: >-
-  This skill should be used when breaking a spec, plan, PRD, or feature into work units
-  for an issue tracker such as GitHub Issues, Jira, Rally, or Linear. Use when
-  the user says "break this down into tickets", "create issues from this
-  spec", "slice this into stories", "decompose into work units", "turn this
-  plan into tasks", or "create the epics and stories". Do not use for a
-  single-session implementation plan you will execute yourself right now (use
-  create-code-plan) or for writing the spec being decomposed (use
-  write-product-spec or write-tech-spec).
+  This skill should be used when breaking a spec, plan, PRD, or feature into work units for an
+  issue tracker such as GitHub Issues, Jira, Rally, or Linear. It applies when the user says
+  "break this down into tickets", "create issues from this spec", "slice this into stories",
+  "decompose into work units", "turn this plan into tasks", or "create the epics and stories". It
+  should not be used for a single-session implementation plan you will execute yourself right now
+  (use create-code-plan) or for writing the spec being decomposed (use write-product-spec or
+  write-tech-spec).
 ---
 
 ## Purpose

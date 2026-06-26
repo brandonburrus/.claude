@@ -1,12 +1,13 @@
 ---
 name: follow-tdd
-description: This skill should be used when implementing any feature, fixing any bug, or changing
-  any code behavior, before writing the implementation code. Also use when the user
-  says "TDD", "test first", "red-green-refactor", "write the test before the code",
-  and after the fix skill has reproduced a bug's root cause, to write the regression
-  test first. Do not use to diagnose a reported bug (use fix; it hands off here),
-  for pure configuration changes, documentation, static content, or for
-  runtime-verifying an already-built change (use the verify skill for that).
+description: >-
+  This skill should be used when implementing any feature, fixing any bug, or changing any code
+  behavior, before writing the implementation code. It also applies when the user says "TDD",
+  "test first", "red-green-refactor", "write the test before the code", and after the fix skill
+  has reproduced a bug's root cause, to write the regression test first. It should not be used to
+  diagnose a reported bug (use fix; it hands off here), for pure configuration changes,
+  documentation, static content, or for runtime-verifying an already-built change (use the verify
+  skill for that).
 ---
 
 ## Purpose

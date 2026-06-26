@@ -1,15 +1,14 @@
 ---
 name: create-claude-agent
 description: >-
-  This skill should be used when creating, editing, porting, or improving a Claude Code
-  subagent, the Markdown agent definitions in ~/.claude/agents or
-  .claude/agents. Use when the user says "create an agent", "add an agent",
-  "make a subagent for X", or "the agent isn't triggering", when the user names
-  one or more agents to add (often role-suffixed like x-reviewer, x-auditor,
-  x-validator), or when adding several agents at once or agents adapted from
-  reference material. Do not use for skills (use create-skill), hooks (use
-  create-claude-hook), deciding which agents to create without writing them, or
-  one-off subagent dispatch needing no saved definition (use the Agent tool).
+  This skill should be used when creating, editing, porting, or improving a Claude Code subagent,
+  the Markdown agent definitions in ~/.claude/agents or .claude/agents. It applies when the user
+  says "create an agent", "add an agent", "make a subagent for X", or "the agent isn't
+  triggering", when the user names one or more agents to add (often role-suffixed like x-reviewer,
+  x-auditor, x-validator), or when adding several agents at once or agents adapted from reference
+  material. It should not be used for skills (use create-skill), hooks (use create-claude-hook),
+  deciding which agents to create without writing them, or one-off subagent dispatch needing no
+  saved definition (use the Agent tool).
 ---
 
 ## Purpose

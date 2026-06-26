@@ -1,17 +1,15 @@
 ---
 name: research-market
 description: >-
-  This skill should be used to research a market and assess product-market opportunity: who
-  the customers are, how big and reachable the market is, the competitive
-  landscape, real demand signals, and where a wedge to fit might be. Use when
-  the user says "market research", "is there a market for this", "product-market
-  fit", "PMF", "market size", "TAM", "competitive landscape", "who are the
-  competitors", or "validate the market". The
-  deliverable is an evidence-grounded opportunity brief with a go, refine, or
-  no-go read. Do not use for defining the product once the market is validated
-  (use write-product-spec), for synthesizing feedback from existing users (use
-  synthesize-feedback), for comparing technical tools or vendors to adopt (use
-  research-solutioning), or for general fact-finding (use deep-research).
+  This skill should be used to research a market and assess product-market opportunity: who the
+  customers are, how big and reachable the market is, the competitive landscape, real demand
+  signals, and where a wedge to fit might be. It applies when the user says "market research", "is
+  there a market for this", "product-market fit", "PMF", "market size", "TAM", "competitive
+  landscape", "who are the competitors", or "validate the market". The deliverable is an
+  evidence-grounded opportunity brief with a go, refine, or no-go read. It should not be used for
+  defining the product once the market is validated (use write-product-spec), for synthesizing
+  feedback from existing users (use synthesize-feedback), for comparing technical tools or vendors
+  to adopt (use research-solutioning), or for general fact-finding (use deep-research).
 ---
 
 ## Purpose

@@ -1,16 +1,14 @@
 ---
 name: validate-api
 description: >-
-  This skill should be used to validate an API change by sending real HTTP requests against
-  the running service with the Bruno CLI, asserting status, body, and headers,
-  and saving every request into a reusable Bruno collection. Use after
-  implementing an API change, or when the user says "validate the API",
-  "smoke-test the endpoint", "hit the endpoint and check the response", "verify
-  the API works", or "check the API returns the right shape". The collection is
-  a byproduct for future replay, and this does not replace automated API tests.
-  Do not use for browser or UI validation (use validate-web), for writing the
-  vitest/supertest or Playwright suite (use follow-tdd), or for designing the
-  API contract (use design-api).
+  This skill should be used to validate an API change by sending real HTTP requests against the
+  running service with the Bruno CLI, asserting status, body, and headers, and saving every
+  request into a reusable Bruno collection. It applies after implementing an API change, or when
+  the user says "validate the API", "smoke-test the endpoint", "hit the endpoint and check the
+  response", "verify the API works", or "check the API returns the right shape". The collection is
+  a byproduct for future replay, and this does not replace automated API tests. It should not be
+  used for browser or UI validation (use validate-web), for writing the vitest/supertest or
+  Playwright suite (use follow-tdd), or for designing the API contract (use design-api).
 ---
 
 ## Purpose

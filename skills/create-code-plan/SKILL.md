@@ -1,13 +1,13 @@
 ---
 name: create-code-plan
-description: This skill should be used when planning any non-trivial code implementation, including
-  new features, bug fixes, refactors, or architectural changes. Use when the user says
-  "plan this", "let's plan before coding", "what's the approach", "how should we
-  approach X", or describes a multi-step code change without explicitly asking for
-  a plan. Do not use for trivial single-line changes, for tasks already fully specified
-  with no design decisions remaining, or for designing a new system or significant
-  architecture from scratch (use write-tech-spec; this skill then plans the
-  implementation of that design).
+description: >-
+  This skill should be used when planning any non-trivial code implementation, including new
+  features, bug fixes, refactors, or architectural changes. It applies when the user says "plan
+  this", "let's plan before coding", "what's the approach", "how should we approach X", or
+  describes a multi-step code change without explicitly asking for a plan. It should not be used
+  for trivial single-line changes, for tasks already fully specified with no design decisions
+  remaining, or for designing a new system or significant architecture from scratch (use
+  write-tech-spec; this skill then plans the implementation of that design).
 ---
 
 ## Purpose

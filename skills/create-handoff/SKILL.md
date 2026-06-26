@@ -1,14 +1,12 @@
 ---
 name: create-handoff
 description: >-
-  This skill should be used when compacting the current working session into a handoff
-  document so a fresh session or another agent can continue without
-  re-deriving context. Use when the user says "write a handoff", "hand this
-  off", "compact this for a fresh session", "context is running low", or
-  "summarize where we are to continue later". Captures the goal, verified
-  versus half-done state, decisions and their reasons, the exact next step,
-  blockers, and load-bearing paths and commands. Do not use for extracting
-  durable cross-session learnings into
+  This skill should be used when compacting the current working session into a handoff document so
+  a fresh session or another agent can continue without re-deriving context. It applies when the
+  user says "write a handoff", "hand this off", "compact this for a fresh session", "context is
+  running low", or "summarize where we are to continue later". Captures the goal, verified versus
+  half-done state, decisions and their reasons, the exact next step, blockers, and load-bearing
+  paths and commands. It should not be used for extracting durable cross-session learnings into
   memory (use learn-from-context).
 ---
 

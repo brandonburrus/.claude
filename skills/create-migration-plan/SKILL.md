@@ -1,17 +1,15 @@
 ---
 name: create-migration-plan
 description: >-
-  This skill should be used when planning a migration or deprecation: schema changes on
-  live data, API version transitions, library or framework upgrades,
-  replacing a system or service, renaming a column or endpoint safely, or
-  sunsetting anything with consumers. Use when the user says "plan the
-  migration", "upgrade to the next major version", "move from X to Y",
-  "deprecate this", "zero-downtime change", or "how do we get rid of this
-  safely". The deliverable is a staged plan, not executed changes. Do not use
-  for writing each migration safely against a specific engine or ORM (use
-  design-data-migration), for designing a schema from scratch (use
-  design-data-schema), for executing the planned work (use create-code-plan), or
-  for release mechanics (use prepare-for-deploy).
+  This skill should be used when planning a migration or deprecation: schema changes on live data,
+  API version transitions, library or framework upgrades, replacing a system or service, renaming
+  a column or endpoint safely, or sunsetting anything with consumers. It applies when the user
+  says "plan the migration", "upgrade to the next major version", "move from X to Y", "deprecate
+  this", "zero-downtime change", or "how do we get rid of this safely". The deliverable is a
+  staged plan, not executed changes. It should not be used for writing each migration safely
+  against a specific engine or ORM (use design-data-migration), for designing a schema from
+  scratch (use design-data-schema), for executing the planned work (use create-code-plan), or for
+  release mechanics (use prepare-for-deploy).
 ---
 
 ## Purpose

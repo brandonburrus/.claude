@@ -1,17 +1,15 @@
 ---
 name: orchestrate-delivery
 description: >-
-  This skill should be used to take a substantial product idea all the way to production in
-  users' hands, sequencing the right skill at each stage and stopping at the
-  evidence gates between them. Use when the user says "take this idea to
-  production", "build this product end to end", "what's the path from idea to
-  launch", "ship this new product/feature start to finish", "guide me through the
-  whole build", "where do we even start with this", or describes a greenfield
-  product or a large feature with no plan yet. Do not use for executing an
-  already-approved code plan (use execute-code-plan), for a single well-scoped
-  change where one stage skill suffices (invoke that skill directly), or for the
-  build pipeline alone with the idea already specified and designed (start at the
-  plan stage).
+  This skill should be used to take a substantial product idea all the way to production in users'
+  hands, sequencing the right skill at each stage and stopping at the evidence gates between them.
+  It applies when the user says "take this idea to production", "build this product end to end",
+  "what's the path from idea to launch", "ship this new product/feature start to finish", "guide
+  me through the whole build", "where do we even start with this", or describes a greenfield
+  product or a large feature with no plan yet. It should not be used for executing an
+  already-approved code plan (use execute-code-plan), for a single well-scoped change where one
+  stage skill suffices (invoke that skill directly), or for the build pipeline alone with the idea
+  already specified and designed (start at the plan stage).
 ---
 
 ## Purpose

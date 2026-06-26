@@ -1,15 +1,14 @@
 ---
 name: analyze-data
 description: >-
-  This skill should be used when analyzing, aggregating, summarizing, or plotting tabular
-  data from CSV, TSV, Excel, JSON, Parquet, or SQLite sources. Use when the
-  user says "analyze this data", "what's the total/average/trend", "group by",
-  "how many rows", "plot this", "make a chart from this data", hands over a
-  data file with a question, or wants an analysis notebook for the exploration.
-  Do not use for editing spreadsheet files as documents (use edit-excel-sheet),
-  designing database schemas (use design-data-schema), architecture diagrams
-  (use create-diagram), or building an interactive or custom data visualization
-  as the deliverable (use visualize-data).
+  This skill should be used when analyzing, aggregating, summarizing, or plotting tabular data
+  from CSV, TSV, Excel, JSON, Parquet, or SQLite sources. It applies when the user says "analyze
+  this data", "what's the total/average/trend", "group by", "how many rows", "plot this", "make a
+  chart from this data", hands over a data file with a question, or wants an analysis notebook for
+  the exploration. It should not be used for editing spreadsheet files as documents (use
+  edit-excel-sheet), designing database schemas (use design-data-schema), architecture diagrams
+  (use create-diagram), or building an interactive or custom data visualization as the deliverable
+  (use visualize-data).
 ---
 
 ## Purpose

@@ -1,12 +1,12 @@
 ---
 name: write-product-spec
-description: This skill should be used when defining what a product or feature is and why it
-  should exist, writing a PRD, product requirements document, product spec, or
-  feature definition, or capturing user journeys, personas, success metrics, and
-  MVP scope. Also use when the user says "PRD", "product spec", "define this
-  feature", "what are we building", or "user journey". Do not use for technical
-  design and architecture (use write-tech-spec) or implementation task planning
-  (use create-code-plan).
+description: >-
+  This skill should be used when defining what a product or feature is and why it should exist,
+  writing a PRD, product requirements document, product spec, or feature definition, or capturing
+  user journeys, personas, success metrics, and MVP scope. It also applies when the user says
+  "PRD", "product spec", "define this feature", "what are we building", or "user journey". It
+  should not be used for technical design and architecture (use write-tech-spec) or implementation
+  task planning (use create-code-plan).
 ---
 
 ## Purpose

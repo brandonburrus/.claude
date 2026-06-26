@@ -1,16 +1,15 @@
 ---
 name: audit-skill-efficacy
 description: >-
-  This skill should be used to find which skills in the library actually change behavior
-  versus which are dead weight, by running the create-skill Phase 5 baseline-vs-
-  with-skill test across many skills at once and flagging the ones a no-skill
-  baseline already matches. Use when the user says "audit my skills", "which
-  skills are dead weight", "do my skills actually work", "test the skill library",
-  "find redundant skills", "are these skills earning their place", or "skill
-  efficacy". Do not use for authoring or fixing one skill (use create-skill, whose
-  Phase 5 this scales up), for auditing AGENTS.md documentation coverage (use
-  audit-agent-context), or for mining transcripts to see which skills ever fire in
-  real use (use audit-harness-usage).
+  This skill should be used to find which skills in the library actually change behavior versus
+  which are dead weight, by running the create-skill Phase 5 baseline-vs- with-skill test across
+  many skills at once and flagging the ones a no-skill baseline already matches. It applies when
+  the user says "audit my skills", "which skills are dead weight", "do my skills actually work",
+  "test the skill library", "find redundant skills", "are these skills earning their place", or
+  "skill efficacy". It should not be used for authoring or fixing one skill (use create-skill,
+  whose Phase 5 this scales up), for auditing AGENTS.md documentation coverage (use
+  audit-agent-context), or for mining transcripts to see which skills ever fire in real use (use
+  audit-harness-usage).
 ---
 
 ## Purpose

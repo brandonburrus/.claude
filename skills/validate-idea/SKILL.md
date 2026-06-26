@@ -1,18 +1,17 @@
 ---
 name: validate-idea
 description: >-
-  This skill should be used to test whether a product or business idea is worth building
-  before committing to build it: identify the riskiest assumption, design the
-  cheapest experiment that could falsify it, run it, and turn the evidence into a
-  go/pivot/kill decision. Use when the user says "validate my idea", "should I
-  build this", "is there real demand", "test this before I build it", "design an
-  experiment to test X", "customer interviews", "user research questions",
-  "the Mom Test", "users say they want it but don't buy", "smoke test", "concierge
-  MVP", "pretotype", or "riskiest assumption". Do not use for sizing a market or
-  reading the competitive landscape from desk research (use research-market), for
-  refining a vague idea's intent before any test exists (use clarify-ambiguity),
-  for choosing between solution approaches (use explore-solutions), or for writing
-  the PRD once the idea is validated (use write-product-spec).
+  This skill should be used to test whether a product or business idea is worth building before
+  committing to build it: identify the riskiest assumption, design the cheapest experiment that
+  could falsify it, run it, and turn the evidence into a go/pivot/kill decision. It applies when
+  the user says "validate my idea", "should I build this", "is there real demand", "test this
+  before I build it", "design an experiment to test X", "customer interviews", "user research
+  questions", "the Mom Test", "users say they want it but don't buy", "smoke test", "concierge
+  MVP", "pretotype", or "riskiest assumption". It should not be used for sizing a market or
+  reading the competitive landscape from desk research (use research-market), for refining a vague
+  idea's intent before any test exists (use clarify-ambiguity), for choosing between solution
+  approaches (use explore-solutions), or for writing the PRD once the idea is validated (use
+  write-product-spec).
 ---
 
 ## Purpose

@@ -1,18 +1,16 @@
 ---
 name: estimate-at-scale
 description: >-
-  This skill should be used to produce an order-of-magnitude estimate from rough scale
-  parameters: monthly cost, storage, capacity, or throughput, given inputs like
-  volume, request rate, data size, retention, and growth. It interrogates for
-  the parameters first, then shows the assumptions and arithmetic behind the
-  number. Use when the user says "estimate the cost", "how much would this cost
-  at scale", "ballpark this", "napkin math", "rough numbers for", "what's the
-  monthly cost if", "how much storage for X users", "size this", "how many servers or connections do
-  I need", "size the thread or connection pool", "what QPS can this handle", or
-  "capacity planning". Do not use
-  for computing over a real dataset you already have (use analyze-data), for
-  designing the system being estimated (use write-tech-spec), or for diagnosing
-  why something is slow (use optimize-performance or fix).
+  This skill should be used to produce an order-of-magnitude estimate from rough scale parameters:
+  monthly cost, storage, capacity, or throughput, given inputs like volume, request rate, data
+  size, retention, and growth. It interrogates for the parameters first, then shows the
+  assumptions and arithmetic behind the number. It applies when the user says "estimate the cost",
+  "how much would this cost at scale", "ballpark this", "napkin math", "rough numbers for",
+  "what's the monthly cost if", "how much storage for X users", "size this", "how many servers or
+  connections do I need", "size the thread or connection pool", "what QPS can this handle", or
+  "capacity planning". It should not be used for computing over a real dataset you already have
+  (use analyze-data), for designing the system being estimated (use write-tech-spec), or for
+  diagnosing why something is slow (use optimize-performance or fix).
 ---
 
 ## Purpose

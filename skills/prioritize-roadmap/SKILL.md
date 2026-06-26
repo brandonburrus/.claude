@@ -1,16 +1,14 @@
 ---
 name: prioritize-roadmap
 description: >-
-  This skill should be used to decide what to build next and in what order from a set of
-  candidate features, bets, epics, or backlog items. Use when the user says
-  "prioritize the roadmap", "what should we build next", "rank these features",
-  "what's the priority", "RICE these", "value vs effort", "sequence the
-  backlog", "what do we cut", or "what's most important to ship this quarter".
-  The deliverable is a ranked and sequenced list with the reasoning and the
-  explicit cut pile. Do not use for defining what one feature is (use
-  write-product-spec), for breaking a chosen item into tasks (use
-  decompose-into-tasks), for triaging individual incoming issues (use
-  triage-backlog), or for choosing among technical approaches to one problem (use
+  This skill should be used to decide what to build next and in what order from a set of candidate
+  features, bets, epics, or backlog items. It applies when the user says "prioritize the roadmap",
+  "what should we build next", "rank these features", "what's the priority", "RICE these", "value
+  vs effort", "sequence the backlog", "what do we cut", or "what's most important to ship this
+  quarter". The deliverable is a ranked and sequenced list with the reasoning and the explicit cut
+  pile. It should not be used for defining what one feature is (use write-product-spec), for
+  breaking a chosen item into tasks (use decompose-into-tasks), for triaging individual incoming
+  issues (use triage-backlog), or for choosing among technical approaches to one problem (use
   explore-solutions).
 ---
 

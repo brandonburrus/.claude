@@ -1,6 +1,13 @@
 ---
 name: plan-go-to-market
-description: This skill should be used to plan a go-to-market launch for a software product or feature, choosing the GTM motion (product-led, sales-led, community-led), the beachhead segment and ideal-customer profile, the positioning, the channels, the launch sequence, and success metrics. Use when the user says "plan the launch", "go-to-market", "GTM plan", "how do we launch this", "launch strategy", or "PLG vs sales-led". Do not use for sizing the market or validating demand (use research-market), for the technical release and rollback (use prepare-for-deploy), or for a sales document (use write-proposal).
+description: >-
+  This skill should be used to plan a go-to-market launch for a software product or feature,
+  choosing the GTM motion (product-led, sales-led, community-led), the beachhead segment and
+  ideal-customer profile, the positioning, the channels, the launch sequence, and success metrics.
+  It applies when the user says "plan the launch", "go-to-market", "GTM plan", "how do we launch
+  this", "launch strategy", or "PLG vs sales-led". It should not be used for sizing the market or
+  validating demand (use research-market), for the technical release and rollback (use
+  prepare-for-deploy), or for a sales document (use write-proposal).
 ---
 
 ## Purpose

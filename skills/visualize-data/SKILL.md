@@ -1,16 +1,14 @@
 ---
 name: visualize-data
 description: >-
-  This skill should be used when building a data visualization as the deliverable with
-  marimo, Streamlit, or D3: an interactive reactive notebook, a shareable data
-  app or dashboard, or a bespoke custom web chart. Use when the user says
-  "visualize this", "build a dashboard", "make an interactive chart", "data
-  app", "build a marimo or streamlit notebook for this", "custom D3
-  visualization", or wants a visualization someone will interact with rather
-  than a one-off image. Do not use for a quick static chart answering an
-  analysis question (use analyze-data), for architecture, flow, or sequence
-  diagrams (use create-diagram), or for general UI building with no data
-  visualization at its center (use design-ui).
+  This skill should be used when building a data visualization as the deliverable with marimo,
+  Streamlit, or D3: an interactive reactive notebook, a shareable data app or dashboard, or a
+  bespoke custom web chart. It applies when the user says "visualize this", "build a dashboard",
+  "make an interactive chart", "data app", "build a marimo or streamlit notebook for this",
+  "custom D3 visualization", or wants a visualization someone will interact with rather than a
+  one-off image. It should not be used for a quick static chart answering an analysis question
+  (use analyze-data), for architecture, flow, or sequence diagrams (use create-diagram), or for
+  general UI building with no data visualization at its center (use design-ui).
 ---
 
 ## Purpose

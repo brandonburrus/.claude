@@ -1,12 +1,11 @@
 ---
 name: edit-word-doc
 description: >-
-  This skill should be used when creating, editing, or reading Microsoft Word documents
-  (.docx), including text, headings, styles, tables, images, and headers or
-  footers. Use when the user says "create a Word doc", "update this docx",
-  "read the Word document", "fill in this template", or references a .docx
-  file. Do not use for Markdown or plain-text writing (write directly), for
-  PDFs (use edit-pdf), or for legacy .doc files without converting them to
+  This skill should be used when creating, editing, or reading Microsoft Word documents (.docx),
+  including text, headings, styles, tables, images, and headers or footers. It applies when the
+  user says "create a Word doc", "update this docx", "read the Word document", "fill in this
+  template", or references a .docx file. It should not be used for Markdown or plain-text writing
+  (write directly), for PDFs (use edit-pdf), or for legacy .doc files without converting them to
   .docx first.
 ---
 

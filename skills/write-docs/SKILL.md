@@ -1,14 +1,13 @@
 ---
 name: write-docs
 description: >-
-  This skill should be used when generating or organizing a documentation set for a
-  codebase, library, CLI, or API: writing a README and docs from scratch,
-  filling documentation gaps, or restructuring docs that have become a
-  confusing pile. Use when the user says "document this", "write the docs",
-  "the docs are a mess", "add docs for this feature", or "what docs does this
-  need". Do not use for the prose craft of a single explainer or tutorial (use
-  teach-through-writing), for recording one architectural decision (use
-  write-adr), or for API contract definition (use design-api).
+  This skill should be used when generating or organizing a documentation set for a codebase,
+  library, CLI, or API: writing a README and docs from scratch, filling documentation gaps, or
+  restructuring docs that have become a confusing pile. It applies when the user says "document
+  this", "write the docs", "the docs are a mess", "add docs for this feature", or "what docs does
+  this need". It should not be used for the prose craft of a single explainer or tutorial (use
+  teach-through-writing), for recording one architectural decision (use write-adr), or for API
+  contract definition (use design-api).
 ---
 
 ## Purpose

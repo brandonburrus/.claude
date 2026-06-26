@@ -1,16 +1,15 @@
 ---
 name: harden-security
 description: >-
-  This skill should be used when designing, building, or modifying anything that touches
-  untrusted input, authentication, authorization, sessions, secrets, file
-  uploads, payments, PII, or external integrations, including threat-modeling
-  the attack surface before writing the code. Use when the user says "make
-  this secure", "harden this", "add auth", "is this safe", "handle user
-  input", "threat model this", "what could go wrong here", or "what's the
-  attack surface". Apply it before and while writing the feature, not after.
-  Do not use for auditing an existing diff (use the bundled /security-review),
-  for API contract auth design (use design-api), or for triaging an
-  incoming vulnerability or security finding (use triage-security-finding).
+  This skill should be used when designing, building, or modifying anything that touches untrusted
+  input, authentication, authorization, sessions, secrets, file uploads, payments, PII, or
+  external integrations, including threat-modeling the attack surface before writing the code. It
+  applies when the user says "make this secure", "harden this", "add auth", "is this safe",
+  "handle user input", "threat model this", "what could go wrong here", or "what's the attack
+  surface". It should be applied before and while writing the feature, not after. It should not be
+  used for auditing an existing diff (use the bundled /security-review), for API contract auth
+  design (use design-api), or for triaging an incoming vulnerability or security finding (use
+  triage-security-finding).
 ---
 
 ## Purpose

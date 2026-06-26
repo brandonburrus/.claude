@@ -1,16 +1,14 @@
 ---
 name: respond-to-incident
 description: >-
-  This skill should be used when responding to a live production incident or outage: a
-  service is down, users are blocked, an alert is firing, data is at risk, or
-  someone declares a SEV. Use when the user says "prod is down", "we have an
-  outage", "the site is down", "users can't log in", "sev1", "sev2", "page the
-  team", "mitigate this now", or "stabilize the system". The skill drives
-  stabilization, severity classification, and stakeholder communication during
-  the incident, then hands the rest off. Do not use for the internal
-  engineering RCA after the fix is validated (use write-post-mortem), for
-  debugging the root cause itself (use fix), or for pre-release deploy
-  preparation (use prepare-for-deploy).
+  This skill should be used when responding to a live production incident or outage: a service is
+  down, users are blocked, an alert is firing, data is at risk, or someone declares a SEV. It
+  applies when the user says "prod is down", "we have an outage", "the site is down", "users can't
+  log in", "sev1", "sev2", "page the team", "mitigate this now", or "stabilize the system". The
+  skill drives stabilization, severity classification, and stakeholder communication during the
+  incident, then hands the rest off. It should not be used for the internal engineering RCA after
+  the fix is validated (use write-post-mortem), for debugging the root cause itself (use fix), or
+  for pre-release deploy preparation (use prepare-for-deploy).
 ---
 
 ## Purpose

@@ -1,15 +1,15 @@
 ---
 name: check-comprehension
-description: This skill should be used when the user wants to deeply understand something and have
-  that understanding verified rather than just receive an explanation, typically after a
-  change, fix, or feature was just built, or for a concept they are studying. Triggers
-  include 'make sure I understand this', 'check my understanding', 'quiz me on this',
-  'teach me what we just did', 'do I actually get this', and 'walk me through until it
-  clicks'. It opens an interactive teaching mode that builds a comprehension checklist,
-  has the learner restate first, drills the whys, quizzes with AskUserQuestion, and
-  refuses to advance until each item is mastered. Do not use for a one-off explanation the
-  user only wants to read (answer directly), or for producing written teaching material
-  (use teach-through-writing).
+description: >-
+  This skill should be used when the user wants to deeply understand something and have that
+  understanding verified rather than just receive an explanation, typically after a change, fix,
+  or feature was just built, or for a concept they are studying. Triggers include 'make sure I
+  understand this', 'check my understanding', 'quiz me on this', 'teach me what we just did', 'do
+  I actually get this', and 'walk me through until it clicks'. It opens an interactive teaching
+  mode that builds a comprehension checklist, has the learner restate first, drills the whys,
+  quizzes with AskUserQuestion, and refuses to advance until each item is mastered. It should not
+  be used for a one-off explanation the user only wants to read (answer directly), or for
+  producing written teaching material (use teach-through-writing).
 ---
 
 ## Purpose
