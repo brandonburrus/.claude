@@ -1,11 +1,11 @@
 ---
 name: create-skill
-description: Use this skill when the user wants to create a new personal skill, update
+description: This skill should be used when the user wants to create a new personal skill, update
   or improve an existing skill, add a skill to their skills library, teach the agent
   a new reusable behavior, or capture domain expertise as a skill. Also use when the
   user says "make this a skill", "create a skill for X", "improve my X skill", "update
   the skill", "add X to the skill", "the skill got this wrong", "I want to always
-  do Y", or pastes instructions and asks to invoke them on demand. Do not use for
+  do Y", or pastes instructions and asks to invoke them on demand. Not for
   configuring automated hooks (use update-config) or for AGENTS.md and CLAUDE.md files.
 ---
 
@@ -92,8 +92,8 @@ Use the template below. Fill every section; delete placeholder text. Specific ru
 ```markdown
 ---
 name: <skill-name>
-description: Use this skill when <primary trigger>. Also use when <secondary triggers
-  and exact user phrases>. Do not use for <near-miss boundary>.
+description: This skill should be used when <primary trigger>. Also use when <secondary
+  triggers and exact user phrases>. Not for <near-miss boundary, only if one is likely>.
 ---
 
 ## Purpose
@@ -126,23 +126,30 @@ What the agent must NOT do before a certain condition is met, if applicable.>
 
 ### Phase 4 - Write the Description Field
 
-Write the description after the body is complete; the body reveals the true scope. A bad description causes the skill to never load (too narrow) or load at the wrong time (too broad).
+Write the description after the body is complete; the body reveals the true scope. The description is the only routing surface: at startup the agent preloads every skill's name and description (never the body) into its context, then matches the user's task against them to decide what to load. The body is read only after a match. A bad description causes the skill to never load (too narrow) or load at the wrong time (too broad).
+
+State both what the skill does and when to use it, in the third person. The "what" is a brief capability line (the kind of thing the user asks for), not a procedure; the "when" is concrete triggers. Third person is non-negotiable: the description is injected into the system prompt, and a first-person ("I can help you...") or second-person ("You can use this...") point of view degrades matching.
 
 | Principle | Do | Avoid |
 |---|---|---|
-| Imperative phrasing | "Use this skill when..." | "This skill does X" |
-| User intent focus | Name what the user asks for | Name what the skill outputs |
-| Trigger phrases | List exact phrasings the user would type | Vague categories only |
-| Keyword coverage | Include symptoms, error messages, file types, synonyms the routing match could hit | Abstract category words only |
-| Near-miss boundary | Name at least one thing it does NOT cover | Omitting boundaries entirely |
-| Triggers only | Describe WHEN to use, never HOW the skill works | Summarizing the workflow |
+| Third person | "This skill should be used when..."; "Processes Excel files and..." | First person ("I can help..."), second person ("You can..."), bare imperative ("Use this skill when...") |
+| What and when | A brief capability statement plus concrete triggers | Triggers with no capability, or capability with no triggers |
+| User intent focus | Name what the user asks for | Name internal implementation or mechanics |
+| Trigger phrases | List the exact phrasings the user would type | Vague categories only |
+| Keyword coverage | Embed the literal terms a user says: file types, error messages, event names, verbs, synonyms | Abstract category words only ("Helps with documents", "Processes data") |
+| Near-miss boundary | When a plausible false-positive exists, name what it does NOT cover | Boilerplate "not for" on skills with no likely collision |
+| Triggers, not procedure | Describe WHEN to use and WHAT it does, never the step-by-step HOW | Summarizing the workflow steps |
 | Generous triggering | Enumerate trigger contexts, including ones where the user does not name the skill | Single narrow trigger |
-| Key use case first | Lead with the primary trigger; the listing truncates at 1,536 characters | Burying the main trigger behind boundary clauses |
+| Key use case first | Lead with the primary trigger | Burying the main trigger behind boundary clauses |
 | Length | 300-600 characters | Over 1024 characters (hard limit) |
 
-Never summarize the skill's workflow in the description. A description that says "does X by doing A then B" becomes a shortcut: the agent follows the two-word summary instead of reading the body, and the body's actual procedure silently stops executing. Triggers in the description; procedure in the body.
+Descriptions compete for a shared budget. The full set is capped (roughly 1% of the context window); on overflow the least-used skills' descriptions are shortened or dropped first, which strips the keywords needed to match. Lead with the primary trigger so it survives truncation, and keep each description well under the 1,536-character listing cap.
+
+Never summarize the skill's workflow in the description. A brief capability line is fine ("Processes Excel files and generates reports"); a step sequence is not. A description that says "does X by doing A then B" becomes a shortcut: the agent follows the two-word summary instead of reading the body, and the body's actual procedure silently stops executing. Capability and triggers in the description; procedure in the body.
 
 Err generous on triggers. Skills undertrigger by default, and the routing mechanism only consults a skill for tasks substantial enough to benefit; an extra trigger phrase rarely causes false loads, but a missing one guarantees missed loads.
+
+Negative scoping is a remedy, not a default. Add a "not for" boundary only when a real adjacent skill or a likely misread would otherwise pull this skill in. When fixing an observed mis-trigger, generalize to the category that caused it rather than pasting the failed query's exact keywords; specific-keyword patches overfit to one prompt and leave the real boundary fuzzy.
 
 Validate before finalizing: if a different agent read only this description and the user's message, would it confidently decide to load this skill? If not, revise.
 
@@ -222,7 +229,7 @@ All bundled scripts are Python, executed with `uv run`. Conventions:
 
 - **Declarations are not procedures.** "The output should be well-structured" is a declaration and is useless. "Use H2 for major sections and include a fillable template block" is a procedure. Skills teach the agent how to approach a class of problems.
 
-- **Missing near-miss boundary in the description causes false triggers.** Without at least one explicit exclusion, the skill loads on tangentially related requests. Name the most likely false positive.
+- **A near-miss boundary prevents false triggers, but only when one is actually likely.** If a real adjacent skill or a plausible misread would pull this skill in, name the most likely false positive as an explicit exclusion. Skip the boundary when nothing else competes for the request; a boilerplate "not for" only spends budget. When patching an observed mis-trigger, exclude the category that caused it, not that one query's keywords, or the patch overfits.
 
 - **A colon-space inside an unquoted description breaks the frontmatter.** YAML plain scalars cannot contain ": "; the description silently fails to parse and the skill router falls back to garbage (observed: a description showing as "Purpose"). Avoid inline colons in the description, or quote the whole string. Verify after writing: the parsed description must match what you wrote.
 
