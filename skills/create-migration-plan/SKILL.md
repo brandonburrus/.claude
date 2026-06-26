@@ -1,7 +1,7 @@
 ---
 name: create-migration-plan
 description: >-
-  Use this skill when planning a migration or deprecation: schema changes on
+  This skill should be used when planning a migration or deprecation: schema changes on
   live data, API version transitions, library or framework upgrades,
   replacing a system or service, renaming a column or endpoint safely, or
   sunsetting anything with consumers. Use when the user says "plan the

@@ -1,7 +1,7 @@
 ---
 name: design-observability
 description: >-
-  Use this skill when designing how a service is monitored before an incident:
+  This skill should be used when designing how a service is monitored before an incident:
   choosing what metrics, logs, and traces to emit, defining SLIs/SLOs and error
   budgets, designing alerts and on-call paging, building service-health
   dashboards, or instrumenting code for visibility. Use when the user says "set up

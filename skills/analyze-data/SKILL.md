@@ -1,7 +1,7 @@
 ---
 name: analyze-data
 description: >-
-  Use this skill when analyzing, aggregating, summarizing, or plotting tabular
+  This skill should be used when analyzing, aggregating, summarizing, or plotting tabular
   data from CSV, TSV, Excel, JSON, Parquet, or SQLite sources. Use when the
   user says "analyze this data", "what's the total/average/trend", "group by",
   "how many rows", "plot this", "make a chart from this data", hands over a

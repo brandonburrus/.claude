@@ -1,7 +1,7 @@
 ---
 name: execute-in-parallel
 description: >-
-  Use this skill to structure work across multiple concurrent subagents for speed
+  This skill should be used to structure work across multiple concurrent subagents for speed
   or quality: fanning out genuinely independent tasks, generating several
   competing solutions and judging them, or adversarially verifying findings with
   independent skeptics. Use when the user says "run these in parallel",

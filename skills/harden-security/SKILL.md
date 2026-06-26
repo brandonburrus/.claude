@@ -1,7 +1,7 @@
 ---
 name: harden-security
 description: >-
-  Use this skill when designing, building, or modifying anything that touches
+  This skill should be used when designing, building, or modifying anything that touches
   untrusted input, authentication, authorization, sessions, secrets, file
   uploads, payments, PII, or external integrations, including threat-modeling
   the attack surface before writing the code. Use when the user says "make

@@ -1,7 +1,7 @@
 ---
 name: design-cli
 description: >-
-  Use this skill when designing or building a command-line tool: a durable CLI
+  This skill should be used when designing or building a command-line tool: a durable CLI
   that wraps an API, SDK, service, or script and exposes composable commands
   with stable output. Use when the user says "build a CLI for X", "make a
   command-line tool", "wrap this API in a CLI", "turn this script into a real

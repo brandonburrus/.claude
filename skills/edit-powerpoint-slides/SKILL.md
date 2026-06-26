@@ -1,7 +1,7 @@
 ---
 name: edit-powerpoint-slides
 description: >-
-  Use this skill when creating, editing, or reading PowerPoint presentations
+  This skill should be used when creating, editing, or reading PowerPoint presentations
   (.pptx), including slides, layouts, placeholders, text, images, tables,
   charts, speaker notes, and click-to-reveal builds and animations. Use when
   the user says "make a slide deck", "create a presentation", "update these

@@ -1,7 +1,7 @@
 ---
 name: triage-security-finding
 description: >-
-  Use this skill to triage an incoming security finding to a disposition: a
+  This skill should be used to triage an incoming security finding to a disposition: a
   dependency or scanner alert (Dependabot, Snyk, npm audit), a CVE advisory, a
   SAST or DAST result, or a pentest or bug-bounty report. It decides whether the
   finding is real, whether it is reachable and exploitable in your context, its

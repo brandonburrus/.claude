@@ -1,6 +1,6 @@
 ---
 name: format-for-obsidian
-description: Use this skill when writing or formatting Markdown files for an Obsidian
+description: This skill should be used when writing or formatting Markdown files for an Obsidian
   vault. Use when the user mentions Obsidian, vault, wikilinks, or Obsidian-flavored
   Markdown, or when a .obsidian directory is detected. Do not use for GitHub READMEs,
   static site generators, or any Markdown renderer that is not Obsidian.

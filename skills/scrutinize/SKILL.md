@@ -1,7 +1,7 @@
 ---
 name: scrutinize
 description: >-
-  Use this skill to scrutinize a plan, PR, diff, design doc, or proposed
+  This skill should be used to scrutinize a plan, PR, diff, design doc, or proposed
   decision from an outsider's perspective: first whether it should exist at all
   or a simpler path reaches the same goal, then tracing the real end-to-end path
   to verify it does what it claims. Use when the user says "scrutinize this",

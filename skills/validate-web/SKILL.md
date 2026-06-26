@@ -1,7 +1,7 @@
 ---
 name: validate-web
 description: >-
-  Use this skill to validate a web change by driving a real browser with the
+  This skill should be used to validate a web change by driving a real browser with the
   agent-browser CLI, confirming user-visible behavior and capturing evidence
   (screenshots, console, network). Use after implementing a frontend change, or
   when the user says "validate this in the browser", "check the UI works",

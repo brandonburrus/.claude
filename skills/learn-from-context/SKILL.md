@@ -1,7 +1,7 @@
 ---
 name: learn-from-context
 description: >-
-  Use this skill when extracting durable learnings from the current session,
+  This skill should be used when extracting durable learnings from the current session,
   including after the user corrects the same behavior, when a hard-won lesson,
   gotcha, or convention surfaces mid-work, at natural wrap-up points, or when
   the user says "what did we learn", "remember this", "make sure this sticks",

@@ -1,7 +1,7 @@
 ---
 name: edit-pdf
 description: >-
-  Use this skill when creating, editing, or reading PDF files, including
+  This skill should be used when creating, editing, or reading PDF files, including
   extracting text and tables, merging or splitting documents, rotating pages,
   filling form fields, adding watermarks or page numbers, and generating new
   PDFs such as reports or invoices. Use when the user says "read this PDF",

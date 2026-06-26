@@ -1,7 +1,7 @@
 ---
 name: prepare-for-deploy
 description: >-
-  Use this skill when preparing a release or deployment: cutting a version,
+  This skill should be used when preparing a release or deployment: cutting a version,
   changelog and version bumps, pre-deploy gates, staging deploys, rollback
   plans, or when the user says "get this ready to deploy", "prep the
   release", "cut a release", "ship this", or asks to deploy anything. The

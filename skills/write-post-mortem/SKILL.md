@@ -1,6 +1,6 @@
 ---
 name: write-post-mortem
-description: Use this skill when writing a post-mortem, postmortem, RCA, or root
+description: This skill should be used when writing a post-mortem, postmortem, RCA, or root
   cause analysis for a fixed and validated bug. Use when the user says "write the
   post-mortem", "document this fix", "write up the root cause", "close out this bug
   with a writeup", or when a debugging session has landed a validated fix worth

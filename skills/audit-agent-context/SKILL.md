@@ -1,7 +1,7 @@
 ---
 name: audit-agent-context
 description: >-
-  Use this skill to audit a codebase or project for proper AGENTS.md coverage
+  This skill should be used to audit a codebase or project for proper AGENTS.md coverage
   and conformance against the CLAUDE.md contextual-documentation standard:
   whether the root and key subsystems have AGENTS.md files, whether each carries
   the required sections, whether the content still matches the code, and whether

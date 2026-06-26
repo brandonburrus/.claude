@@ -1,7 +1,7 @@
 ---
 name: explore-solutions
 description: >-
-  Use this skill when a decision has more than one viable direction and you need
+  This skill should be used when a decision has more than one viable direction and you need
   to choose: generate several genuinely distinct approaches, weigh them against
   explicit criteria, and converge on a recommendation with the rejected
   alternatives named. Use when the user says "what are the options", "explore

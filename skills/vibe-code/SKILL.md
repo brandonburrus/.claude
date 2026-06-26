@@ -1,7 +1,7 @@
 ---
 name: vibe-code
 description: >-
-  Use this skill when building a throwaway prototype or quick spike to answer
+  This skill should be used when building a throwaway prototype or quick spike to answer
   a design question before committing to it, including sanity-checking a data
   model or state machine, mocking up UI directions, or exploring options. Use
   when the user says "vibe code", "prototype this", "spike it", "quick and

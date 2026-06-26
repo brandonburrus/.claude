@@ -1,7 +1,7 @@
 ---
 name: design-data-migration
 description: >-
-  Use this skill when writing or running a database migration: adding, altering,
+  This skill should be used when writing or running a database migration: adding, altering,
   or dropping a column or index on a live table, backfilling or transforming data
   at scale, making a schema change zero-downtime, or authoring migration files in
   Prisma, Drizzle, Kysely, Django, Alembic, Rails, or golang-migrate. Use when the

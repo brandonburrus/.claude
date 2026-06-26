@@ -1,6 +1,6 @@
 ---
 name: edit-image
-description: Use this skill when manipulating or converting raster images with sharp,
+description: This skill should be used when manipulating or converting raster images with sharp,
   including "convert this png to jpg", "resize this image", "make a thumbnail", "compress
   this photo", "crop/rotate/flip this image", "strip EXIF metadata", "add a watermark",
   "overlay my logo", "batch convert these images", or "what are this image's dimensions".

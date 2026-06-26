@@ -1,6 +1,6 @@
 ---
 name: check-comprehension
-description: Use this skill when the user wants to deeply understand something and have
+description: This skill should be used when the user wants to deeply understand something and have
   that understanding verified rather than just receive an explanation, typically after a
   change, fix, or feature was just built, or for a concept they are studying. Triggers
   include 'make sure I understand this', 'check my understanding', 'quiz me on this',

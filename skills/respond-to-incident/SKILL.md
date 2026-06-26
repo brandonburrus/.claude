@@ -1,7 +1,7 @@
 ---
 name: respond-to-incident
 description: >-
-  Use this skill when responding to a live production incident or outage: a
+  This skill should be used when responding to a live production incident or outage: a
   service is down, users are blocked, an alert is firing, data is at risk, or
   someone declares a SEV. Use when the user says "prod is down", "we have an
   outage", "the site is down", "users can't log in", "sev1", "sev2", "page the

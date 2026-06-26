@@ -1,6 +1,6 @@
 ---
 name: write-adr
-description: Use this skill when recording an architecture decision record, capturing
+description: This skill should be used when recording an architecture decision record, capturing
   why a significant technical choice was made, what alternatives were considered,
   and when to revisit it. Use when the user says "ADR", "record this decision",
   "document why we chose X", or asks "why did we choose X" about a past decision,

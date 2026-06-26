@@ -1,7 +1,7 @@
 ---
 name: create-claude-agent
 description: >-
-  Use this skill when creating, editing, porting, or improving a Claude Code
+  This skill should be used when creating, editing, porting, or improving a Claude Code
   subagent, the Markdown agent definitions in ~/.claude/agents or
   .claude/agents. Use when the user says "create an agent", "add an agent",
   "make a subagent for X", or "the agent isn't triggering", when the user names

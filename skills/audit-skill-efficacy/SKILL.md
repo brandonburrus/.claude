@@ -1,7 +1,7 @@
 ---
 name: audit-skill-efficacy
 description: >-
-  Use this skill to find which skills in the library actually change behavior
+  This skill should be used to find which skills in the library actually change behavior
   versus which are dead weight, by running the create-skill Phase 5 baseline-vs-
   with-skill test across many skills at once and flagging the ones a no-skill
   baseline already matches. Use when the user says "audit my skills", "which

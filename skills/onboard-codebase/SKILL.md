@@ -1,7 +1,7 @@
 ---
 name: onboard-codebase
 description: >-
-  Use this skill when building an understanding of an unfamiliar codebase or
+  This skill should be used when building an understanding of an unfamiliar codebase or
   orienting in a new repository. Use when the user says "onboard me", "help me
   understand this codebase", "walk me through this repo", "how does this
   project work", "zoom out", or "where does X happen in here", and when

@@ -1,6 +1,6 @@
 ---
 name: clarify-ambiguity
-description: Use this skill when a request, idea, or direction is ambiguous, underspecified,
+description: This skill should be used when a request, idea, or direction is ambiguous, underspecified,
   or vague and needs clarification before any work starts, especially when the ask is
   missing who it is for, why now, what success looks like, or the binding constraint.
   Also use when the user says "grill me", "interview me", "clarify this", "stress-test

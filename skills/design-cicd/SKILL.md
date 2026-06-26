@@ -1,7 +1,7 @@
 ---
 name: design-cicd
 description: >-
-  Use this skill when designing or changing a CI/CD pipeline: setting up CI for a
+  This skill should be used when designing or changing a CI/CD pipeline: setting up CI for a
   repo, adding a GitHub Actions (or GitLab CI, CircleCI) workflow, configuring
   quality gates, wiring a build/test/deploy pipeline, adding branch protection or
   required status checks, setting up preview/staging/production deploys, adding a

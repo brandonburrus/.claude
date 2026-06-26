@@ -2,7 +2,7 @@
 name: rubber-duck
 disable-model-invocation: true
 description: >-
-  Use this skill when the goal is the user's own understanding of a concept or a
+  This skill should be used when the goal is the user's own understanding of a concept or a
   problem, not a finished answer or a solved task: helping them learn something
   new, or thinking through a problem of their own out loud. Use when the user
   says "help me understand X", "explain X to me", "rubber-duck this", "I don't

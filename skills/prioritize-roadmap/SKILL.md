@@ -1,7 +1,7 @@
 ---
 name: prioritize-roadmap
 description: >-
-  Use this skill to decide what to build next and in what order from a set of
+  This skill should be used to decide what to build next and in what order from a set of
   candidate features, bets, epics, or backlog items. Use when the user says
   "prioritize the roadmap", "what should we build next", "rank these features",
   "what's the priority", "RICE these", "value vs effort", "sequence the

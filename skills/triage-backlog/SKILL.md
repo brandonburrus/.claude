@@ -1,7 +1,7 @@
 ---
 name: triage-backlog
 description: >-
-  Use this skill when triaging incoming issues, bug reports, or feature
+  This skill should be used when triaging incoming issues, bug reports, or feature
   requests on any tracker (GitHub Issues, Jira, Rally, Linear), including
   evaluating new issues, requesting missing information, marking work ready
   for implementation, or closing out-of-scope requests. Use when the user says

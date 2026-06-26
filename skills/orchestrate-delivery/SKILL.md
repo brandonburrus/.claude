@@ -1,7 +1,7 @@
 ---
 name: orchestrate-delivery
 description: >-
-  Use this skill to take a substantial product idea all the way to production in
+  This skill should be used to take a substantial product idea all the way to production in
   users' hands, sequencing the right skill at each stage and stopping at the
   evidence gates between them. Use when the user says "take this idea to
   production", "build this product end to end", "what's the path from idea to

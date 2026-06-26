@@ -1,7 +1,7 @@
 ---
 name: review-pull-request
 description: >-
-  Use this skill when reviewing someone else's pull request or proposed
+  This skill should be used when reviewing someone else's pull request or proposed
   code changes. Use when the user says "review PR #42", "review this pull request",
   "take a look at this PR", "what do you think of these changes", or asks for a
   second opinion on a branch, diff, or commit range. Also use for reviewing a local

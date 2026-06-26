@@ -1,7 +1,7 @@
 ---
 name: research-market
 description: >-
-  Use this skill to research a market and assess product-market opportunity: who
+  This skill should be used to research a market and assess product-market opportunity: who
   the customers are, how big and reachable the market is, the competitive
   landscape, real demand signals, and where a wedge to fit might be. Use when
   the user says "market research", "is there a market for this", "product-market

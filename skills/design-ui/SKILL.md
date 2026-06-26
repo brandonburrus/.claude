@@ -1,6 +1,6 @@
 ---
 name: design-ui
-description: Use this skill when building, styling, or redesigning any kind of User
+description: This skill should be used when building, styling, or redesigning any kind of User
   Interface, including web components, pages, landing pages, dashboards, or frontend
   interfaces. Also use when the user says "make this look better", "style this",
   "design a page for X", or asks for UI polish. Do not use for auditing existing

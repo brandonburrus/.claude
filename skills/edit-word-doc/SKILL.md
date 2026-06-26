@@ -1,7 +1,7 @@
 ---
 name: edit-word-doc
 description: >-
-  Use this skill when creating, editing, or reading Microsoft Word documents
+  This skill should be used when creating, editing, or reading Microsoft Word documents
   (.docx), including text, headings, styles, tables, images, and headers or
   footers. Use when the user says "create a Word doc", "update this docx",
   "read the Word document", "fill in this template", or references a .docx

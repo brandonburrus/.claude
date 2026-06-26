@@ -1,7 +1,7 @@
 ---
 name: synthesize-feedback
 description: >-
-  Use this skill to turn raw product feedback into themes, the pain behind each,
+  This skill should be used to turn raw product feedback into themes, the pain behind each,
   and the opportunities they point to. Use for user interviews, support tickets,
   app reviews, survey free-text, sales notes, or churn comments, and when the
   user says "synthesize the feedback", "what are users saying", "themes in this

@@ -1,7 +1,7 @@
 ---
 name: triage-review-feedback
 description: >-
-  Use this skill when handling code-review feedback received on your own pull
+  This skill should be used when handling code-review feedback received on your own pull
   request or change: triaging reviewer comments, deciding what to accept
   versus push back on, implementing the accepted fixes, and replying to
   reviewers. Use when the user says "address the review comments", "respond

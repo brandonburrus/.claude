@@ -1,7 +1,7 @@
 ---
 name: write-eval
 description: >-
-  Use this skill when writing evaluations for an LLM-powered feature, agent,
+  This skill should be used when writing evaluations for an LLM-powered feature, agent,
   or prompt: building eval datasets, choosing graders (code checks, pattern
   matching, LLM-as-judge, human review), setting pass thresholds, and wiring
   evals into the development loop. Use when the user says "write evals",

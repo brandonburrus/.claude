@@ -1,7 +1,7 @@
 ---
 name: create-handoff
 description: >-
-  Use this skill when compacting the current working session into a handoff
+  This skill should be used when compacting the current working session into a handoff
   document so a fresh session or another agent can continue without
   re-deriving context. Use when the user says "write a handoff", "hand this
   off", "compact this for a fresh session", "context is running low", or

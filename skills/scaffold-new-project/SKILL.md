@@ -1,6 +1,6 @@
 ---
 name: scaffold-new-project
-description: 'Use this skill when scaffolding a brand-new project from scratch: starting a new TypeScript library, CLI tool (commander), or MCP server, a new Python package or Python MCP server (uv, ruff, pytest), a new React web app with Playwright e2e, or a new pnpm monorepo with workspace catalogs. Use when the user says "scaffold a new project", "start a new repo", "set up a new library/CLI/MCP server", "new TS package", "bootstrap a React app", or "create a pnpm monorepo". Triggers on choosing tsup, biome, vitest, fastmcp, or pnpm-workspace for a brand-new project. Do not use when adding files to an existing project, migrating, or copying one (use code-with-best-practices for implementation in a repo that already exists).'
+description: 'This skill should be used when scaffolding a brand-new project from scratch: starting a new TypeScript library, CLI tool (commander), or MCP server, a new Python package or Python MCP server (uv, ruff, pytest), a new React web app with Playwright e2e, or a new pnpm monorepo with workspace catalogs. Use when the user says "scaffold a new project", "start a new repo", "set up a new library/CLI/MCP server", "new TS package", "bootstrap a React app", or "create a pnpm monorepo". Triggers on choosing tsup, biome, vitest, fastmcp, or pnpm-workspace for a brand-new project. Do not use when adding files to an existing project, migrating, or copying one (use code-with-best-practices for implementation in a repo that already exists).'
 ---
 
 ## Purpose

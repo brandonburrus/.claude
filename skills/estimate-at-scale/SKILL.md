@@ -1,7 +1,7 @@
 ---
 name: estimate-at-scale
 description: >-
-  Use this skill to produce an order-of-magnitude estimate from rough scale
+  This skill should be used to produce an order-of-magnitude estimate from rough scale
   parameters: monthly cost, storage, capacity, or throughput, given inputs like
   volume, request rate, data size, retention, and growth. It interrogates for
   the parameters first, then shows the assumptions and arithmetic behind the

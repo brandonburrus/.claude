@@ -1,7 +1,7 @@
 ---
 name: write-docs
 description: >-
-  Use this skill when generating or organizing a documentation set for a
+  This skill should be used when generating or organizing a documentation set for a
   codebase, library, CLI, or API: writing a README and docs from scratch,
   filling documentation gaps, or restructuring docs that have become a
   confusing pile. Use when the user says "document this", "write the docs",

@@ -1,7 +1,7 @@
 ---
 name: visualize-data
 description: >-
-  Use this skill when building a data visualization as the deliverable with
+  This skill should be used when building a data visualization as the deliverable with
   marimo, Streamlit, or D3: an interactive reactive notebook, a shareable data
   app or dashboard, or a bespoke custom web chart. Use when the user says
   "visualize this", "build a dashboard", "make an interactive chart", "data

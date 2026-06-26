@@ -1,7 +1,7 @@
 ---
 name: translate-for-leadership
 description: >-
-  Use this skill when rewriting engineering content for engineering-org
+  This skill should be used when rewriting engineering content for engineering-org
   leadership (VPs, directors, PMs, release managers) and shaping it for its
   channel: ticket comment, Slack post, async standup line, email, or meeting
   talking points. Use when the user says "write this up for management",

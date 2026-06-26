@@ -1,6 +1,6 @@
 ---
 name: fix
-description: Use this skill when anything breaks or behaves unexpectedly and before
+description: This skill should be used when anything breaks or behaves unexpectedly and before
   proposing any fix. Use for bug reports, failing or flaky tests, build failures,
   crashes, regressions, performance degradation, and pasted stack traces or error
   logs. Also use when the user says "debug this", "fix this bug", "why is this

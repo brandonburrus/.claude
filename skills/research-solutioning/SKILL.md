@@ -1,7 +1,7 @@
 ---
 name: research-solutioning
 description: >-
-  Use this skill to research and compare specific external technical solutions
+  This skill should be used to research and compare specific external technical solutions
   (libraries, frameworks, SaaS, databases, managed services, or commercial
   vendors) against your requirements and choose one. Use when the user says
   "compare X vs Y", "evaluate these tools", "which database, library, framework,

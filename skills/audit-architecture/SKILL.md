@@ -1,7 +1,7 @@
 ---
 name: audit-architecture
 description: >-
-  Use this skill when evaluating a codebase's architecture and surfacing
+  This skill should be used when evaluating a codebase's architecture and surfacing
   improvement candidates, including finding refactoring opportunities,
   consolidating tightly-coupled modules, making code more testable, or when
   the user says "audit the architecture", "review the structure of this

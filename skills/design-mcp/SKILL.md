@@ -1,7 +1,7 @@
 ---
 name: design-mcp
 description: >-
-  Use this skill when designing or reviewing an MCP (Model Context Protocol)
+  This skill should be used when designing or reviewing an MCP (Model Context Protocol)
   server, including deciding what becomes a tool versus a resource versus a
   prompt, tool naming and schemas, transport and authorization choices, and
   server security. Use when the user says "build an MCP server", "expose X to

@@ -1,6 +1,6 @@
 ---
 name: follow-tdd
-description: Use this skill when implementing any feature, fixing any bug, or changing
+description: This skill should be used when implementing any feature, fixing any bug, or changing
   any code behavior, before writing the implementation code. Also use when the user
   says "TDD", "test first", "red-green-refactor", "write the test before the code",
   and after the fix skill has reproduced a bug's root cause, to write the regression

@@ -1,7 +1,7 @@
 ---
 name: code-with-best-practices
 description: >-
-  Use this skill when planning, writing, or reviewing code in TypeScript,
+  This skill should be used when planning, writing, or reviewing code in TypeScript,
   JavaScript, Python, Go, Rust, SQL, or Bash, or when working with React,
   Node.js, Vitest, Playwright, Terraform, AWS CDK, pandas, NumPy, polars,
   marimo, or Jupyter notebooks. Use for any implementation work in these stacks

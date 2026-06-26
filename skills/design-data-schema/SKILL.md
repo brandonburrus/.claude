@@ -1,6 +1,6 @@
 ---
 name: design-data-schema
-description: Use this skill when designing or reviewing a database schema, including
+description: This skill should be used when designing or reviewing a database schema, including
   SQL tables, columns, constraints, indexes, and migrations, or DynamoDB and
   similar NoSQL key design, access patterns, and single-table modeling. Use when
   the user says "design the schema", "model this data", "what should the tables

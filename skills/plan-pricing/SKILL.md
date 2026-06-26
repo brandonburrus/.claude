@@ -1,6 +1,6 @@
 ---
 name: plan-pricing
-description: Use this skill when designing a pricing and packaging model for a software product, including picking a pricing model (flat, per-seat, usage-based, tiered, freemium, value-based), choosing the metric to charge on, estimating willingness to pay, and laying out tiers. Use when the user says "how should I price this", "what should I charge", "design the pricing", "set up our tiers", "freemium or paid", "per-seat vs usage-based", or "what's our pricing model". Do not use for sizing or segmenting the market (use research-market) or for cost and capacity math at scale (use estimate-at-scale).
+description: This skill should be used when designing a pricing and packaging model for a software product, including picking a pricing model (flat, per-seat, usage-based, tiered, freemium, value-based), choosing the metric to charge on, estimating willingness to pay, and laying out tiers. Use when the user says "how should I price this", "what should I charge", "design the pricing", "set up our tiers", "freemium or paid", "per-seat vs usage-based", or "what's our pricing model". Do not use for sizing or segmenting the market (use research-market) or for cost and capacity math at scale (use estimate-at-scale).
 ---
 
 ## Purpose

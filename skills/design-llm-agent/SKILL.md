@@ -1,7 +1,7 @@
 ---
 name: design-llm-agent
 description: >-
-  Use this skill when designing or architecting an LLM-powered application,
+  This skill should be used when designing or architecting an LLM-powered application,
   agent, or agentic workflow, including agent loops, tool interfaces, context
   window management, prompt ownership, evals, human-in-the-loop steps, and
   reliability patterns. Use when the user says "build an agent", "design an

@@ -1,7 +1,7 @@
 ---
 name: evaluate-software-options
 description: >-
-  Use this skill when finding, comparing, or choosing a commercial or
+  This skill should be used when finding, comparing, or choosing a commercial or
   open-source software application to adopt for a business or team need,
   including CRM, ITSM, project management, document management, data
   visualization, HR, helpdesk, analytics, and similar product categories. Use

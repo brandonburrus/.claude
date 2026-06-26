@@ -1,7 +1,7 @@
 ---
 name: validate-idea
 description: >-
-  Use this skill to test whether a product or business idea is worth building
+  This skill should be used to test whether a product or business idea is worth building
   before committing to build it: identify the riskiest assumption, design the
   cheapest experiment that could falsify it, run it, and turn the evidence into a
   go/pivot/kill decision. Use when the user says "validate my idea", "should I

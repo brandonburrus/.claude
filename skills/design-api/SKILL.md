@@ -1,6 +1,6 @@
 ---
 name: design-api
-description: Use this skill when designing or reviewing an API contract, including
+description: This skill should be used when designing or reviewing an API contract, including
   REST endpoints, GraphQL schemas, resource naming, pagination, error formats,
   versioning, auth scopes, or typed interfaces between modules. Use when the user
   says "design the API", "add an endpoint", "what should this endpoint look like",

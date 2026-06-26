@@ -1,7 +1,7 @@
 ---
 name: ground-in-docs
 description: >-
-  Use this skill before coding against an unfamiliar, fast-moving, or
+  This skill should be used before coding against an unfamiliar, fast-moving, or
   version-sensitive API, library, or framework: fetch and digest the official
   documentation for the actually installed version instead of trusting
   training data. Use when the user says "check the docs", "verify against the

@@ -1,7 +1,7 @@
 ---
 name: create-claude-hook
 description: >-
-  Use this skill when creating, editing, debugging, or improving a Claude Code
+  This skill should be used when creating, editing, debugging, or improving a Claude Code
   hook, meaning the scripts and settings entries that run automatically on
   harness events such as PreToolUse, PostToolUse, SessionStart, Stop, or
   UserPromptSubmit. Use when the user says "create a hook", "block X

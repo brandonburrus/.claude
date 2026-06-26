@@ -1,7 +1,7 @@
 ---
 name: audit-harness-usage
 description: >-
-  Use this skill to mine your own Claude Code session history for signals that
+  This skill should be used to mine your own Claude Code session history for signals that
   improve the harness: which skills never fire in real use, which fire most, and
   where repeated manual corrections point to a missing hook or skill. Use when the
   user says "which skills never fire", "audit harness usage", "analyze my

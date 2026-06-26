@@ -1,6 +1,6 @@
 ---
 name: refactor-code
-description: Use this skill when refactoring or simplifying working code without
+description: This skill should be used when refactoring or simplifying working code without
   changing its behavior, including reducing complexity, improving names, removing
   duplication, untangling nested logic, or cleaning up after a feature lands. Use
   when the user says "refactor this", "simplify this", "clean this up", "this code

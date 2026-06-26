@@ -1,7 +1,7 @@
 ---
 name: analyze-product-metrics
 description: >-
-  Use this skill after a feature or product ships, to turn usage and product
+  This skill should be used after a feature or product ships, to turn usage and product
   data into a ship / iterate / roll-back decision with statistical honesty. Use
   when the user says "did the launch work", "analyze the metrics", "read the A/B
   test", "is this experiment significant", "should we ship the variant",

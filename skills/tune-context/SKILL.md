@@ -1,7 +1,7 @@
 ---
 name: tune-context
 description: >-
-  Use this skill when auditing or tightening the always-on agent context,
+  This skill should be used when auditing or tightening the always-on agent context,
   including CLAUDE.md, AGENTS.md files, rules files, skill descriptions, and
   memory indexes. Use when the user says "trim my CLAUDE.md", "my context is
   bloated", "the agent keeps ignoring conventions", "tighten my always-on context",

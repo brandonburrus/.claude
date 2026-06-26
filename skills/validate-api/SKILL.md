@@ -1,7 +1,7 @@
 ---
 name: validate-api
 description: >-
-  Use this skill to validate an API change by sending real HTTP requests against
+  This skill should be used to validate an API change by sending real HTTP requests against
   the running service with the Bruno CLI, asserting status, body, and headers,
   and saving every request into a reusable Bruno collection. Use after
   implementing an API change, or when the user says "validate the API",

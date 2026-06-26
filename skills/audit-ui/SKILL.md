@@ -1,6 +1,6 @@
 ---
 name: audit-ui
-description: Use this skill to review or critique an existing UI for quality and accessibility without changing it, returning a severity-ranked findings report. Use when the user says "review this UI", "audit the frontend", "critique this design", or "is this accessible", or hands over a live page, screenshots, or a component. Covers anti-slop visual quality, hierarchy and typography, accessibility (contrast, focus, ARIA, keyboard, alt text), responsive behavior, and interaction states. Do not use for building or fixing UI (use design-ui); this skill reports problems and never implements the fix.
+description: This skill should be used to review or critique an existing UI for quality and accessibility without changing it, returning a severity-ranked findings report. Use when the user says "review this UI", "audit the frontend", "critique this design", or "is this accessible", or hands over a live page, screenshots, or a component. Covers anti-slop visual quality, hierarchy and typography, accessibility (contrast, focus, ARIA, keyboard, alt text), responsive behavior, and interaction states. Do not use for building or fixing UI (use design-ui); this skill reports problems and never implements the fix.
 ---
 
 ## Purpose

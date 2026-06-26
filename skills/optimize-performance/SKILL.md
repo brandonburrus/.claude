@@ -1,7 +1,7 @@
 ---
 name: optimize-performance
 description: >-
-  Use this skill when making code, pages, queries, or services faster, when
+  This skill should be used when making code, pages, queries, or services faster, when
   performance budgets or SLAs exist, when Core Web Vitals need improvement, or
   when the user says "make this faster", "this is slow", "optimize this",
   "reduce the bundle size", "speed up this query", or "improve load time". Do

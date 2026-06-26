@@ -1,6 +1,6 @@
 ---
 name: write-product-spec
-description: Use this skill when defining what a product or feature is and why it
+description: This skill should be used when defining what a product or feature is and why it
   should exist, writing a PRD, product requirements document, product spec, or
   feature definition, or capturing user journeys, personas, success metrics, and
   MVP scope. Also use when the user says "PRD", "product spec", "define this

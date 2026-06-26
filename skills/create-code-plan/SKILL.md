@@ -1,6 +1,6 @@
 ---
 name: create-code-plan
-description: Use this skill when planning any non-trivial code implementation, including
+description: This skill should be used when planning any non-trivial code implementation, including
   new features, bug fixes, refactors, or architectural changes. Use when the user says
   "plan this", "let's plan before coding", "what's the approach", "how should we
   approach X", or describes a multi-step code change without explicitly asking for

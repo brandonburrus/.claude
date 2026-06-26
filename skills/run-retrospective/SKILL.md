@@ -1,7 +1,7 @@
 ---
 name: run-retrospective
 description: >-
-  Use this skill to run a retrospective on a work period (a sprint, a project, a
+  This skill should be used to run a retrospective on a work period (a sprint, a project, a
   release cycle, a quarter) and turn it into a few concrete, owned, dated actions
   grounded in evidence. Use when the user says "run a retro", "retrospective",
   "sprint retro", "project retro", "post-sprint review", "what went well and what
