@@ -93,8 +93,9 @@ Use the template below. Fill every section; delete placeholder text. Specific ru
 ```markdown
 ---
 name: <skill-name>
-description: This skill should be used when <primary trigger>. Also use when <secondary
-  triggers and exact user phrases>. Not for <near-miss boundary, only if one is likely>.
+description: This skill should be used when <primary trigger>. It applies when <secondary
+  triggers and exact user phrases>. It should not be used for <near-miss boundary, only
+  if one is likely>.
 ---
 
 ## Purpose
@@ -129,11 +130,11 @@ What the agent must NOT do before a certain condition is met, if applicable.>
 
 Write the description after the body is complete; the body reveals the true scope. The description is the only routing surface: at startup the agent preloads every skill's name and description (never the body) into its context, then matches the user's task against them to decide what to load. The body is read only after a match. A bad description causes the skill to never load (too narrow) or load at the wrong time (too broad).
 
-State both what the skill does and when to use it, in the third person. The "what" is a brief capability line (the kind of thing the user asks for), not a procedure; the "when" is concrete triggers. Third person is non-negotiable: the description is injected into the system prompt, and a first-person ("I can help you...") or second-person ("You can use this...") point of view degrades matching.
+State both what the skill does and when to use it, in the third person. The "what" is a brief capability line (the kind of thing the user asks for), not a procedure; the "when" is concrete triggers. Third person is non-negotiable: the description is injected into the system prompt, and a first-person ("I can help you...") or second-person ("You can use this...") point of view degrades matching. This holds for the whole description, not just the lead: continuation triggers read "It applies when..." (not "Use when..." or "Also use when..."), and boundaries read "It should not be used for..." (not "Do not use for..."). The one exception is a parenthetical cross-reference to another skill, which stays imperative ("(use design-api)") because it directs the agent elsewhere rather than describing this skill.
 
 | Principle | Do | Avoid |
 |---|---|---|
-| Third person | "This skill should be used when..."; "Processes Excel files and..." | First person ("I can help..."), second person ("You can..."), bare imperative ("Use this skill when...") |
+| Third person throughout | Every clause declarative: "This skill should be used when...", "It applies when...", "It should not be used for..." | First person ("I can help..."), second person ("You can..."), any imperative clause including continuations ("Use this skill when...", "Use when...", "Also use when...", "Do not use for...") |
 | What and when | A brief capability statement plus concrete triggers | Triggers with no capability, or capability with no triggers |
 | User intent focus | Name what the user asks for | Name internal implementation or mechanics |
 | Trigger phrases | List the exact phrasings the user would type | Vague categories only |
