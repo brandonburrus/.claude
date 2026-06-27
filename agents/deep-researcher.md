@@ -11,7 +11,7 @@ description: Use this agent to perform deep, multi-source research on a question
   files or acts on the findings. Do not use for grounding code against a specific
   library or API's documentation (use ground-in-docs), assessing product-market
   opportunity (use research-market), comparing specific tools or vendors against
-  requirements (use research-solutioning), or a single-fact lookup answerable in
+  requirements (use research-solutions), or a single-fact lookup answerable in
   one search.
 tools: Read, Grep, Glob, Bash, WebFetch, WebSearch
 ---
