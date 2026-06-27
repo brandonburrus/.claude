@@ -1,5 +1,5 @@
 ---
-name: analyze-product-metrics
+name: review-metrics
 description: >-
   This skill should be used after a feature or product ships, to turn usage and product data into
   a ship / iterate / roll-back decision with statistical honesty. It applies when the user says

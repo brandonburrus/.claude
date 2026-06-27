@@ -1,4 +1,4 @@
-Apply these practices whenever planning, writing, or reviewing SQL queries or migrations. Targets standard SQL with PostgreSQL-leaning notes (engine differences flagged). Generic clean-code rules live in CLAUDE.md; this reference is the SQL-specific, easy-to-get-wrong material. Table, key, and index DESIGN is out of scope here (use design-data-schema); this covers writing queries and migrations against an existing schema. On conflict, the project's own conventions win.
+Apply these practices whenever planning, writing, or reviewing SQL queries or migrations. Targets standard SQL with PostgreSQL-leaning notes (engine differences flagged). Generic clean-code rules live in CLAUDE.md; this reference is the SQL-specific, easy-to-get-wrong material. Table, key, and index DESIGN is out of scope here (use design-schema); this covers writing queries and migrations against an existing schema. On conflict, the project's own conventions win.
 
 ## Contents
 

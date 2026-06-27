@@ -1,5 +1,5 @@
 ---
-name: open-pull-request
+name: pr
 description: >-
   This skill should be used when opening, creating, or submitting a pull request for the current
   branch. It applies when the user says "open a PR", "create a pull request", "submit this for

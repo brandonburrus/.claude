@@ -6,7 +6,7 @@ description: >-
   interfaces between modules. It applies when the user says "design the API", "add an endpoint",
   "what should this endpoint look like", "model this in GraphQL", or is about to expose any new
   public interface surface. It should not be used for database schema design (use
-  design-data-schema) or for implementing an endpoint whose contract already exists.
+  design-schema) or for implementing an endpoint whose contract already exists.
 ---
 
 ## Purpose

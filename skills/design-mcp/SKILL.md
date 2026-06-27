@@ -7,7 +7,7 @@ description: >-
   "build an MCP server", "expose X to Claude over MCP", "design the MCP integration", or "should
   this be a tool or a resource". It should not be used for consuming MCP servers in harness config
   (use the bundled update-config), for designing the agent that uses the server (use
-  design-llm-agent), or for plain HTTP APIs consumed by code (use design-api).
+  design-agent), or for plain HTTP APIs consumed by code (use design-api).
 ---
 
 ## Purpose
@@ -28,7 +28,7 @@ What should the model be able to DO, what context should it be able to READ, and
 | Resource | The application attaches as context | Passive data the client chooses to include: file contents, schemas, records; parameterized via URI templates | Data shoved into tool results that should be addressable and subscribable |
 | Prompt | The user explicitly selects | Reusable workflow templates with arguments (slash-command shaped) | Workflow instructions buried in a tool description |
 
-Everything-is-a-tool is the default failure mode; it makes the model responsible for context-fetching decisions the application should own and bloats the tool list (which dilutes selection accuracy, the same fewer-sharper-tools law from design-llm-agent).
+Everything-is-a-tool is the default failure mode; it makes the model responsible for context-fetching decisions the application should own and bloats the tool list (which dilutes selection accuracy, the same fewer-sharper-tools law from design-agent).
 
 ### 3. Design the tool surface
 
@@ -67,7 +67,7 @@ Stateless tools beat session state where possible; when sessions exist, IDs are 
 
 ### 8. Hand off to implementation
 
-Name the SDK (Python `mcp` with FastMCP decorators, or TypeScript `@modelcontextprotocol/sdk` with `McpServer` and zod schemas; shapes in the reference), show the client config the server will need (`.mcp.json` command entry for stdio, url entry for HTTP), and route the build through create-code-plan. Plan the eval loop too: a server is verified by connecting a real client and watching the model actually choose the right tools, which is a design-llm-agent eval in miniature.
+Name the SDK (Python `mcp` with FastMCP decorators, or TypeScript `@modelcontextprotocol/sdk` with `McpServer` and zod schemas; shapes in the reference), show the client config the server will need (`.mcp.json` command entry for stdio, url entry for HTTP), and route the build through create-code-plan. Plan the eval loop too: a server is verified by connecting a real client and watching the model actually choose the right tools, which is a design-agent eval in miniature.
 
 ## Gotchas
 

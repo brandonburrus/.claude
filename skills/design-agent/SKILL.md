@@ -1,5 +1,5 @@
 ---
-name: design-llm-agent
+name: design-agent
 description: >-
   This skill should be used when designing or architecting an LLM-powered application, agent, or
   agentic workflow, including agent loops, tool interfaces, context window management, prompt

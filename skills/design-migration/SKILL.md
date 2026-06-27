@@ -1,5 +1,5 @@
 ---
-name: design-data-migration
+name: design-migration
 description: >-
   This skill should be used when writing or running a database migration: adding, altering, or
   dropping a column or index on a live table, backfilling or transforming data at scale, making a
@@ -9,7 +9,7 @@ description: >-
   "backfill this column", or "the migration tool wraps it in a transaction". It should not be used
   for planning the staged rollout and deprecation sequence (use create-migration-plan, which
   decides the stages this skill then writes), designing the target tables, keys, and indexes (use
-  design-data-schema), or writing ordinary application queries (use code-with-best-practices with
+  design-schema), or writing ordinary application queries (use code-with-best-practices with
   the SQL reference).
 ---
 

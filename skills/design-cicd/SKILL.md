@@ -10,7 +10,7 @@ description: >-
   release-day prep and the rollback plan for one specific release (use prepare-for-deploy),
   writing the tests themselves (use follow-tdd), provisioning cloud resources with IaC (use
   code-with-best-practices with the CDK or Terraform reference), or opening a PR (use
-  open-pull-request).
+  pr).
 ---
 
 ## Purpose
