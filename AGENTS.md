@@ -19,7 +19,7 @@ This repository is Brandon's personal Claude Code configuration directory (`~/.c
 - All skill files: no H1 headings in the body (the frontmatter `name` serves as the title). The no-emoji and no-em-dash rules are global; see `CLAUDE.md`.
 - No "When to Use" or "When NOT to Use" sections in any skill body; the description is the only routing surface. Boundary detail too big for the description becomes a Gotcha; behavioral exceptions attach to the relevant rule.
 - No absolute filesystem paths inside skill files; all locations are relative to the skill directory so the library stays portable.
-- Skill directory name and the `name` frontmatter field must match exactly (kebab-case), and skill names are verb-led: the name states the action the skill performs (`create-diagram`, `write-adr`, `follow-tdd`), never a topic or noun.
+- Skill directory name and the `name` frontmatter field must match exactly (kebab-case), and skill names are verb-led: the name states the action the skill performs (`create-diagram`, `write-adr`, `follow-tdd`), never a topic or noun. Exception: `pr` is a deliberate noun name, kept for the terse `/pr` command (user decision).
 - Skill scripts are Python only, run via `uv run ${CLAUDE_SKILL_DIR}/scripts/<name>.py`, with dependencies declared inline using PEP 723 metadata (no venvs, no requirements files). `${CLAUDE_SKILL_DIR}` is substituted by the harness at invocation, keeping skill files free of absolute paths while commands work from any working directory. Exception: `edit-image` ships Node `.mjs` scripts because sharp (its chosen library) is Node-only; quick edits use `npx -y sharp-cli`, complex edits use a global `sharp` install resolved via `createRequire` from `npm root -g` (no repo `node_modules`, no `NODE_PATH`).
 - Reference files within a skill stay one level deep from SKILL.md and get a table of contents when over 100 lines.
 - SKILL.md target length is 80-250 lines, hard limit 500; overflow goes to `references/`.
@@ -42,6 +42,7 @@ This repository is Brandon's personal Claude Code configuration directory (`~/.c
 - 2026-06-06: The debugging skill is named `fix`. Why: Claude Code's bundled `/debug` skill (session debug logs) collides with the obvious name.
 - 2026-06-06: `design-ui` is build-only; auditing existing UI without changing it belongs to `audit-ui` (added 2026-06-13), not `design-ui`. Why: user choice to keep building and read-only critique as separate skills.
 - 2026-06-06: `pr` is frictionless: no approval gate before `gh pr create`, pending work auto-committed. Why: user chose one-command PR creation.
+- 2026-06-26: `pr` (renamed from `open-pull-request`) keeps a noun name, a deliberate exception to the verb-led naming rule. Why: user wants the terse `/pr` command.
 - 2026-06-06: `triage-backlog` was verified by judged trigger checks only. Why: no live tracker was available; shake it down on first real use.
 - 2026-06-06: `execute-code-plan` is deferred until the agents phase. Why: user wants the skills library finished first.
 - 2026-06-06: `hooks/inject-agents-md.py` surfaces AGENTS.md files (root at SessionStart, nested lazily on file touch). Why: Claude Code natively loads only CLAUDE.md.
