@@ -1,22 +1,40 @@
 ---
 name: design-migration
 description: >-
-  This skill should be used when designing or writing a migration of any kind: a schema or data
-  change on a live table, a major version bump of a library, framework, or language runtime, a move
-  to a new platform, provider, region, cluster, or datastore engine, or an evolution of a public
-  API or interface that consumers depend on. It applies when the user says "write the migration",
-  "add a column without downtime", "this migration locks the table", "upgrade to the next major
-  version of X safely", "migrate to a new database, provider, or region", "version this API without
-  breaking consumers", or "deprecate this endpoint safely". It should not be used for the staged
-  rollout and deprecation PLAN of what stages run in what order (use create-migration-plan, which
-  decides the stages this skill then writes), for designing the target tables, keys, and indexes
-  (use design-schema), or for writing ordinary application queries (use code-with-best-practices
-  with the SQL reference).
+  This skill should be used when planning or writing a migration of any kind: a schema or data
+  change on a live table, a major version bump of a library, framework, or runtime, a move to a new
+  platform, provider, region, or datastore engine, an evolution of a public API consumers depend
+  on, or deprecating and sunsetting something with consumers. It covers both the staged rollout
+  plan and writing each stage safely. It applies when the user says "plan the migration", "write
+  the migration", "add a column without downtime", "upgrade to the next major version safely",
+  "version this API without breaking consumers", "deprecate this", or "how do we get rid of this
+  safely". It should not be used for designing the target tables, keys, and indexes (use
+  design-schema), executing the broader code change (use create-code-plan), writing ordinary
+  application queries (use code-with-best-practices), or release mechanics (use prepare-for-deploy).
 ---
 
 ## Purpose
 
-Design and write a migration of any type so that it moves the system to its new state without breaking what is deployed, without a window where traffic is lost, and with a way back at every step. This skill owns the execution craft that is common to all migrations plus the type-specific form of each operation. The rollout sequence (which stages exist, in what order, with what deprecation window) is decided by create-migration-plan; this skill writes the migration for a given stage. The deliverable is the migration artifact (the migration file, the upgrade diff and codemod, the cutover runbook, or the versioned contract) plus the execution approach that makes it safe.
+Plan and write a migration of any type so it moves the system to its new state without breaking what is deployed, without a window where traffic is lost, and with a way back at every step. This skill owns both the staged rollout plan (the sequence of safe states, the macro strategy, the deprecation window) and the execution craft that writes each stage. For a multi-stage effort the deliverable is the staged plan, ready for decompose-into-tasks; for a given stage it is the migration artifact (the migration file, the upgrade diff and codemod, the cutover runbook, or the versioned contract) plus the execution approach that makes it safe.
+
+## Plan the staged rollout first
+
+Before writing anything, plan the migration as a sequence of safe states, not a before-and-after diff: every stage leaves the system deployed, working, and abandonable, and the irreversible steps come last. Migrations fail in the gap between states, not at the endpoints, so a plan that describes only the destination has not planned the migration.
+
+- **Scope it.** Quantify the consumers with evidence (call sites, traffic, dependent packages), not assumptions: Hyrum's Law means that with enough users every observable behavior is depended on, so "nobody uses that" needs data. Confirm the replacement exists and covers the depended-on behavior before announcing any deprecation. Weigh the migration cost against the standing cost of not migrating; keeping the old thing for another year can be the right finding, not a failure.
+- **Pick the macro strategy.** The type references carry the per-type mechanics; this is the overall shape the stages take:
+
+| Strategy | Use for | Shape | Rollback |
+|---|---|---|---|
+| Expand-contract | Schema and contract changes on live systems | Add new alongside old, dual-write, switch reads, retire old | Forward step; old path present until contract |
+| Strangler | Replacing a whole system or service | Route traffic incrementally to the new system | Shift traffic back; old system still running |
+| Adapter | Swapping an implementation behind a stable interface | Old interface delegates to new internals | Restore the old delegation |
+| Feature-flag cutover | Per-consumer or per-tenant moves | A flag switches each consumer independently | Flip the flag |
+
+- **Stage it.** Each stage is independently deployable, verifiable, and reversible or explicitly marked irreversible, ordered by the universal method below: code stops referencing a thing one stage before it is removed, destructive steps are their own final stage, and schema changes stay separate from their backfills.
+- **Plan the deprecation window** when consumers are external to the change: advisory by default (a hard deadline only for security, unsustainable maintenance, or a blocking dependency), the announcement names the replacement, the date or "no hard deadline", and a migration guide, and the owner migrates the consumers or ships tooling rather than announcing and waiting. The consumer-migration mechanics are in references/api-contract-migrations.md.
+
+For a multi-stage effort the staged plan is itself the deliverable: hand it to decompose-into-tasks for tickets or create-code-plan for execution detail. For a single stage, go straight to writing it.
 
 ## The universal safe-migration method
 
@@ -99,3 +117,5 @@ The lock-safety of each operation, the ORM-specific authoring, and the online sc
 - **A "rollback" that was never run is not a rollback.** Production databases and shipped releases are forward-only; the way back is a forward step you wrote and tested against the changed state. An untested down migration or an unrehearsed traffic-shift-back is a plan that does not exist.
 - **Removal requires evidence of zero usage, not absence of complaints.** The contract beat (drop the column, delete the old cluster, remove the API version) runs only on metrics, logs, or dependency scans showing nothing uses the old path over a representative window. Silence is not evidence.
 - **Scale and traffic are the variables dev does not have.** A migration instant on 100 dev rows locks for hours on 10M; an upgrade green in CI breaks under production load; a cutover fine at 1% melts at 100%. Test against production-sized data and roll out incrementally for exactly this reason.
+- **Deployed migrations are immutable.** Editing a migration file that has run anywhere creates environment drift that surfaces months later as unexplained differences; a fix is a new migration, never an edit to the old one.
+- **Plans decay; pin the trigger.** A plan written today against today's traffic and schema needs its assumptions rechecked if execution starts months later. Date the plan and list the assumptions that must still hold for it to be safe.
