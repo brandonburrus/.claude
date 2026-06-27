@@ -9,7 +9,7 @@ description: >-
   evidence-grounded opportunity brief with a go, refine, or no-go read. It should not be used for
   defining the product once the market is validated (use write-product-spec), for synthesizing
   feedback from existing users (use synthesize-feedback), for comparing technical tools or vendors
-  to adopt (use research-solutioning), or for general fact-finding (use deep-research).
+  to adopt (use research-solutions), or for general fact-finding (use deep-research).
 ---
 
 ## Purpose

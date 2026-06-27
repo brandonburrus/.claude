@@ -10,7 +10,7 @@ description: >-
   MVP", "pretotype", or "riskiest assumption". It should not be used for sizing a market or
   reading the competitive landscape from desk research (use research-market), for refining a vague
   idea's intent before any test exists (use clarify-ambiguity), for choosing between solution
-  approaches (use explore-solutions), or for writing the PRD once the idea is validated (use
+  approaches (use research-solutions), or for writing the PRD once the idea is validated (use
   write-product-spec).
 ---
 

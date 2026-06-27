@@ -10,7 +10,7 @@ description: >-
   not be used for executing an already-approved code plan's implement/verify pipeline (use
   execute-code-plan), for the line-by-line mechanics of authoring a Workflow orchestration script
   (that is the Workflow tool's own surface), or for reasoning through solution options as a
-  one-time analytical decision without spawning agents (use explore-solutions).
+  one-time analytical decision without spawning agents (use research-solutions).
 ---
 
 ## Purpose
