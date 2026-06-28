@@ -19,7 +19,7 @@ Review an existing UI for quality and accessibility and return a severity-ranked
 ```text
 Audit Progress:
 - [ ] 1. Target and inputs resolved
-- [ ] 2. Each dimension checked against its table
+- [ ] 2. Each dimension and usability lens (Nielsen, cognitive load, Laws of UX) checked
 - [ ] 3. Primary task walked as 2-3 personas; stalls recorded
 - [ ] 4. Findings located, severity-ranked, fixes written
 - [ ] 5. Report assembled: anti-slop verdict first, then findings by severity
@@ -64,6 +64,20 @@ Cognitive load is the effort the interface demands. Separate three kinds, becaus
 - **Germane** is effort that builds the user's understanding; it is good load, leave it.
 
 Working-memory rule: at any single decision point, count the distinct options the user must hold at once. Four or fewer is fine, five to seven is pushing it (group or disclose progressively), eight or more overloads and is a finding. Apply it to nav items, choices in a menu, and visible form fields per group.
+
+The Laws of UX add a third usability lens: named cognitive and perceptual principles whose violations look fine on screen but cost effort. Run the high-signal checks below; the full catalog of all 30, each mapped to a dimension, is in `references/laws-of-ux.md`. File each as a finding under its mapped dimension.
+
+| Law | Flag when violated | Maps to dimension |
+|---|---|---|
+| Hick's Law / Choice Overload | A decision point dumps many ungrouped options with no default or progressive disclosure | Hierarchy / Content |
+| Von Restorff Effect | No single visual standout; elements compete for "primary" so the main action does not pop | Visual / Hierarchy |
+| Fitts's Law | Frequent or primary targets small or cramped; a destructive action sits next to the primary | Responsive / Interaction |
+| Doherty Threshold | An action over ~400ms shows no immediate feedback (frozen control, no skeleton or optimistic state) | Interaction / feedback |
+| Serial Position Effect | The highest-value nav or menu items are buried in the middle of a long list | Hierarchy |
+| Goal-Gradient / Zeigarnik | A multi-step flow hides progress or how much remains; interrupted progress is lost | Interaction / Content |
+| Gestalt (Proximity, Common Region, Similarity, Uniform Connectedness) | Related items far apart or unrelated ones boxed together; same-function controls styled differently; grouping by label only | Hierarchy / spacing |
+| Jakob's Law / Mental Model | A standard control is reinvented to behave unlike its platform or category norm, breaking expectation | Visual / Interaction |
+| Postel's Law | Input rejected on a normalizable technicality (trailing space, format) the system could accept | Content / Interaction |
 
 ### 3. Walk the primary task as personas
 
@@ -124,6 +138,7 @@ Order the report so the reader acts in the right order: lead with the anti-slop 
 - **Unverifiable is not the same as passing.** A dimension you could not observe (interaction from a screenshot, rendered contrast from source alone) is reported as not verified, with the reason. Inferring a pass you did not see is how audits miss real defects.
 - **Severity is about the user, not the fix effort.** A one-line CSS fix for a contrast failure that locks out low-vision users is a Blocker, not a nit. Rank by who is harmed and how badly.
 - **Reminding about accessibility at build time makes designs timid; auditing it afterward does not.** This skill is the dedicated place for the WCAG pass precisely because it runs on finished UI, not while it is being designed.
+- **The Aesthetic-Usability trap.** A beautiful interface biases you toward rating it usable; the Aesthetic-Usability Effect cuts both ways, helping real users and fooling auditors. Walk the primary task as the personas before trusting the surface; polish is not proof the flow works.
 
 ## Example finding set
 

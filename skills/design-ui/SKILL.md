@@ -78,6 +78,18 @@ One design system per project. Aesthetics (glassmorphism, bento, brutalism, edit
 
 These apply in both registers.
 
+**Laws of UX (build directives).** The named cognitive and perceptual principles behind the rules below; apply them as you build. Full catalog of all 30 with directives in `references/laws-of-ux.md`.
+- *Reduce choices* (Hick, Choice Overload, Miller): cap one decision point at about 5 visible options; past that, group, paginate, or progressively disclose, and mark one recommended default.
+- *One standout* (Von Restorff): exactly one primary action per view, visually distinct from secondary; when everything is emphasized, nothing is.
+- *Reachable targets* (Fitts): size frequent and primary targets generously (≥ 44px), keep destructive actions clear of the primary, and exploit edges and corners for high-traffic controls.
+- *Fast feedback* (Doherty): acknowledge every action in under 400ms; if the real result is slower, show optimistic UI or a skeleton at once, never a frozen control.
+- *Order for memory* (Serial Position): put the highest-value nav and menu items first and last, the least important in the middle.
+- *Show progress* (Goal-Gradient, Zeigarnik): every multi-step flow shows steps done and remaining, makes the finish feel near, and resumes after interruption.
+- *Group by perception* (Gestalt: Proximity, Common Region, Similarity, Uniform Connectedness): signal relatedness with spacing, a shared container, and consistent styling before reaching for labels; style same-function elements identically.
+- *Match expectation* (Jakob, Mental Model): standard components behave the way users expect from the platform and category leaders; spend novelty on the brand layer, not the controls.
+- *Forgiving input* (Postel): accept input liberally (trim, normalize, accept formats), emit output strictly; never reject on a technicality you could normalize.
+- *Absorb complexity* (Tesler): irreducible complexity lives in the system as defaults and inference, not pushed onto the user as configuration.
+
 **Consistency locks.** Pick once, lock page-wide, audit before shipping:
 - One accent color. A warm-grey site does not get a blue CTA in section 7.
 - One corner-radius system (all-sharp, all-soft 12-16px, or a documented per-element rule). Round buttons in a square layout is broken design.
@@ -134,6 +146,7 @@ Before delivering, verify mechanically:
 - [ ] Contrast passes for body, placeholders, buttons, and forms
 - [ ] Every animation motivated, inside its duration band, and reduced-motion wrapped
 - [ ] Interactive elements have focus-visible rings and 44px touch targets; full state matrix on forms and overlays
+- [ ] Laws of UX directives applied: choices capped with a default, one standout action, feedback under 400ms, progress shown on multi-step flows, perceptual grouping
 - [ ] Any serif passes a gate (named in brief, or aesthetic fits with a stated reason); no default serif on a generic creative brief
 - [ ] No CTA label wraps at desktop; no two CTAs share one intent
 - [ ] Loading, empty, and error states present (product UI)
