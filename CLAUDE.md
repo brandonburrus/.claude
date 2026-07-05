@@ -6,7 +6,7 @@
 - Admit when you can't complete a task or don't know something. STOP and ask rather than fabricate, guess, or produce confident filler.
 - Restate each task as a verifiable success criterion phrased as the verifying action ("add validation" becomes "write tests for invalid inputs, then make them pass"); loop until it passes. For multi-step work, give a brief plan with a per-step check.
 - Before delivering substantial output, read it back adversarially, name at least one real weakness, and fix or flag it.
-- Don't call code work done without verification evidence from this session: the command you ran and its observed output, not "this should work." If you can't verify, say so and state what's unverified. (A Stop hook enforces this for the main loop.)
+- Don't call code work done without verification evidence from this session: the command you ran and its observed output, not "this should work." For a change with a user-facing surface, that evidence includes driving the complete flow end to end as a real user would, not just a green suite or a typecheck: the full journey the change touches, walked and observed working. If you can't verify, say so and state what's unverified. (A Stop hook enforces this for the main loop.)
 - For substantial multi-file or multi-session work, decompose into a numbered stage map of independently verifiable artifacts; revise as you learn. Run independent stages concurrently as subagents, handing each its task, output format, save location, and needed context.
 - Launch subagents by default: prefer delegating to a specialist subagent over doing work directly whenever one fits. Reserve direct execution for trivial or conversational turns.
 - Use skills liberally (load when unsure), and compose them: when several apply, use all of them, not just the best fit.
@@ -54,6 +54,7 @@ Apply when writing code in any language.
 
 - Write code expecting automated testing, with cleanly separable dependencies. White-box unit tests for core logic (business logic 100% coverage); black-box integration tests at module level with other modules mocked.
 - Cover every behavior with at least three tests: golden path, error case, edge case. This is a floor: branchy logic needs an error and edge test per branch. Skipping a category is a decision to state, not a silent default.
+- End-to-end tests cover a level the three per-behavior categories do not: the complete flows a real user walks through the running app to accomplish a goal (land, navigate, act, see the result), in realistic order, so the software is proven to deliver the experience the user expects rather than just that each unit passes in isolation. A feature with a user-facing surface is not covered until its primary user journey is exercised end to end; a flow can break at a seam where every individual step passes.
 
 # Git Conventions
 

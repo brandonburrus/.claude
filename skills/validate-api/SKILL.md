@@ -39,6 +39,8 @@ Validate (API):
 
 Per behavior: method and path, expected status, the body fields or shape that must hold, key headers, and the error cases (401 without auth, 400 on bad input, 404 on missing). Pull them from the diff, the spec, or the API contract. An endpoint with no stated expected response cannot be validated.
 
+Beyond the per-endpoint checks, state the complete flow a real client walks to accomplish the goal (for example authenticate, create, read back, update, delete) and validate it as an ordered chain, feeding each response into the next request (step 3 shows the token/id capture). A real integration breaks at the seams between calls, where each endpoint passes in isolation but the sequence does not, so the end-to-end flow is itself a behavior to validate, not just the individual endpoints.
+
 ### 2. Locate or create the collection and environment
 
 Detect an existing collection first: look for an `opencollection.yml` (or a legacy `bruno.json`) in the repo and extend it if present. Otherwise create an OpenCollection (default location `<repo>/bruno/` unless the project has a convention, and say where you put it). The root `opencollection.yml`:

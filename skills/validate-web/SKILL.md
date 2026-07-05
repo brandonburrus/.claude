@@ -40,6 +40,8 @@ Validate (web):
 
 List the user-visible behaviors the change must produce, each with a checkable observable: "submitting the empty form shows a 'Required' error", "after login the header greets the user by name", "the deleted row disappears without a reload". Pull them from the diff, the spec, or the acceptance criteria. A behavior with no observable cannot be validated; resolve that before opening the browser.
 
+Include the complete user journey among the outcomes, not only isolated behaviors: the full multi-step path a real user walks to accomplish the goal the change serves (land on the entry page, move through each step in order, reach the end state). The experience the user actually has is the sum of those steps in sequence, and a flow can break at a seam where every individual step passes on its own, so validate the journey as one continuous session, not a set of disconnected checks.
+
 ### 2. Confirm the tool and the running app
 
 Check the tool with `agent-browser doctor`. Get the running app URL; if nothing is serving, start it with the project's run command or ask the user to. Validation against a stale build proves nothing.
@@ -49,6 +51,8 @@ Check the tool with `agent-browser doctor`. Get the running app URL; if nothing 
 `agent-browser open <url>`, then `agent-browser snapshot`. The snapshot is a compact accessibility tree where each element carries a ref like `@e1`. Target elements by ref or by semantic locator (`find role`, `find text`, `find label`), not brittle CSS. Prefer the snapshot over dumping HTML; it is built to be token-efficient.
 
 ### 4. Drive each behavior to its expected state
+
+Drive the behaviors in the real user's order so the session reproduces the actual end-to-end journey, carrying state forward (the logged-in session, the created record) as a real user would, rather than resetting between disconnected checks. Then, for each step:
 
 Act, then wait for the result, then assert it:
 

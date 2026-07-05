@@ -61,6 +61,8 @@ For every feature, the coverage floor is three tests, and naming them is how you
 
 This is a floor, not a ceiling. A feature with branching logic or several failure modes needs an error and an edge test per branch; a trivial pure function may genuinely need only the three. Above the floor, prioritize critical paths and complex logic over exhaustive enumeration, and confirm priorities with the user when the interface design is not already settled. Skipping a category is a decision to state, not a default to drift into: "no error case because the type system makes invalid input unrepresentable" is a valid call, silently testing only the golden path is not.
 
+The three categories are per-behavior; a feature that spans a user-facing flow has one more level to cover. The complete user journey is itself a behavior: the end-to-end path a real user walks to accomplish the goal (arrive, move through each step in realistic order, reach the end state), exercised by an integration or e2e test against the assembled system, not only each unit in isolation. Enumerate the primary journey and any flow where the steps interact or carry state forward, because a suite where every unit passes but the assembled journey was never run has a coverage gap: the flow can break at a seam where each step passes on its own.
+
 ### 2. RED: write one failing test
 
 One test, one behavior, through the public interface.
@@ -191,6 +193,7 @@ Before declaring the work complete:
 - [ ] Bug fixes include a reproduction test that failed before the fix
 - [ ] Tests assert through public interfaces on observable outcomes
 - [ ] No tests skipped or disabled
+- [ ] For a user-facing change, the complete user journey was walked end to end and observed working (live or via an e2e test), not just the isolated behavior
 
 Cannot check every box? TDD was skipped somewhere; the unchecked box names where to restart.
 
@@ -200,6 +203,8 @@ Green tests prove the logic; they do not prove the running system. For a change 
 
 - Web UI: `validate-web` drives a real browser against the dev server.
 - HTTP API: `validate-api` sends real requests against the running service.
+
+Validate the complete user journey, not just the one behavior you changed: walk the full multi-step flow a real user takes to reach the goal the change serves (arrive, move through each step, act, see the end state), in realistic order, because a change that passes in isolation can still break the flow it lives inside, and the experience the user actually has is the sum of those steps in sequence. This is also the bar for calling the work done: for a user-facing surface, "done" means the full flow was walked and observed working, not just a green suite.
 
 A pure library or a refactor with no behavioral surface has nothing to validate live; say so rather than inventing a step.
 
