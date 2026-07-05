@@ -179,6 +179,7 @@
   "channelsEnabled": false,
   "prefersReducedMotion": false,
   "showThinkingSummaries": true,
+  "skipWorkflowUsageWarning": true,
   "theme": "dark",
   "editorMode": "vim",
   "preferredNotifChannel": "ghostty",
@@ -187,6 +188,5 @@
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
   "useAutoModeDuringPlan": true,
-  "voiceEnabled": true,
-  "skipWorkflowUsageWarning": true
+  "voiceEnabled": true
 }
