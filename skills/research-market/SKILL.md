@@ -7,7 +7,7 @@ description: >-
   there a market for this", "product-market fit", "PMF", "market size", "TAM", "competitive
   landscape", "who are the competitors", or "validate the market". The deliverable is an
   evidence-grounded opportunity brief with a go, refine, or no-go read. It should not be used for
-  defining the product once the market is validated (use write-product-spec), for synthesizing
+  defining the product once the market is validated (use spec), for synthesizing
   feedback from existing users (use synthesize-feedback), for comparing technical tools or vendors
   to adopt (use research-solutions), or for general fact-finding (use deep-research).
 ---

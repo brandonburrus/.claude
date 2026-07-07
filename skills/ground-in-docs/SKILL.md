@@ -45,7 +45,7 @@ Extract only what the task needs: signatures, semantics, constraints, deprecatio
 | One-off use in this task | Nowhere; the grounded code is the artifact |
 | Non-obvious call that will confuse later readers | Short code comment with version and doc link |
 | Library is load-bearing for the project | Version-stamped digest file in the project's docs, linked from AGENTS.md |
-| The choice between libraries or versions was itself significant | write-adr |
+| The choice between libraries or versions was itself significant | spec (ADR mode) |
 
 Never persist raw documentation dumps; persist the distilled facts this project depends on. A copied doc page is stale on arrival and bloats the context surface tune-context exists to police.
 

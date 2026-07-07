@@ -6,7 +6,7 @@ description: Use this agent to audit a codebase's architecture for improvement
   before a large change to a subsystem, or when the user says "audit the
   architecture", "review the structure of this codebase", "find tech debt", or
   "why is this so hard to change". It returns a severity-ranked findings report
-  and never edits files. Do not use for designing a new system (use write-tech-spec
+  and never edits files. Do not use for designing a new system (use spec
   or the tech-spec-reviewer agent), for implementing the improvements it proposes
   (use create-code-plan then the code-refactorer agent), for reviewing a single
   diff or PR (use code-reviewer), or for auditing AGENTS.md documentation (use

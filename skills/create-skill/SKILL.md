@@ -71,7 +71,7 @@ Over-specifying judgment calls makes the skill brittle; under-specifying fragile
 Use the template below. Fill every section; delete placeholder text. Specific rules:
 
 - `name` field must exactly match the directory name (kebab-case)
-- Names are verb-led: the name states the action the skill performs (`create-diagram`, `write-adr`, `fix`, `follow-tdd`), because the name doubles as the `/command` the user types and a command is an imperative. Noun or topic names (`obsidian`, `code-planning`) read as subject areas, not actions, and give no hint what invoking them does
+- Names are verb-led: the name states the action the skill performs (`create-diagram`, `write-docs`, `fix`, `follow-tdd`), because the name doubles as the `/command` the user types and a command is an imperative. Noun or topic names (`obsidian`, `code-planning`) read as subject areas, not actions, and give no hint what invoking them does
 - Write the description field last (see Phase 4)
 - H2 for major sections, H3 for subsections; never H1 inside the body
 - Directive language: "Always," "Never," "Prefer," "Avoid." Pair each directive with its reason unless the reason is obvious. A rule whose why is understood generalizes to situations the rule's author never anticipated; a bare MUST invites loopholes the moment the literal wording does not fit

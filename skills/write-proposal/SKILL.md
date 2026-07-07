@@ -5,11 +5,11 @@ description: >-
   or vendor evaluations) where the goal is to convince stakeholders to adopt a recommended
   approach. It applies when the user says "write a proposal", "make the case for", "pitch this",
   "convince the team to", "write an RFC to adopt X", or "spike writeup"; this is the
-  persuade-to-adopt RFC, whereas a design RFC that specifies how to build is write-tech-spec. It
+  persuade-to-adopt RFC, whereas a design RFC that specifies how to build is the spec skill. It
   should not be used for pure documentation, reference material, or educational content where the
-  goal is reader understanding rather than persuasion, for recording a decision already made (use
-  write-adr), or for the staged migration plan itself (use design-migration; this skill
-  writes the pitch that gets it adopted).
+  goal is reader understanding rather than persuasion, for recording a decision already made
+  (use spec), or for the staged migration plan itself (use design-migration; this skill writes
+  the pitch that gets it adopted).
 ---
 
 ## Purpose

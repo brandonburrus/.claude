@@ -6,7 +6,7 @@ description: >-
   restructuring docs that have become a confusing pile. It applies when the user says "document
   this", "write the docs", "the docs are a mess", "add docs for this feature", or "what docs does
   this need". It should not be used for the prose craft of a single explainer or tutorial (use
-  teach-through-writing), for recording one architectural decision (use write-adr), or for API
+  teach-through-writing), for recording one architectural decision (use spec), or for API
   contract definition (use design-api).
 ---
 
@@ -53,7 +53,7 @@ Not every subject needs all four modes; forcing four pages per thing is how doc 
 | A whole product or library (new user) | Tutorial (one, the getting-started path) + Reference + a How-to per common task |
 | A public API surface, CLI, config schema | Reference (complete, mandatory) + How-to per real task |
 | An internal module or subsystem | Reference + Explanation (the why); rarely a tutorial |
-| A non-obvious design decision or model | Explanation (and link it from write-adr if a decision record exists) |
+| A non-obvious design decision or model | Explanation (and link it from the ADR if a decision record exists) |
 
 Rules: one Tutorial is usually enough for a whole product (the single path that gets a newcomer to a working result); add a How-to only for a task a real user actually performs, not every API method; Reference must cover the full surface from step 1.
 

@@ -8,8 +8,8 @@ description: >-
   contract. It applies when the user says "interrogate me", "grill me", "interview me", "question
   me until you get it", "clarify this", "refine this idea", "stress-test my thinking", "poke holes
   in my idea", "define the scope", or "am I missing something". It should not be used for writing
-  the resulting PRD (use write-product-spec), for system design (use write-tech-spec), or for
-  single-fact ambiguities that one direct question resolves.
+  the resulting PRD or tech spec (use spec), or for single-fact ambiguities that one direct
+  question resolves.
 ---
 
 ## Purpose
@@ -90,7 +90,7 @@ Yes / no / refine?
 
 Gate on an explicit yes. "Sounds good", "sure", and silence are not yes; follow with "anything you'd refine?". "Whatever you think is best" is delegation, not decision: re-ask as a choice between two concrete options. An out-of-scope section that is empty or one line means the interrogation never left the initial framing; go back to Adjacencies and Premise before presenting again.
 
-On yes, the contract feeds whatever comes next: write-product-spec for product definition, write-tech-spec for system design, create-code-plan for implementation, or simply doing the now-defined work. On abort, deliver the ledger as-is, labeled unconfirmed, with the open angles listed.
+On yes, the contract feeds whatever comes next: spec for product definition or system design, create-code-plan for implementation, or simply doing the now-defined work. On abort, deliver the ledger as-is, labeled unconfirmed, with the open angles listed.
 
 ## Elicitation Methods
 
@@ -138,7 +138,7 @@ Different ambiguities yield to different techniques; pick per question, then ret
 
 - **Proportionality gates invocation, not depth.** A single missing fact gets one direct question without this protocol. But once the interrogation starts, it runs the full checklist; a half interrogation produces a contract that lies about being complete.
 - **The polite user is the failure mode.** Someone agreeing with every guess is disengaging, not converging. Occasionally guess in a direction you expect pushback on; a user who never corrects you has stopped reading.
-- **Domain interrogations outrank this skill.** write-product-spec and write-tech-spec carry their own interrogation protocols tuned to their documents. When the conversation is clearly headed at one of those artifacts, hand off instead of making the user answer everything twice.
+- **Domain interrogations outrank this skill.** The spec skill's product and tech modes carry their own interrogation protocols tuned to their documents. When the conversation is clearly headed at one of those artifacts, hand off instead of making the user answer everything twice.
 - **Relentless describes the agent's persistence, not the user's captivity.** The agent never quits first, but the user can abort at any time and gets the unconfirmed ledger when they do.
 
 ## Example

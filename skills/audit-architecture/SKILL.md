@@ -6,7 +6,7 @@ description: >-
   making code more testable, or when the user says "audit the architecture", "review the structure
   of this codebase", "why is this so hard to change", or "find tech debt". It also applies when
   the fix skill escalates after repeated failed fixes in one area. It should not be used for
-  designing new systems (use write-tech-spec), for implementing the improvements it proposes (use
+  designing new systems (use spec), for implementing the improvements it proposes (use
   create-code-plan then refactor), or for reviewing a single change (use
   review-pull-request).
 ---
@@ -66,7 +66,7 @@ Offer a before/after diagram via create-diagram when the relationship is graph-s
 
 Walk the design tree with the user in dependency order: constraints, what sits behind the new seam, the shape of the deepened interface, what survives of the existing tests. One question at a time with a recommended answer (the interrogate skill's decision-tree walk mechanics). As decisions crystallize:
 
-- A rejected candidate with a load-bearing reason gets an offer to record it via write-adr, framed as preventing future audits from re-suggesting it; skip the offer for ephemeral reasons ("not now")
+- A rejected candidate with a load-bearing reason gets an offer to record it as an ADR via the spec skill, framed as preventing future audits from re-suggesting it; skip the offer for ephemeral reasons ("not now")
 - New domain terms coined for deepened modules go into the project's glossary or AGENTS.md
 
 ### 5. Hand off implementation

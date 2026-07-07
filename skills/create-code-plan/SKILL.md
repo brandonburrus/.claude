@@ -6,8 +6,8 @@ description: >-
   this", "let's plan before coding", "what's the approach", "how should we approach X", or
   describes a multi-step code change without explicitly asking for a plan. It should not be used
   for trivial single-line changes, for tasks already fully specified with no design decisions
-  remaining, or for designing a new system or significant architecture from scratch (use
-  write-tech-spec; this skill then plans the implementation of that design).
+  remaining, or for designing a new system or significant architecture from scratch (use spec;
+  this skill then plans the implementation of that design).
 ---
 
 ## Purpose

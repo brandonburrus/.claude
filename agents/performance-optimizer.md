@@ -7,7 +7,7 @@ description: Use this agent to diagnose and fix a performance problem in an
   hot path". It measures, changes only what the measurement implicates, and
   re-measures to prove the win. Do not use for diagnosing a correctness bug or a
   crash (use root-cause-investigator), for sizing or designing a system for scale
-  before it exists (use estimate-at-scale or write-tech-spec), or for
+  before it exists (use estimate-at-scale or spec), or for
   behavior-preserving cleanup with no performance goal (use code-refactorer).
 model: inherit
 skills:

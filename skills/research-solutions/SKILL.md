@@ -121,7 +121,7 @@ For the approach: a framing, an evaluation table, and a recommendation block (pi
 - **Marketing is not evidence.** The comparison page, the conference demo, and the first-party benchmark are sales. Read the docs, the issues, the license, and the third-party numbers.
 - **Headline pricing lies at scale.** The free tier and "starting at" price rarely hold at your real volume; price it with estimate-at-scale before trusting it.
 - **A genuine tie means spike, not deliberate.** When two options are close and the deciding question is empirical, more paper analysis is procrastination; a time-boxed prototype settles it.
-- **This precedes the plan and the spec.** Once decided, hand the winner to create-code-plan or write-tech-spec. Re-opening the decision there reruns work already done.
+- **This precedes the plan and the spec.** Once decided, hand the winner to create-code-plan or spec. Re-opening the decision there reruns work already done.
 
 ## Example
 

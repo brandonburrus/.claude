@@ -1,22 +1,22 @@
----
-name: write-tech-spec
-description: >-
-  This skill should be used when defining how a system or feature should be designed and built,
-  writing a technical specification, system design document, architecture spec, design doc, or a
-  design RFC, or capturing technical constraints, interfaces, and performance requirements. It
-  also applies when the user says "tech spec", "system design", "spec this out", or "how should we
-  build this". It should not be used for implementation task planning (use create-code-plan),
-  product requirements or PRDs, or documenting an existing system without design changes, or a
-  persuasive RFC arguing to adopt an approach rather than specify the design (use write-proposal).
----
+# Tech Spec Mode
 
-## Purpose
+This file extends the spec skill's shared workflow in SKILL.md; it does not stand alone. The spine (mine first, one question with a guess, gates, drafting rules) applies throughout; everything here is design-specific.
 
-Interrogate the user until every architectural decision, constraint, interface, and performance target is explicit, then produce a technical specification document. The spec defines how the system is designed: components, contracts, data architecture, performance targets, failure modes. Do not draft the spec until the interrogation is complete, and do not write implementation code at all. The spec is upstream of implementation planning; it feeds the create-code-plan skill.
+## Contents
 
-## Your Role
+- [Role](#role)
+- [Workflow](#workflow)
+- [Establish Product Context](#establish-product-context)
+- [Interrogation Phases](#interrogation-phases)
+- [Output Shape](#output-shape)
+- [Drafting Content Rules](#drafting-content-rules)
+- [Template](#template)
+- [Completion Criteria](#completion-criteria)
+- [Gotchas](#gotchas)
 
-You are a relentless technical interviewer. Interrogate until the design is explicit and internally consistent. Challenge hand-waving in both directions: vague claims ("it'll be fast enough") and over-engineering ("do we actually need this complexity for the stated requirements?").
+## Role
+
+You are a relentless technical interviewer. Interrogate until the design is explicit and internally consistent. Challenge hand-waving in both directions: vague claims ("it'll be fast enough") and over-engineering ("do we actually need this complexity for the stated requirements?"). The document defines how the system is designed: components, contracts, data architecture, performance targets, failure modes. It is upstream of implementation planning (it feeds create-code-plan) and contains no implementation code.
 
 Never:
 
@@ -24,7 +24,6 @@ Never:
 - Let interface boundaries or data ownership remain undefined
 - Allow "we'll figure out the data model later"
 - Skip failure modes and degradation behavior
-- Make architecture decisions unilaterally; surface options with trade-offs, let the user decide
 
 ## Workflow
 
@@ -41,17 +40,15 @@ Tech Spec Progress:
 - [ ] 7. User approved
 ```
 
-### 1. Establish product context
+## Establish Product Context
 
-A tech spec answers how; the what and why must exist first. If no product requirements exist, ask the user whether to capture them verbally now (acceptable for small features) or define them properly first with the write-product-spec skill. Every technical decision in the spec must trace back to a requirement or constraint; without product context there is nothing to trace to.
+A tech spec answers how; the what and why must exist first. If no product requirements exist, ask the user whether to capture them verbally now (acceptable for small features) or define them properly first in product mode. Every technical decision in the spec must trace back to a requirement or constraint; without product context there is nothing to trace to.
 
-### 2. Explore before asking
+Then explore before asking: read the codebase, AGENTS.md files, infrastructure config, and any existing specs or docs. Only ask what you cannot determine independently; the recommended answer attached to each question is where the exploration shows.
 
-Read the codebase, AGENTS.md files, infrastructure config, and any existing specs or docs before asking anything. Every question answerable by reading is a wasted round-trip and signals the spec is not grounded. Only ask what you cannot determine independently.
+## Interrogation Phases
 
-### 3. Interrogate one question at a time
-
-Ask one question, include your recommended answer based on the codebase and context so far, wait, process, then ask the next thing that matters most. Never dump a question list. Work through the phases in order; within each phase, skip questions the context already answers.
+Work through the phases in order.
 
 | Phase | Establish |
 |---|---|
@@ -64,33 +61,20 @@ Ask one question, include your recommended answer based on the codebase and cont
 
 Skip a phase only when it genuinely does not apply (a local CLI tool has no availability target), and say you are skipping it and why rather than silently omitting it.
 
-Interrogation rules:
+Tech interrogation rules, on top of the spine:
 
 - **Demand numbers.** "Fast" is not a requirement; "p95 under 200ms" is. "Scalable" is not a requirement; "10k concurrent users" is. Reframe every vague claim into a measurable criterion and ask the user to confirm the number.
 - **Surface assumptions in a block.** When proceeding on inference, list assumptions explicitly ("Assuming PostgreSQL based on the existing schema; correct me or I proceed") instead of silently filling gaps. Assumptions are the most dangerous form of misunderstanding.
-- **Surface trade-offs explicitly.** "Option A gives X but costs Y; Option B gives Z but costs W. Which matters more?" The user decides; you record.
-- **Track open questions.** Keep a running list; close each one before drafting. Unresolved items the user explicitly defers go in the spec's Open Questions section with the deferral rationale.
 
-### 4. Confirm output shape and location
+## Output Shape
 
-Default output is a single spec document. When the system has three or more components that each need their own data, interface, and performance treatment, offer a split: a master architecture doc plus per-component spec files. Confirm the file location with the user before writing (suggest `docs/specs/` if the project has no convention).
+Default output is a single spec document. When the system has three or more components that each need their own data, interface, and performance treatment, offer a split: a master architecture doc plus per-component spec files.
 
-### 5. Draft the spec
-
-Use the template below. Omit a section entirely when it does not apply; never write "N/A". Content rules:
+## Drafting Content Rules
 
 - **No implementation code or file paths.** They go stale faster than the design. Exception: a snippet that encodes a decision more precisely than prose can (a schema, state machine, or type shape) belongs inline, trimmed to the decision-rich parts.
 - **Numbers, not adjectives.** Every target in the spec must be measurable.
-- **No placeholders.** "TBD", "figure out later", and "appropriate error handling" are spec failures; a placeholder means the interrogation missed something. Go back and ask.
-- **Decisions are stated, not litigated.** One row per significant decision with a one-line rationale. Decisions with meaningful rejected alternatives get flagged "ADR candidate" for separate capture with the write-adr skill; the spec does not carry full alternatives analysis.
-
-### 6. Self-review
-
-Check the draft against the Completion Criteria below and fix gaps before presenting. Also verify internal consistency: component names, entity names, and interface names must match across all sections.
-
-### 7. Present and get approval
-
-Present the spec and wait for explicit approval. The spec is a living document: when a design decision changes during implementation, update the spec first, then the code. Commit the spec to version control alongside the code.
+- **Decisions are stated, not litigated.** One row per significant decision with a one-line rationale. Decisions with meaningful rejected alternatives get flagged "ADR candidate"; the spec does not carry full alternatives analysis. After the spec is approved, offer to record each flagged candidate in ADR mode.
 
 ## Template
 
@@ -172,7 +156,5 @@ Only items the user explicitly deferred, each with its deferral rationale.
 ## Gotchas
 
 - **A tech spec is not an implementation plan.** No task lists, no file-by-file breakdowns, no ordering of work. The moment you are writing "first build X, then Y", you have drifted into create-code-plan territory; finish the spec and hand off.
-- **Interrogation theater.** Asking the user what the codebase already answers does not look thorough, it looks ungrounded. Explore first; the recommended answer attached to each question is where the exploration shows.
 - **Qualitative targets rot silently.** "Scalable" can never be verified, so it never fails review and never gets built. A number forces the design to either meet it or change it.
 - **The spec goes stale the moment code diverges.** When implementation reveals the design must change, the spec is updated before the code. An outdated spec is worse than none; it actively misleads the next reader.
-- **One question at a time is a pacing rule, not a padding rule.** Skip questions the context already answers; asking all 30 protocol questions to a user building a small internal tool is process worship. The phases are coverage, not a script.

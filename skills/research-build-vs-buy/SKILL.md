@@ -10,7 +10,7 @@ description: >-
   management, and similar). It should not be used for selecting a developer-integrated library,
   framework, database, managed service, or dev tool, or deciding a technical approach including a
   dev component weighed against building it (use research-solutions), for assessing a product's
-  own market opportunity (use research-market), or for writing the spec (use write-product-spec).
+  own market opportunity (use research-market), or for writing the spec (use spec).
 ---
 
 ## Purpose

@@ -36,7 +36,7 @@ Getting the branch wrong wastes the whole prototype; a beautiful UI mock answers
 
 ## When the question is answered
 
-- **Capture the answer durably**: what was asked, what the prototype showed, what was decided. The home follows the decision's shape: an ADR for a significant choice (write-adr), a line in the relevant AGENTS.md, the ticket (decompose treats decision-rich prototype snippets like state machines and schemas as the one allowed code-in-ticket exception), or learn-from-context when the lesson generalizes.
+- **Capture the answer durably**: what was asked, what the prototype showed, what was decided. The home follows the decision's shape: an ADR for a significant choice (spec), a line in the relevant AGENTS.md, the ticket (decompose treats decision-rich prototype snippets like state machines and schemas as the one allowed code-in-ticket exception), or learn-from-context when the lesson generalizes.
 - **Delete the prototype, or explicitly absorb the decision.** Absorbing means rebuilding the validated design under follow-tdd with the prototype open as reference; it never means renaming the prototype into production. Prototype code carries every shortcut from rule 4 invisibly, and promoting it imports those shortcuts as latent bugs with no test coverage marking where they live.
 - **Leave nothing rotting.** A stale prototype in the repo becomes load-bearing the moment someone imports it; that is how "it's just a prototype" becomes the production payment path.
 

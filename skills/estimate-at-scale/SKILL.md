@@ -9,7 +9,7 @@ description: >-
   "what's the monthly cost if", "how much storage for X users", "size this", "how many servers or
   connections do I need", "size the thread or connection pool", "what QPS can this handle", or
   "capacity planning". It should not be used for computing over a real dataset you already have
-  (use analyze-data), for designing the system being estimated (use write-tech-spec), or for
+  (use analyze-data), for designing the system being estimated (use spec), or for
   diagnosing why something is slow (use optimize-performance or fix).
 ---
 
@@ -19,7 +19,7 @@ Turn rough scale parameters into a defensible order-of-magnitude estimate, with 
 
 ## Interrogate first
 
-Do not compute on guessed inputs. Pull the scale parameters from the user before doing any arithmetic, offering a recommended default for each so they confirm rather than compose (the same interrogation pattern interrogate and the spec skills use). Batch independent questions; ask sequentially when one answer changes the next. If the user gives a range, carry the range through.
+Do not compute on guessed inputs. Pull the scale parameters from the user before doing any arithmetic, offering a recommended default for each so they confirm rather than compose (the same interrogation pattern interrogate and the spec skill use). Batch independent questions; ask sequentially when one answer changes the next. If the user gives a range, carry the range through.
 
 What to elicit depends on what is being estimated:
 

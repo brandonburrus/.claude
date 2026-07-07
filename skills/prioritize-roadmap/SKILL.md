@@ -6,7 +6,7 @@ description: >-
   "what should we build next", "rank these features", "what's the priority", "RICE these", "value
   vs effort", "sequence the backlog", "what do we cut", or "what's most important to ship this
   quarter". The deliverable is a ranked and sequenced list with the reasoning and the explicit cut
-  pile. It should not be used for defining what one feature is (use write-product-spec), for
+  pile. It should not be used for defining what one feature is (use spec), for
   breaking a chosen item into tasks (use decompose), for triaging individual incoming
   issues (use triage-backlog), or for choosing among technical approaches to one problem (use
   research-solutions).
@@ -42,7 +42,7 @@ Pull the metric and objective from the user; they live in their head, not the ba
 
 ### 2. Gather the candidates
 
-List the items in contention, each with enough detail to score: the value it claims, who it is for, the rough effort, and its dependencies. An item too vague to score is not ready to prioritize; send it back to discovery or `write-product-spec` rather than guessing a score for it.
+List the items in contention, each with enough detail to score: the value it claims, who it is for, the rough effort, and its dependencies. An item too vague to score is not ready to prioritize; send it back to discovery or the `spec` skill rather than guessing a score for it.
 
 ### 3. Pick one scoring lens
 

@@ -10,13 +10,13 @@ description: >-
   MVP", "pretotype", or "riskiest assumption". It should not be used for sizing a market or
   reading the competitive landscape from desk research (use research-market), for refining a vague
   idea's intent before any test exists (use interrogate), for choosing between solution
-  approaches (use research-solutions), or for writing the PRD once the idea is validated (use
-  write-product-spec).
+  approaches (use research-solutions), or for writing the PRD once the idea is validated
+  (use spec).
 ---
 
 ## Purpose
 
-Run the cheapest test that could prove a product idea wrong, before any of it is built. The deliverable is an experiment plan with a pre-committed pass/fail threshold (and the interview script, landing-page copy, or concierge plan it needs), followed by a synthesis of the evidence into a Go, Pivot, or Kill verdict. This skill executes validation; `write-product-spec` step 8 only *names* the assumptions to test, and `research-market` reads the market from the outside. This one collects primary evidence from real people doing real things.
+Run the cheapest test that could prove a product idea wrong, before any of it is built. The deliverable is an experiment plan with a pre-committed pass/fail threshold (and the interview script, landing-page copy, or concierge plan it needs), followed by a synthesis of the evidence into a Go, Pivot, or Kill verdict. This skill executes validation; the `spec` skill's PRD silent-assumptions pass only *names* the assumptions to test, and `research-market` reads the market from the outside. This one collects primary evidence from real people doing real things.
 
 The one rule the whole skill defends: **validate by observing what people actually do, not by asking what they would do.** Stated intent ("yes I'd use that", "great idea") is the default output of a politeness reflex and carries zero signal. Past behavior and costly commitments are the only reliable data. Every step below exists to keep the test anchored to behavior.
 
@@ -29,7 +29,7 @@ The one rule the whole skill defends: **validate by observing what people actual
 
 ### 1. Surface and rank the assumptions
 
-List the beliefs the idea silently rests on. If the user has a `write-product-spec` already, its "assumptions-to-test" are the input; otherwise elicit them. Sort each into one of three risk types:
+List the beliefs the idea silently rests on. If the user already has a PRD from the `spec` skill, its "assumptions-to-test" are the input; otherwise elicit them. Sort each into one of three risk types:
 
 | Type | The bet | Usual failure |
 |---|---|---|
@@ -77,7 +77,7 @@ Separate facts (what they did and said they did) from interpretations (what you 
 
 | Verdict | Trigger | Next step |
 |---|---|---|
-| Go | Met the pre-set threshold with behavioral evidence | Proceed to `write-product-spec` / MVP; carry the evidence in |
+| Go | Met the pre-set threshold with behavioral evidence | Proceed to `spec` (product mode) / MVP; carry the evidence in |
 | Pivot | The pain is real but the assumed segment, problem framing, or solution is wrong | Re-rank assumptions and re-test the new riskiest one |
 | Kill | No demand: no existing workaround, no spend, no commitment | Stop; name the disconfirming evidence plainly |
 
@@ -95,7 +95,7 @@ These let you read a result fast. Multiple red flags on a desirability test is a
 - **The agent cannot run the test; it designs and synthesizes.** Interviews, traffic, and pre-orders happen in the real world over days. Produce the plan, the script, and the threshold; then process the results the user brings back. Do not fabricate or assume outcomes.
 - **A threshold set after seeing results is not a threshold.** The pass/fail line must be committed in step 2. Moving it to match the data is the most common way a doomed idea survives validation.
 - **Compliments and "I would" feel like progress and are not.** Enthusiasm with no behavioral evidence or commitment is a red flag, not a green one; weight it at zero.
-- **Validation precedes the spec; it does not replace it.** A Go verdict feeds `write-product-spec`; it does not substitute for defining what gets built. Hand off, do not absorb its job.
+- **Validation precedes the spec; it does not replace it.** A Go verdict feeds the `spec` skill's PRD mode; it does not substitute for defining what gets built. Hand off, do not absorb its job.
 - **This is not market research.** `research-market` answers "is the market big and reachable" from secondary sources. This answers "will these specific people actually act" from primary evidence. Run validation even when the market looks large on paper; a big market for an unwanted product is still zero.
 
 ## Example

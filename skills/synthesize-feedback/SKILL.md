@@ -8,8 +8,8 @@ description: >-
   tickets", "what are the top pain points", "make sense of these reviews", or "cluster this
   feedback". The deliverable is signal-ranked themes grounded in quoted evidence. It should not be
   used for quantitative analysis of a dataset (use analyze-data), for code-review feedback on your
-  own PR (use review-pr-feedback), for writing the spec a theme leads to (use
-  write-product-spec), or for deciding build order across themes (use prioritize-roadmap).
+  own PR (use review-pr-feedback), for writing the spec a theme leads to (use spec), or for
+  deciding build order across themes (use prioritize-roadmap).
 ---
 
 ## Purpose
@@ -72,7 +72,7 @@ Close with **What this corpus cannot tell us**: the gaps and skews from step 6, 
 - **Counting votes is not weighting signal.** Raw frequency ranks a loud nice-to-have above a quiet dealbreaker. Severity and segment value are the other two axes, and they often dominate.
 - **A theme without a quote is a bias.** Verbatim evidence is what separates what users said from what you wanted them to say; if you cannot quote it, you have not found it yet.
 - **The corpus is not the population.** Tickets, reviews, and churn surveys are all skewed samples, never the silent majority. Naming the skew is part of the deliverable, not a disclaimer.
-- **Solutioning hides the problem.** Designing the feature inside the synthesis collapses the problem into one answer; leave the opportunity open and hand it to write-product-spec or prioritize-roadmap.
+- **Solutioning hides the problem.** Designing the feature inside the synthesis collapses the problem into one answer; leave the opportunity open and hand it to spec (product mode) or prioritize-roadmap.
 
 ## Example
 
