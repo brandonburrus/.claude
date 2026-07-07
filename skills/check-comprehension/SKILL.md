@@ -9,7 +9,7 @@ description: >-
   an interactive mode that locates the gap, makes the learner restate first, drills the whys,
   quizzes with AskUserQuestion, and refuses to advance until each point is mastered. It should not
   be used for a one-off explanation or quick fact the user only wants to read (answer directly),
-  for sharpening a vague request before a task (use clarify), for tutorial or explainer
+  for sharpening a vague request before a task (use interrogate), for tutorial or explainer
   material for an audience (use teach-through-writing), for understanding a specific repository
   (use onboard), or for fixing the bug yourself (use fix).
 ---

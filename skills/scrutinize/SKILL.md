@@ -9,7 +9,7 @@ description: >-
   PR (use review-pull-request), for verifying a finished task meets its spec with fresh evidence
   (use the completion-verifier agent), for whole-system architecture evaluation (use
   audit-architecture), or for sharpening a vague request before any work exists (use
-  clarify).
+  interrogate).
 ---
 
 ## Purpose

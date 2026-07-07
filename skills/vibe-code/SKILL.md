@@ -32,7 +32,7 @@ Getting the branch wrong wastes the whole prototype; a beautiful UI mock answers
 4. **Skip the polish, deliberately.** No tests, no error handling beyond runnable, no abstractions, no design-ui pass. These are not corners cut; they are the speed the prototype buys.
 5. **The security floor stays on.** harden's Never tier holds even here: no real credentials in code, no disabled certificate checks, no untrusted input piped to eval or the shell. A prototype with a leaked secret is an incident, not a draft.
 6. **Surface the state.** After every action (logic) or on every variant switch (UI), show the full relevant state; the user is here to see what changed, and hidden state defeats the play.
-7. **Time-box it.** A prototype that consumes a day is a project wearing a disguise; if the question is not converging, that is itself the answer (the design is underspecified), and the route is clarify, not more prototype.
+7. **Time-box it.** A prototype that consumes a day is a project wearing a disguise; if the question is not converging, that is itself the answer (the design is underspecified), and the route is interrogate, not more prototype.
 
 ## When the question is answered
 
