@@ -4,9 +4,10 @@ description: >-
   This skill should be used when planning, writing, or reviewing code in TypeScript, JavaScript,
   Python, Go, Rust, SQL, or Bash, or when working with React, Node.js, Vitest, Playwright,
   Terraform, AWS CDK, pandas, NumPy, polars, marimo, or Jupyter notebooks. It applies to any
-  implementation work in these stacks even when the user never says "best practices". It should
-  not be used for API contract or database schema design (use spec) or UI visual design (use
-  design).
+  implementation work in these stacks even when the user never says "best practices", and when
+  the user says "add retries", "make this resilient", "handle upstream failures", "add
+  timeouts", or "add a circuit breaker". It should not be used for API contract or database
+  schema design (use spec) or UI visual design (use design).
 ---
 
 ## Purpose
@@ -40,6 +41,7 @@ Consolidated entry point for language and framework best practices. Detect the s
 | NumPy numerical code | [NumPy](references/library-numpy.md) + [Python](references/language-python.md) |
 | polars data work | [polars](references/library-polars.md) + [Python](references/language-python.md) |
 | marimo notebooks | [marimo](references/tool-marimo.md) + [Python](references/language-python.md) |
+| Resilience and fault-tolerance work (retries, timeouts, idempotency, circuit breakers, fallbacks, queue consumers, health checks) | [Resilience](references/resilience.md) + the language reference for the files touched |
 | Jupyter notebooks | [Jupyter](references/tool-jupyter.md) + [Python](references/language-python.md) |
 
 ## Loading rules
