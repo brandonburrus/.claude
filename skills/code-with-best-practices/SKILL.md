@@ -53,4 +53,4 @@ Consolidated entry point for language and framework best practices. Detect the s
 - On conflict, the project's own documented conventions win, then the global CLAUDE.md rules, then these references. A reference here never justifies diff noise in a codebase that does it differently.
 - The SQL reference covers writing queries and migrations; designing tables, keys, and indexes belongs to design-schema.
 - Endpoint and schema contracts belong to design-api; these references inform the implementation behind the contract.
-- This skill informs how code is written, not the workflow around it: test-first discipline is follow-tdd, behavior-preserving cleanup is refactor-code, debugging is fix.
+- This skill informs how code is written, not the workflow around it: test-first discipline is follow-tdd, behavior-preserving cleanup is refactor, debugging is fix.

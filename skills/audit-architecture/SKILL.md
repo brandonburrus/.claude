@@ -7,7 +7,7 @@ description: >-
   of this codebase", "why is this so hard to change", or "find tech debt". It also applies when
   the fix skill escalates after repeated failed fixes in one area. It should not be used for
   designing new systems (use write-tech-spec), for implementing the improvements it proposes (use
-  create-code-plan then refactor-code), or for reviewing a single change (use
+  create-code-plan then refactor), or for reviewing a single change (use
   review-pull-request).
 ---
 
@@ -64,14 +64,14 @@ Offer a before/after diagram via create-diagram when the relationship is graph-s
 
 ### 4. Grill the chosen candidate
 
-Walk the design tree with the user in dependency order: constraints, what sits behind the new seam, the shape of the deepened interface, what survives of the existing tests. One question at a time with a recommended answer (the clarify-ambiguity Grill mode mechanics). As decisions crystallize:
+Walk the design tree with the user in dependency order: constraints, what sits behind the new seam, the shape of the deepened interface, what survives of the existing tests. One question at a time with a recommended answer (the clarify Grill mode mechanics). As decisions crystallize:
 
 - A rejected candidate with a load-bearing reason gets an offer to record it via write-adr, framed as preventing future audits from re-suggesting it; skip the offer for ephemeral reasons ("not now")
 - New domain terms coined for deepened modules go into the project's glossary or AGENTS.md
 
 ### 5. Hand off implementation
 
-The agreed design routes to create-code-plan (and execution under refactor-code's test gate when behavior-preserving). This skill's output ends at the plan handoff.
+The agreed design routes to create-code-plan (and execution under refactor's test gate when behavior-preserving). This skill's output ends at the plan handoff.
 
 ## Guardrails
 

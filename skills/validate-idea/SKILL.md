@@ -9,7 +9,7 @@ description: >-
   questions", "the Mom Test", "users say they want it but don't buy", "smoke test", "concierge
   MVP", "pretotype", or "riskiest assumption". It should not be used for sizing a market or
   reading the competitive landscape from desk research (use research-market), for refining a vague
-  idea's intent before any test exists (use clarify-ambiguity), for choosing between solution
+  idea's intent before any test exists (use clarify), for choosing between solution
   approaches (use research-solutions), or for writing the PRD once the idea is validated (use
   write-product-spec).
 ---

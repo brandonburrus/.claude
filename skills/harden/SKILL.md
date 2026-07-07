@@ -1,5 +1,5 @@
 ---
-name: harden-security
+name: harden
 description: >-
   This skill should be used when designing, building, or modifying anything that touches untrusted
   input, authentication, authorization, sessions, secrets, file uploads, payments, PII, or

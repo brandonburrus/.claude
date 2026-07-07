@@ -1,5 +1,5 @@
 ---
-name: refactor-code
+name: refactor
 description: >-
   This skill should be used when refactoring or simplifying working code without changing its
   behavior, including reducing complexity, improving names, removing duplication, untangling

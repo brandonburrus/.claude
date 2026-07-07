@@ -1,6 +1,6 @@
 # Security quick reference
 
-Concrete values that complement the harden-security methodology. The skill says which headers and checks to apply and why; this is the copy-paste form, plus the OWASP mapping. It is a lookup, not a substitute for the threat-modeling pass.
+Concrete values that complement the harden methodology. The skill says which headers and checks to apply and why; this is the copy-paste form, plus the OWASP mapping. It is a lookup, not a substitute for the threat-modeling pass.
 
 ## Security header values
 

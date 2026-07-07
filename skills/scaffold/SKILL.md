@@ -1,5 +1,5 @@
 ---
-name: scaffold-new-project
+name: scaffold
 description: >-
   This skill should be used when scaffolding a brand-new project from scratch: starting a new
   TypeScript library, CLI tool (commander), or MCP server, a new Python package or Python MCP

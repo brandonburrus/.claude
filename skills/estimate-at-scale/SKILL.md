@@ -19,7 +19,7 @@ Turn rough scale parameters into a defensible order-of-magnitude estimate, with 
 
 ## Interrogate first
 
-Do not compute on guessed inputs. Pull the scale parameters from the user before doing any arithmetic, offering a recommended default for each so they confirm rather than compose (the same interrogation pattern clarify-ambiguity and the spec skills use). Batch independent questions; ask sequentially when one answer changes the next. If the user gives a range, carry the range through.
+Do not compute on guessed inputs. Pull the scale parameters from the user before doing any arithmetic, offering a recommended default for each so they confirm rather than compose (the same interrogation pattern clarify and the spec skills use). Batch independent questions; ask sequentially when one answer changes the next. If the user gives a range, carry the range through.
 
 What to elicit depends on what is being estimated:
 

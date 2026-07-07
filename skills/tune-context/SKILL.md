@@ -6,7 +6,7 @@ description: >-
   the user says "trim my CLAUDE.md", "my context is bloated", "the agent keeps ignoring
   conventions", "tighten my always-on context", or "clean up the AGENTS.md", and periodically as
   always-on files accumulate. It should not be used for capturing new learnings (use
-  learn-from-context), for writing a project's first AGENTS.md (use onboard-codebase), for
+  learn-from-context), for writing a project's first AGENTS.md (use onboard), for
   auditing a project's AGENTS.md coverage and conformance against the standard (use
   audit-agent-context), or for managing conversation-level context in a single session (compaction
   handles that).

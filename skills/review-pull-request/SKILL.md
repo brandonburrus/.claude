@@ -6,7 +6,7 @@ description: >-
   PR", "what do you think of these changes", or asks for a second opinion on a branch, diff, or
   commit range. It also applies to reviewing a local branch against a base when no PR exists. It
   should not be used for opening a PR (use pr), reviewing your own in-progress work
-  mid-task, or rewriting code for clarity (use refactor-code).
+  mid-task, or rewriting code for clarity (use refactor).
 ---
 
 ## Purpose

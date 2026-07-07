@@ -62,7 +62,7 @@ Stateless tools beat session state where possible; when sessions exist, IDs are 
 
 - **Token passthrough is forbidden**: the server never forwards client-supplied tokens to downstream APIs; it obtains its own credentials (URL elicitation for user-delegated access) and validates that inbound tokens were issued for this server
 - **Confused deputy**: proxy-style servers need per-client consent before forwarding to third-party auth
-- **Untrusted inputs everywhere**: tool arguments are model-generated from possibly-hostile context; validate them like any boundary input (harden-security applies in full)
+- **Untrusted inputs everywhere**: tool arguments are model-generated from possibly-hostile context; validate them like any boundary input (harden applies in full)
 - **Least privilege**: minimal scopes up front, progressive elevation on challenge; destructive operations gated by annotation honesty plus server-side checks, not annotation alone
 
 ### 8. Hand off to implementation

@@ -1,5 +1,5 @@
 ---
-name: onboard-codebase
+name: onboard
 description: >-
   This skill should be used when building an understanding of an unfamiliar codebase or orienting
   in a new repository. It applies when the user says "onboard me", "help me understand this

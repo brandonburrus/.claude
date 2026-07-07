@@ -8,7 +8,7 @@ description: >-
   user says "triage this security finding", "is this CVE exploitable", "Dependabot flagged this",
   "Snyk alert", "npm audit found", "is this vulnerability real", "assess this pentest finding",
   "is this reachable", or "what's the real severity". It should not be used for building security
-  into a feature as you write it (use harden-security), for auditing your own diff for new
+  into a feature as you write it (use harden), for auditing your own diff for new
   vulnerabilities (use the security-reviewer agent or the bundled /security-review), for
   reproducing and fixing a confirmed issue once triaged (use fix, then follow-tdd), or for
   responding to an active breach (use respond-to-incident).
@@ -65,7 +65,7 @@ Pick one, with the reason:
 
 ### 6. Record and route
 
-Write the verdict per finding with its reasoning. Route fix-now items to `fix` (reproduce first) or a dependency upgrade, mitigations through `harden-security`, and accepted findings to a tracked register with the reason and review date. If the finding involves a reporter (bug bounty) or an upstream maintainer (a vulnerability you found in a dependency), coordinate disclosure rather than only patching locally.
+Write the verdict per finding with its reasoning. Route fix-now items to `fix` (reproduce first) or a dependency upgrade, mitigations through `harden`, and accepted findings to a tracked register with the reason and review date. If the finding involves a reporter (bug bounty) or an upstream maintainer (a vulnerability you found in a dependency), coordinate disclosure rather than only patching locally.
 
 ## Gotchas
 

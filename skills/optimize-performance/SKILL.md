@@ -6,7 +6,7 @@ description: >-
   faster", "this is slow", "optimize this", "reduce the bundle size", "speed up this query", or
   "improve load time". It should not be used for diagnosing a performance regression where
   something got slow after a change (use fix to find the root cause first), or for refactoring for
-  readability without a speed goal (use refactor-code).
+  readability without a speed goal (use refactor).
 ---
 
 ## Purpose

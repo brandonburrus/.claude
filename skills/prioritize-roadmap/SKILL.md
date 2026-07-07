@@ -7,7 +7,7 @@ description: >-
   vs effort", "sequence the backlog", "what do we cut", or "what's most important to ship this
   quarter". The deliverable is a ranked and sequenced list with the reasoning and the explicit cut
   pile. It should not be used for defining what one feature is (use write-product-spec), for
-  breaking a chosen item into tasks (use decompose-into-tasks), for triaging individual incoming
+  breaking a chosen item into tasks (use decompose), for triaging individual incoming
   issues (use triage-backlog), or for choosing among technical approaches to one problem (use
   research-solutions).
 ---

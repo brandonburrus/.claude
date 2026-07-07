@@ -1,5 +1,5 @@
 ---
-name: clarify-ambiguity
+name: clarify
 description: >-
   This skill should be used when a request, idea, or direction is ambiguous, underspecified, or
   vague and needs clarification before any work starts, especially when the ask is missing who it

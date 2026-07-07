@@ -15,7 +15,7 @@ description: >-
 
 ## Purpose
 
-Plan and write a migration of any type so it moves the system to its new state without breaking what is deployed, without a window where traffic is lost, and with a way back at every step. This skill owns both the staged rollout plan (the sequence of safe states, the macro strategy, the deprecation window) and the execution craft that writes each stage. For a multi-stage effort the deliverable is the staged plan, ready for decompose-into-tasks; for a given stage it is the migration artifact (the migration file, the upgrade diff and codemod, the cutover runbook, or the versioned contract) plus the execution approach that makes it safe.
+Plan and write a migration of any type so it moves the system to its new state without breaking what is deployed, without a window where traffic is lost, and with a way back at every step. This skill owns both the staged rollout plan (the sequence of safe states, the macro strategy, the deprecation window) and the execution craft that writes each stage. For a multi-stage effort the deliverable is the staged plan, ready for decompose; for a given stage it is the migration artifact (the migration file, the upgrade diff and codemod, the cutover runbook, or the versioned contract) plus the execution approach that makes it safe.
 
 ## Plan the staged rollout first
 
@@ -34,7 +34,7 @@ Before writing anything, plan the migration as a sequence of safe states, not a 
 - **Stage it.** Each stage is independently deployable, verifiable, and reversible or explicitly marked irreversible, ordered by the universal method below: code stops referencing a thing one stage before it is removed, destructive steps are their own final stage, and schema changes stay separate from their backfills.
 - **Plan the deprecation window** when consumers are external to the change: advisory by default (a hard deadline only for security, unsustainable maintenance, or a blocking dependency), the announcement names the replacement, the date or "no hard deadline", and a migration guide, and the owner migrates the consumers or ships tooling rather than announcing and waiting. The consumer-migration mechanics are in references/api-contract-migrations.md.
 
-For a multi-stage effort the staged plan is itself the deliverable: hand it to decompose-into-tasks for tickets or create-code-plan for execution detail. For a single stage, go straight to writing it.
+For a multi-stage effort the staged plan is itself the deliverable: hand it to decompose for tickets or create-code-plan for execution detail. For a single stage, go straight to writing it.
 
 ## The universal safe-migration method
 

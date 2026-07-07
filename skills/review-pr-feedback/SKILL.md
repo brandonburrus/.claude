@@ -29,7 +29,7 @@ For each comment, check the claim against the codebase before deciding anything:
 | Accept | Verified correct for this codebase | Implement in step 4 |
 | Push back | Verified wrong: breaks behavior, misreads context, conflicts with a recorded decision, or violates YAGNI | Draft a reply with the technical reasoning and the evidence |
 | Clarify | Ambiguous, or correct-looking but underspecified | Ask before implementing anything related |
-| Out of scope | Valid but new work beyond this PR | Offer a ticket (decompose-into-tasks); do not grow the PR |
+| Out of scope | Valid but new work beyond this PR | Offer a ticket (decompose); do not grow the PR |
 
 Two checks that earn their keep:
 

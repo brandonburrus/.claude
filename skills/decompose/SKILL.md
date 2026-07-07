@@ -1,5 +1,5 @@
 ---
-name: decompose-into-tasks
+name: decompose
 description: >-
   This skill should be used when breaking a spec, plan, PRD, or feature into work units for an
   issue tracker such as GitHub Issues, Jira, Rally, or Linear. It applies when the user says

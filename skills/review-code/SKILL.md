@@ -8,7 +8,7 @@ description: >-
   what we just built", "review this before I commit", "multi-angle review", "adversarially review
   this", or asks for a thorough review of the current change. It should not be used for reviewing
   someone else's pull request or an external branch (use review-pull-request), or for fixing the
-  issues it finds (it reports only; hand fixes to fix or refactor-code).
+  issues it finds (it reports only; hand fixes to fix or refactor).
 ---
 
 ## Purpose
@@ -55,10 +55,10 @@ Spawn the selected reviewers as read-only subagents in a single message so they 
 
 | Lens | Loads | Run when | Hunts for |
 |---|---|---|---|
-| Security | `harden-security` | The change touches untrusted input, auth/authz, secrets, config, or network, file, or DB access. Skip pure docs, comments, or formatting | Injection, auth/authz gaps, secrets in code, unsafe handling of untrusted input, missing validation at trust boundaries, unsafe deserialization, SSRF/path traversal |
+| Security | `harden` | The change touches untrusted input, auth/authz, secrets, config, or network, file, or DB access. Skip pure docs, comments, or formatting | Injection, auth/authz gaps, secrets in code, unsafe handling of untrusted input, missing validation at trust boundaries, unsafe deserialization, SSRF/path traversal |
 | Performance | `optimize-performance` | The change adds or alters runtime logic, loops, queries, or I/O. Skip docs, config-only, or trivial wiring | N+1 queries, hot-path allocations, blocking I/O on the request path, accidental quadratic loops, missing indexes, unbounded fetches, needless serialization |
 | Best practices | `code-with-best-practices` | The change is code in a supported stack. Skip pure documentation | Language and stack idioms, error handling, concurrency correctness, API misuse, missing or weak tests for the new behavior |
-| Maintainability | `refactor-code` | Any non-trivial code change. Skip docs-only or one-line changes | Structure and coupling, naming, duplication, function and module size, leaky abstractions, anything that raises the long-term cost of change |
+| Maintainability | `refactor` | Any non-trivial code change. Skip docs-only or one-line changes | Structure and coupling, naming, duplication, function and module size, leaky abstractions, anything that raises the long-term cost of change |
 | Acceptance (optional) | the work item's criteria | A work item is identifiable (see below) | Whether the change satisfies each acceptance criterion, and which criteria are unmet, partially met, or untested |
 
 Run the **acceptance** lens only when a work item is identifiable: passed in by the user, or detected from the branch name or a commit message (for example `PROJ-123`, `#456`). Fetch its criteria through an available MCP or CLI (a Jira/Linear MCP tool, or `gh issue view`); if none is reachable, ask the user to paste the criteria. If no work item exists, skip this lens silently; never fabricate criteria.
@@ -100,7 +100,7 @@ Verdict: <block | fix-before-merge | minor-nits | clean>   (N critical, N high, 
 - <what the reviewers checked and found clean, so the report's silence is informative>
 ```
 
-End with the report. This skill does not fix; offer to hand the confirmed findings to `fix` or `refactor-code` if the user wants them addressed.
+End with the report. This skill does not fix; offer to hand the confirmed findings to `fix` or `refactor` if the user wants them addressed.
 
 ## Gotchas
 
@@ -117,6 +117,6 @@ End with the report. This skill does not fix; offer to hand the confirmed findin
 Invocation: "review the auth changes I just made before I open the PR."
 
 1. **Target.** On `feature/auth-PROJ-412`; base is `origin/main`. Resolve to the branch diff (`git diff $(git merge-base HEAD origin/main)...HEAD`) plus uncommitted work: 7 files, 240 lines.
-2. **Fan out (one message, 5 parallel reviewers).** Security (loads `harden-security`), performance (`optimize-performance`), best practices (`code-with-best-practices`), maintainability (`refactor-code`), and acceptance, which detects `PROJ-412` from the branch name and pulls the criteria via the Jira MCP. Each gets the 7-file diff, reviews read-only, returns findings.
+2. **Fan out (one message, 5 parallel reviewers).** Security (loads `harden`), performance (`optimize-performance`), best practices (`code-with-best-practices`), maintainability (`refactor`), and acceptance, which detects `PROJ-412` from the branch name and pulls the criteria via the Jira MCP. Each gets the 7-file diff, reviews read-only, returns findings.
 3. **Verify.** Security flags "JWT not verified before decode" (critical) and "timing-unsafe token compare" (high); two skeptics confirm the first against the code path and refute the second (the compare is on a non-secret request id). Performance's "N+1 on session lookup" survives; maintainability's "extract a helper" (low, high-confidence) skips verification.
 4. **Synthesize.** Dedupe (security and best-practices both flagged the unverified JWT, merged), rank, emit: verdict `fix-before-merge`, 1 critical, 1 high, 3 medium, 2 low, plus acceptance showing one criterion `untested`. Offer to hand the confirmed set to `fix`.

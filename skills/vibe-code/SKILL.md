@@ -30,13 +30,13 @@ Getting the branch wrong wastes the whole prototype; a beautiful UI mock answers
 2. **One command to run.** Whatever the project's runner already supports; the user starts it without thinking, because friction at the run step kills the play loop the prototype exists for.
 3. **No persistence by default.** State lives in memory; persistence is usually the thing being checked, not a dependency. When the question genuinely involves a database, use a scratch store named to be wiped.
 4. **Skip the polish, deliberately.** No tests, no error handling beyond runnable, no abstractions, no design-ui pass. These are not corners cut; they are the speed the prototype buys.
-5. **The security floor stays on.** harden-security's Never tier holds even here: no real credentials in code, no disabled certificate checks, no untrusted input piped to eval or the shell. A prototype with a leaked secret is an incident, not a draft.
+5. **The security floor stays on.** harden's Never tier holds even here: no real credentials in code, no disabled certificate checks, no untrusted input piped to eval or the shell. A prototype with a leaked secret is an incident, not a draft.
 6. **Surface the state.** After every action (logic) or on every variant switch (UI), show the full relevant state; the user is here to see what changed, and hidden state defeats the play.
-7. **Time-box it.** A prototype that consumes a day is a project wearing a disguise; if the question is not converging, that is itself the answer (the design is underspecified), and the route is clarify-ambiguity, not more prototype.
+7. **Time-box it.** A prototype that consumes a day is a project wearing a disguise; if the question is not converging, that is itself the answer (the design is underspecified), and the route is clarify, not more prototype.
 
 ## When the question is answered
 
-- **Capture the answer durably**: what was asked, what the prototype showed, what was decided. The home follows the decision's shape: an ADR for a significant choice (write-adr), a line in the relevant AGENTS.md, the ticket (decompose-into-tasks treats decision-rich prototype snippets like state machines and schemas as the one allowed code-in-ticket exception), or learn-from-context when the lesson generalizes.
+- **Capture the answer durably**: what was asked, what the prototype showed, what was decided. The home follows the decision's shape: an ADR for a significant choice (write-adr), a line in the relevant AGENTS.md, the ticket (decompose treats decision-rich prototype snippets like state machines and schemas as the one allowed code-in-ticket exception), or learn-from-context when the lesson generalizes.
 - **Delete the prototype, or explicitly absorb the decision.** Absorbing means rebuilding the validated design under follow-tdd with the prototype open as reference; it never means renaming the prototype into production. Prototype code carries every shortcut from rule 4 invisibly, and promoting it imports those shortcuts as latent bugs with no test coverage marking where they live.
 - **Leave nothing rotting.** A stale prototype in the repo becomes load-bearing the moment someone imports it; that is how "it's just a prototype" becomes the production payment path.
 

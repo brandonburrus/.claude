@@ -8,7 +8,7 @@ description: >-
   applies when the user says "audit the AGENTS.md files", "audit agent context", "check AGENTS.md
   coverage", "are the AGENTS.md files proper", "is this project documented for agents", or "review
   the agent context docs". The deliverable is an audit report with per-file findings and fixes. It
-  should not be used for writing a project's first AGENTS.md (use onboard-codebase), for
+  should not be used for writing a project's first AGENTS.md (use onboard), for
   tightening the always-on context to cut bloat (use tune-context), for capturing a new learning
   into AGENTS.md (use learn-from-context), or for general architecture review (use
   audit-architecture).
@@ -16,7 +16,7 @@ description: >-
 
 ## Purpose
 
-Audit a codebase for AGENTS.md coverage and conformance against the CLAUDE.md "Maintaining Contextual Documentation" standard, and report what is missing, malformed, drifted from the code, or mis-recorded, with a specific fix per finding. The deliverable is the audit, not the fixes; apply them on request, hand a missing root to `onboard-codebase`, or hand bloat to `tune-context`. The discipline is auditing content against reality, not just checking that files exist: a present-but-stale AGENTS.md passes a file check and fails the standard, and a doc that contradicts the code is the worst case because it misleads every agent that trusts it.
+Audit a codebase for AGENTS.md coverage and conformance against the CLAUDE.md "Maintaining Contextual Documentation" standard, and report what is missing, malformed, drifted from the code, or mis-recorded, with a specific fix per finding. The deliverable is the audit, not the fixes; apply them on request, hand a missing root to `onboard`, or hand bloat to `tune-context`. The discipline is auditing content against reality, not just checking that files exist: a present-but-stale AGENTS.md passes a file check and fails the standard, and a doc that contradicts the code is the worst case because it misleads every agent that trusts it.
 
 ## What the standard requires
 
@@ -80,7 +80,7 @@ For any Key Decisions section, flag:
 
 ### 6. Report, ordered by severity
 
-Lead with drift (docs that contradict the code), then missing root, then coverage gaps at real boundaries, then conformance gaps, then decision-log hygiene. Name the file and the exact fix for each. Offer to apply fixes, or to route a missing root to `onboard-codebase` and bloat to `tune-context`.
+Lead with drift (docs that contradict the code), then missing root, then coverage gaps at real boundaries, then conformance gaps, then decision-log hygiene. Name the file and the exact fix for each. Offer to apply fixes, or to route a missing root to `onboard` and bloat to `tune-context`.
 
 ## Output shape
 
