@@ -6,14 +6,14 @@ description: >-
   review), setting pass thresholds, and wiring evals into the development loop. It applies when
   the user says "write evals", "add evals for this", "how do I know the agent actually works",
   "test my prompt", "the agent feels unreliable, measure it", or before changing a prompt that has
-  no eval coverage. It should not be used for designing the agent itself (use design-agent),
+  no eval coverage. It should not be used for designing the agent itself (use spec),
   for testing conventional code (use follow-tdd), or for Claude API mechanics (use the bundled
   claude-api reference).
 ---
 
 ## Purpose
 
-Build evals: the unit tests of AI work. design-agent makes eval-first non-negotiable at the design level; this skill is the implementation side, producing the dataset, the graders, the thresholds, and the loop integration. Evals exist before the prompt is tuned, because without a measured baseline every prompt change is a vibes-based bet, and "the output looks good" is not a regression suite. Deliverable: versioned eval definitions, a recorded baseline, and a defined place in the dev loop.
+Build evals: the unit tests of AI work. The spec skill's llm-agents reference makes eval-first non-negotiable at the design level; this skill is the implementation side, producing the dataset, the graders, the thresholds, and the loop integration. Evals exist before the prompt is tuned, because without a measured baseline every prompt change is a vibes-based bet, and "the output looks good" is not a regression suite. Deliverable: versioned eval definitions, a recorded baseline, and a defined place in the dev loop.
 
 ## Workflow
 
@@ -60,7 +60,7 @@ Split into two kinds with different jobs: capability evals (does the new behavio
 ### 5. Wire evals into the loop
 
 - Baseline before any prompt change, re-run after; the delta is the review artifact for the change. A prompt edit without an eval run is an untested code change.
-- Evals are code: versioned with the prompts they test (prompts are first-class code per design-agent), reviewed, and runnable by one command. Slow evals stop getting run, so speed is a feature: parallelize, use cheaper models for judges, trim cases that never discriminate.
+- Evals are code: versioned with the prompts they test (prompts are first-class code per the spec skill's llm-agents reference), reviewed, and runnable by one command. Slow evals stop getting run, so speed is a feature: parallelize, use cheaper models for judges, trim cases that never discriminate.
 - Release gates use deterministic graders only; a probabilistic judge in a deploy gate produces flaky releases. Judges inform trends, code graders gate.
 - Log every run's results and keep the history; a slow downward trend across ten changes is invisible without it.
 

@@ -278,7 +278,7 @@ export default {
 
 ## Optional add-on: GitHub Actions CI gate
 
-Opt-in. Add only when the user asks or accepts the suggestion (suggest it for projects that will be published or shared). A minimal gate that runs lint, typecheck, and tests on every push to `main` and every pull request. This is a starter gate, not a designed pipeline; richer CI (deploy stages, branch protection, matrix builds, caching strategy) is `design-cicd`'s job.
+Opt-in. Add only when the user asks or accepts the suggestion (suggest it for projects that will be published or shared). A minimal gate that runs lint, typecheck, and tests on every push to `main` and every pull request. This is a starter gate, not a designed pipeline; richer CI (deploy stages, branch protection, matrix builds, caching strategy) is the spec skill's job (cicd reference).
 
 The action versions below are best-practice defaults; bump them to the current major when scaffolding. `biome ci` is biome's no-write CI command (it fails on lint/format/import issues rather than fixing them), so the gate does not depend on the `--write` scripts.
 

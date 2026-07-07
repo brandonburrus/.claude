@@ -6,7 +6,7 @@ description: >-
   this ready to deploy", "prep the release", "cut a release", "ship this", or asks to deploy
   anything. The skill prepares everything and hands the user the exact production deploy step; it
   never executes a production deploy itself. It should not be used for planning schema or API
-  migrations (use design-migration), for fixing failures the gates surface (use fix), or for
+  migrations (use spec), for fixing failures the gates surface (use fix), or for
   live production incidents (stabilize first, then write-post-mortem).
 ---
 
@@ -42,7 +42,7 @@ Any red gate stops the release and routes to fix. Never disable, skip, or rerun-
 
 ### 4. Review what rides along (judgment starts here)
 
-- **Migrations**: if schema or data changes ship with this release, verify they are backward compatible with the currently deployed code, because app rollback takes minutes while database rollback may not exist. Staged or risky migrations route to design-migration before the release proceeds.
+- **Migrations**: if schema or data changes ship with this release, verify they are backward compatible with the currently deployed code, because app rollback takes minutes while database rollback may not exist. Staged or risky migrations route to the spec skill's migration references before the release proceeds.
 - **Config and environment**: diff required env vars and config against what each target environment has; a release that needs an unset variable fails at startup, after the deploy.
 - **Feature flags**: confirm which flags gate the new behavior and their intended launch state. Flags decouple deploying code from releasing behavior, which makes the rollback story a toggle instead of a redeploy.
 - **Observability and baseline**: confirm the health endpoint covers the new surface and that errors and latency for it will actually appear on a dashboard someone watches. Then record the current production baseline now, before the deploy: error rate, p50/p95/p99 latency, availability. This is not decoration; the numbers become the concrete rollback triggers in the next step, and a baseline captured after deploying is already contaminated by the deploy.

@@ -6,13 +6,13 @@ description: >-
   "review this UI", "audit the frontend", "critique this design", or "is this accessible", or
   hands over a live page, screenshots, or a component. Covers anti-slop visual quality, hierarchy
   and typography, accessibility (contrast, focus, ARIA, keyboard, alt text), responsive behavior,
-  and interaction states. It should not be used for building or fixing UI (use design-ui); this
+  and interaction states. It should not be used for building or fixing UI (use design); this
   skill reports problems and never implements the fix.
 ---
 
 ## Purpose
 
-Review an existing UI for quality and accessibility and return a severity-ranked findings report. The deliverable is the report only: this skill finds and names problems, it never edits, restyles, or rebuilds the interface. Hand fixes off to design-ui. Do not report a finding you cannot point to: every finding names a location, the dimension it fails, why it harms the user, and a concrete fix. A vague "improve the hierarchy" is not a finding.
+Review an existing UI for quality and accessibility and return a severity-ranked findings report. The deliverable is the report only: this skill finds and names problems, it never edits, restyles, or rebuilds the interface. Hand fixes off to the design skill. Do not report a finding you cannot point to: every finding names a location, the dimension it fails, why it harms the user, and a concrete fix. A vague "improve the hierarchy" is not a finding.
 
 ## Workflow
 
@@ -130,11 +130,11 @@ Assign each finding one severity. Rank by user impact, not by how easy the fix i
 | Major | Significant friction or a clear quality defect, but a workaround exists | Missing focus ring, no empty/error state, text overflow at a common breakpoint, flat hierarchy on a key screen |
 | Nit | Polish; no real user impact | Slightly off spacing, minor copy awkwardness, one icon optically misaligned |
 
-Order the report so the reader acts in the right order: lead with the anti-slop verdict (a direct yes/no on whether it looks AI-generated, with the specific tells), then findings grouped Blocker, Major, Nit. Name systemic patterns once rather than filing the same nit twenty times ("hard-coded grays instead of tokens across all cards"). Note 2-3 genuine strengths so the handoff knows what to preserve. Resist nit inflation: a report that is 90% nits buries the findings that matter. Close by pointing the fix work to design-ui; do not implement anything.
+Order the report so the reader acts in the right order: lead with the anti-slop verdict (a direct yes/no on whether it looks AI-generated, with the specific tells), then findings grouped Blocker, Major, Nit. Name systemic patterns once rather than filing the same nit twenty times ("hard-coded grays instead of tokens across all cards"). Note 2-3 genuine strengths so the handoff knows what to preserve. Resist nit inflation: a report that is 90% nits buries the findings that matter. Close by pointing the fix work to the design skill; do not implement anything.
 
 ## Gotchas
 
-- **Audit, do not redesign.** The pull toward "and here is the fixed code" is strong and wrong; this skill stops at the report. The fix belongs to design-ui, which owns the build and the design read. Mixing them produces unrequested rewrites and hides which problems were real.
+- **Audit, do not redesign.** The pull toward "and here is the fixed code" is strong and wrong; this skill stops at the report. The fix belongs to the design skill, which owns the build and the design read. Mixing them produces unrequested rewrites and hides which problems were real.
 - **Unverifiable is not the same as passing.** A dimension you could not observe (interaction from a screenshot, rendered contrast from source alone) is reported as not verified, with the reason. Inferring a pass you did not see is how audits miss real defects.
 - **Severity is about the user, not the fix effort.** A one-line CSS fix for a contrast failure that locks out low-vision users is a Blocker, not a nit. Rank by who is harmed and how badly.
 - **Reminding about accessibility at build time makes designs timid; auditing it afterward does not.** This skill is the dedicated place for the WCAG pass precisely because it runs on finished UI, not while it is being designed.
@@ -172,5 +172,5 @@ Nit
 Strengths to preserve: clear single focal point (the recommended plan), genuine
 copy with no buzzwords, logical heading order.
 
-Hand the fixes to design-ui.
+Hand the fixes to the design skill.
 ```

@@ -1,13 +1,17 @@
----
-name: design-api
-description: >-
-  This skill should be used when designing or reviewing an API contract, including REST endpoints,
-  GraphQL schemas, resource naming, pagination, error formats, versioning, auth scopes, or typed
-  interfaces between modules. It applies when the user says "design the API", "add an endpoint",
-  "what should this endpoint look like", "model this in GraphQL", or is about to expose any new
-  public interface surface. It should not be used for database schema design (use
-  design-schema) or for implementing an endpoint whose contract already exists.
----
+# API Contract Design
+
+Consulted from the spec skill (SKILL.md routes here): standalone API-contract design or review, or the deepener for tech-spec phase 4 (interfaces).
+
+## Contents
+
+- [Purpose](#purpose)
+- [Principles (any style)](#principles-any-style)
+- [Workflow](#workflow)
+- [REST](#rest)
+- [GraphQL](#graphql)
+- [Typed interfaces (where the surface is typed)](#typed-interfaces-where-the-surface-is-typed)
+- [Anti-patterns (reject on sight)](#anti-patterns-reject-on-sight)
+- [Gotchas](#gotchas)
 
 ## Purpose
 
@@ -124,4 +128,4 @@ function render(result: Result): string {
 - **Error shape consistency outranks error shape quality.** A mediocre format used everywhere beats a great format used on new endpoints only; consumers code against the worst case.
 - **Hyrum's Law applies to your error messages.** Consumers parse error text you never promised; give them machine-readable codes so they have something stable to depend on.
 - **The contract artifact is the deliverable, not a formality.** An API designed in prose and implemented from memory drifts on the first endpoint; the OpenAPI or SDL document is what review, codegen, and tests hang off.
-- **Existing convention beats this skill's defaults.** A codebase with offset pagination and snake_case everywhere gets more of the same; consistency within an API surface outranks any rule here except the security ones.
+- **Existing convention beats this reference's defaults.** A codebase with offset pagination and snake_case everywhere gets more of the same; consistency within an API surface outranks any rule here except the security ones.

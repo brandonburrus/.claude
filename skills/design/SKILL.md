@@ -1,5 +1,5 @@
 ---
-name: design-ui
+name: design
 description: >-
   This skill should be used when building, styling, or redesigning any kind of User Interface,
   including web components, pages, landing pages, dashboards, or frontend interfaces. It also

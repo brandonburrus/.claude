@@ -1,6 +1,6 @@
 # Accessibility (WCAG 2.1 AA)
 
-Verification reference for design-ui. The component-build mechanics (keyboard reach, focus-visible rings, the eight-state matrix, roving tabindex, 44px touch targets, native `dialog`/`inert`) live in `interaction.md`; this file covers what to verify for WCAG AA conformance: screen readers, contrast, forms, ARIA, and testing.
+Verification reference for the design skill. The component-build mechanics (keyboard reach, focus-visible rings, the eight-state matrix, roving tabindex, 44px touch targets, native `dialog`/`inert`) live in `interaction.md`; this file covers what to verify for WCAG AA conformance: screen readers, contrast, forms, ARIA, and testing.
 
 ## Screen readers
 

@@ -137,4 +137,4 @@ if (transport === "httpStream") {
 }
 ```
 
-The tool contract here is a placeholder. Designing the real tools, resources, and schemas is `design-mcp`'s job, not this skill's.
+The tool contract here is a placeholder. Designing the real tools, resources, and schemas is the spec skill's job (mcp reference), not this skill's.

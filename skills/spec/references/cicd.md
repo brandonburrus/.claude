@@ -1,17 +1,15 @@
----
-name: design-cicd
-description: >-
-  This skill should be used when designing or changing a CI/CD pipeline: setting up CI for a repo,
-  adding a GitHub Actions (or GitLab CI, CircleCI) workflow, configuring quality gates, wiring a
-  build/test/deploy pipeline, adding branch protection or required status checks, setting up
-  preview/staging/production deploys, adding a rollback workflow, or making a slow pipeline
-  faster. It applies when the user says "set up CI", "add a workflow", "automate the checks",
-  "gate merges on tests", "deploy pipeline", or "CI is too slow". It should not be used for
-  release-day prep and the rollback plan for one specific release (use prepare-for-deploy),
-  writing the tests themselves (use follow-tdd), provisioning cloud resources with IaC (use
-  code-with-best-practices with the CDK or Terraform reference), or opening a PR (use
-  pr).
----
+# CI/CD Pipeline Design
+
+Consulted from the spec skill (SKILL.md routes here): standalone pipeline design or change, or the deepener for a tech spec's rollout section.
+
+## Contents
+
+- [Purpose](#purpose)
+- [Two principles that drive every decision](#two-principles-that-drive-every-decision)
+- [Workflow](#workflow)
+- [Example: a parallel GitHub Actions gate set](#example-a-parallel-github-actions-gate-set)
+- [Feed CI failures back into the loop](#feed-ci-failures-back-into-the-loop)
+- [Gotchas](#gotchas)
 
 ## Purpose
 

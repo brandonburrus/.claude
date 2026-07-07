@@ -8,7 +8,7 @@ description: >-
   response", "verify the API works", or "check the API returns the right shape". The collection is
   a byproduct for future replay, and this does not replace automated API tests. It should not be
   used for browser or UI validation (use validate-web), for writing the vitest/supertest or
-  Playwright suite (use follow-tdd), or for designing the API contract (use design-api).
+  Playwright suite (use follow-tdd), or for designing the API contract (use spec).
 ---
 
 ## Purpose

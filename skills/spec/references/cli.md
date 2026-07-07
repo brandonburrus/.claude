@@ -1,18 +1,10 @@
----
-name: design-cli
-description: >-
-  This skill should be used when designing or building a command-line tool: a durable CLI that
-  wraps an API, SDK, service, or script and exposes composable commands with stable output. It
-  applies when the user says "build a CLI for X", "make a command-line tool", "wrap this API in a
-  CLI", "turn this script into a real tool", or wants reusable read/write commands with auth and
-  JSON output. It should not be used for designing the HTTP or GraphQL contract a service exposes
-  (use design-api), for a throwaway one-off script that solves a single task in place, or for
-  general code implementation (use code-with-best-practices).
----
+# CLI Tool Design
+
+Consulted from the spec skill (SKILL.md routes here): designing and building a durable command-line tool.
 
 ## Purpose
 
-Design a command-line tool that both humans and agents can run repeatably from any directory: composable commands, predictable JSON, safe writes, and auth that does not leak. The design is the deliverable that makes implementation mechanical; a CLI built without designing the command surface first becomes a pile of one-off flags that no second caller can compose. This skill is for durable tools. If a short script in the current repo solves the task once, write that script instead; not every job needs a CLI.
+Design a command-line tool that both humans and agents can run repeatably from any directory: composable commands, predictable JSON, safe writes, and auth that does not leak. The design is the deliverable that makes implementation mechanical; a CLI built without designing the command surface first becomes a pile of one-off flags that no second caller can compose. This reference is for durable tools. If a short script in the current repo solves the task once, write that script instead; not every job needs a CLI.
 
 ## First gate: tool or script?
 

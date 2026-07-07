@@ -8,7 +8,7 @@ description: >-
   "handle user input", "threat model this", "what could go wrong here", or "what's the attack
   surface". It should be applied before and while writing the feature, not after. It should not be
   used for auditing an existing diff (use the bundled /security-review), for API contract auth
-  design (use design-api), or for triaging an incoming vulnerability or security finding (use
+  design (use spec), or for triaging an incoming vulnerability or security finding (use
   triage-security-finding).
 ---
 

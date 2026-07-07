@@ -1,18 +1,10 @@
----
-name: design-mcp
-description: >-
-  This skill should be used when designing or reviewing an MCP (Model Context Protocol) server,
-  including deciding what becomes a tool versus a resource versus a prompt, tool naming and
-  schemas, transport and authorization choices, and server security. It applies when the user says
-  "build an MCP server", "expose X to Claude over MCP", "design the MCP integration", or "should
-  this be a tool or a resource". It should not be used for consuming MCP servers in harness config
-  (use the bundled update-config), for designing the agent that uses the server (use
-  design-agent), or for plain HTTP APIs consumed by code (use design-api).
----
+# MCP Server Design
+
+Consulted from the spec skill (SKILL.md routes here): MCP server contract design or review. Read references/mcp-protocol.md alongside this file; the exact protocol field names and semantics are precise and hallucination-prone.
 
 ## Purpose
 
-Design an MCP server's contract before any implementation: which capabilities it exposes, as which primitives, over which transport, with what authorization, and against which security obligations. The deliverable is the server design (primitive inventory, tool schemas, transport and auth decision, security review) ready to hand to implementation. Exact protocol field names and semantics live in [references/mcp-protocol.md](references/mcp-protocol.md); read it before designing, because the primitive semantics and auth requirements are precise and hallucination-prone.
+Design an MCP server's contract before any implementation: which capabilities it exposes, as which primitives, over which transport, with what authorization, and against which security obligations. The deliverable is the server design (primitive inventory, tool schemas, transport and auth decision, security review) ready to hand to implementation.
 
 ## Workflow
 
@@ -28,11 +20,11 @@ What should the model be able to DO, what context should it be able to READ, and
 | Resource | The application attaches as context | Passive data the client chooses to include: file contents, schemas, records; parameterized via URI templates | Data shoved into tool results that should be addressable and subscribable |
 | Prompt | The user explicitly selects | Reusable workflow templates with arguments (slash-command shaped) | Workflow instructions buried in a tool description |
 
-Everything-is-a-tool is the default failure mode; it makes the model responsible for context-fetching decisions the application should own and bloats the tool list (which dilutes selection accuracy, the same fewer-sharper-tools law from design-agent).
+Everything-is-a-tool is the default failure mode; it makes the model responsible for context-fetching decisions the application should own and bloats the tool list (which dilutes selection accuracy, the same fewer-sharper-tools law from the llm-agents reference).
 
 ### 3. Design the tool surface
 
-- **One tool per logical operation**, named for what it does in the domain (`search_wiki_pages`, not `do_query`); name rules per the reference (1-128 chars, letters, digits, `_`, `-`, `.`)
+- **One tool per logical operation**, named for what it does in the domain (`search_wiki_pages`, not `do_query`); name rules per the protocol digest (1-128 chars, letters, digits, `_`, `-`, `.`)
 - **Descriptions are written for the model as the audience**: when to use it, what it returns, what it must not be used for; the description is the routing surface exactly as skill descriptions are
 - **Schemas make invalid calls unrepresentable**: typed `inputSchema` with enums and constraints over free strings; `outputSchema` plus `structuredContent` when callers act on the result programmatically (with text serialization alongside for compatibility)
 - **Annotations are honest hints**: `readOnlyHint`, `destructiveHint`, `idempotentHint`, `openWorldHint` set truthfully; clients use them for consent UX, and a destructive tool marked read-only is a lie the user pays for. Treat annotations from other servers as untrusted; they are hints, not enforcement
@@ -67,7 +59,7 @@ Stateless tools beat session state where possible; when sessions exist, IDs are 
 
 ### 8. Hand off to implementation
 
-Name the SDK (Python `mcp` with FastMCP decorators, or TypeScript `@modelcontextprotocol/sdk` with `McpServer` and zod schemas; shapes in the reference), show the client config the server will need (`.mcp.json` command entry for stdio, url entry for HTTP), and route the build through create-code-plan. Plan the eval loop too: a server is verified by connecting a real client and watching the model actually choose the right tools, which is a design-agent eval in miniature.
+Name the SDK (Python `mcp` with FastMCP decorators, or TypeScript `@modelcontextprotocol/sdk` with `McpServer` and zod schemas; shapes in the protocol digest), show the client config the server will need (`.mcp.json` command entry for stdio, url entry for HTTP), and route the build through create-code-plan. Plan the eval loop too: a server is verified by connecting a real client and watching the model actually choose the right tools, which is the llm-agents reference's eval-first loop in miniature.
 
 ## Gotchas
 

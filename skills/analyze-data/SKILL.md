@@ -6,7 +6,7 @@ description: >-
   this data", "what's the total/average/trend", "group by", "how many rows", "plot this", "make a
   chart from this data", hands over a data file with a question, or wants an analysis notebook for
   the exploration. It should not be used for editing spreadsheet files as documents (use
-  edit-excel-sheet), designing database schemas (use design-schema), architecture diagrams
+  edit-excel-sheet), designing database schemas (use spec), architecture diagrams
   (use create-diagram), or building an interactive or custom data visualization as the deliverable
   (use visualize-data).
 ---

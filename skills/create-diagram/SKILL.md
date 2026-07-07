@@ -6,7 +6,7 @@ description: >-
   models, flowcharts, sequence diagrams, state machines, ER diagrams, class diagrams, Gantt
   charts, and git graphs. It applies when the user says "diagram this", "draw the architecture",
   "visualize this flow", or wants any visual representation of a system or process. It should not
-  be used for UI mockups or wireframes (use design-ui), editing existing images, or plotting
+  be used for UI mockups or wireframes (use design), editing existing images, or plotting
   charts from datasets.
 ---
 

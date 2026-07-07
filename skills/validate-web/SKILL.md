@@ -8,7 +8,7 @@ description: >-
   actually submit", "click through the flow", or "verify it end to end in a browser". The
   deliverable is a pass/fail-with-evidence report, not a test file. It should not be used for
   authoring an automated e2e suite (use Playwright via follow-tdd), for API-only validation (use
-  validate-api), or for visual design work (use design-ui), or for a quality and accessibility
+  validate-api), or for visual design work (use design), or for a quality and accessibility
   critique (use audit-ui).
 ---
 

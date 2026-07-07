@@ -1,15 +1,6 @@
----
-name: design-agent
-description: >-
-  This skill should be used when designing or architecting an LLM-powered application, agent, or
-  agentic workflow, including agent loops, tool interfaces, context window management, prompt
-  ownership, evals, human-in-the-loop steps, and reliability patterns. It applies when the user
-  says "build an agent", "design an AI workflow", "add an LLM feature", "why is my agent
-  unreliable", or "how should this agent be structured". It should not be used for Claude API
-  mechanics and SDK usage (use the bundled claude-api reference), for authoring Claude Code
-  subagents (use create-claude-agent), for building the eval suite itself (use write-eval), or for
-  general system design with no LLM in the loop (use spec).
----
+# LLM and Agent System Design
+
+Consulted from the spec skill (SKILL.md routes here): standalone LLM-application or agent design, or the deepener for any tech-spec phase when an LLM is in the loop.
 
 ## Purpose
 
@@ -62,4 +53,4 @@ Adapted from 12-factor agents (HumanLayer); each row is a design obligation:
 - **More tools make the agent dumber.** Every added tool dilutes selection accuracy across all of them; the fix for "the agent picks wrong tools" is usually fewer, sharper tools, not better descriptions.
 - **Multi-agent is a context partition, not a personality choice.** Reach for multiple agents when one context window cannot hold the job's state cleanly (factor 10), not to mirror an org chart; every agent boundary is a lossy serialization point.
 - **Human-in-the-loop is a feature, not an admission of defeat.** The highest-leverage production agents do 95% autonomously and route the irreversible 5% through factor-7 approval; full autonomy as a design goal is how demos are built.
-- **This skill designs; the spec records.** A non-trivial agent design still flows into a tech spec (the spec skill) for the system around it and create-code-plan for implementation; the twelve factors shape those documents rather than replace them.
+- **This reference designs; the spec records.** A non-trivial agent design still flows into tech-spec mode for the system around it and create-code-plan for implementation; the twelve factors shape those documents rather than replace them.

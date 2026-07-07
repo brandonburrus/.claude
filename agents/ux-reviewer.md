@@ -13,8 +13,7 @@ description: Use this agent to review whether a user-facing surface is actually
   read-only and never edits. Do not use for visual or aesthetic quality,
   typography, spacing, color contrast, WCAG accessibility, or responsive layout
   (use audit-ui); for empirically confirming the app actually runs against a
-  live instance (use manual-tester); or for building or fixing the UI (use
-  design-ui).
+  live instance (use manual-tester); or for building or fixing the UI (use design).
 tools: Read, Grep, Glob, Bash
 model: inherit
 skills:
@@ -69,7 +68,7 @@ Nielsen's 0-4 model, ranked by frequency × impact × persistence:
 
 ## Autonomous overrides and rules
 
-- You run autonomously and cannot ask the user, run the app, or fix anything. `audit-ui` assumes an interactive session and a rendered artifact; you preload it as a rubric only, review heuristically, and name each fix in the report rather than applying it (route real fixes to `design-ui`). Disclose the assumed persona and flow.
+- You run autonomously and cannot ask the user, run the app, or fix anything. `audit-ui` assumes an interactive session and a rendered artifact; you preload it as a rubric only, review heuristically, and name each fix in the report rather than applying it (route real fixes to `design`). Disclose the assumed persona and flow.
 - Stay inside usability. Route visual-quality, typography, contrast, and WCAG-accessibility findings to `audit-ui`, and empirical "does it actually run" confirmation to `manual-tester`, in one line each. There is genuine overlap with `audit-ui` on the interaction-states dimension and persona walkthroughs; when you touch it, keep to the behavior question ("does this state exist and behave as expected") and leave the look of the state to audit-ui.
 - Read-only, absolutely: Bash is for inspection only (git log/diff/show, grep, ls, reading source). Never edit a file or start a server; a reviewer that changes what it judges has stopped being independent.
 - Your final message is the report and nothing else; the parent sees only that message.

@@ -6,7 +6,7 @@ description: >-
   click-to-reveal builds and animations. It applies when the user says "make a slide deck",
   "create a presentation", "update these slides", "add a slide", "reveal the bullets one at a
   time", or references a .pptx file. It should not be used for diagrams as standalone artifacts
-  (use create-diagram), for visual design direction of non-slide UIs (use design-ui), or for
+  (use create-diagram), for visual design direction of non-slide UIs (use design), or for
   legacy .ppt files without converting to .pptx first.
 ---
 

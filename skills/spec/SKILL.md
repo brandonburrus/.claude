@@ -1,18 +1,22 @@
 ---
 name: spec
 description: >-
-  This skill should be used when writing a product spec (PRD), a tech spec (system design,
-  design doc), or an ADR (architecture decision record). It applies when the user says "PRD",
-  "product spec", "define this feature", "tech spec", "system design", "spec this out", "ADR",
-  "record this decision", or "why did we choose X", or when a significant decision settles
-  mid-conversation. It should not be used for implementation planning (use create-code-plan),
-  ticket slicing (use decompose), persuasive RFCs (use write-proposal), documenting an existing
-  system as-is, or project conventions (AGENTS.md).
+  This skill should be used for system and software design: writing a product spec (PRD), a tech
+  spec (system design, design doc), or an ADR (architecture decision record), and for domain
+  design consults: API contracts, database schemas, observability (SLOs, alerts, dashboards),
+  LLM agent architecture, CLI command surfaces, MCP servers, CI/CD pipelines, and migration or
+  deprecation plans. It applies when the user says "PRD", "tech spec", "spec this out", "ADR",
+  "record this decision", "why did we choose X", "design the API", "add an endpoint", "design
+  the schema", "model this data", "define SLOs", "design the alerts", "build an agent", "add an
+  LLM feature", "build a CLI", "build an MCP server", "set up CI", "plan the migration", or
+  "deprecate this". It should not be used for implementation planning (use create-code-plan),
+  ticket slicing (use decompose), persuasive RFCs (use write-proposal), or UI and visual design
+  (use design).
 ---
 
 ## Purpose
 
-Interrogate the user until the product intent (PRD), the design (tech spec), or the decision (ADR) is explicit and free of gaps, then produce the document. One skill, three document types, one shared discipline: mine what already exists, ask one question at a time with a guess attached, and never draft before the gate passes. This file carries everything the modes share; each mode's reference file carries its role, interrogation phases, template, and completion criteria.
+One surface for system design. Three document modes interrogate the user until the product intent (PRD), the design (tech spec), or the decision (ADR) is explicit, then produce the document, never drafting before the gate passes. Eight design domains carry the standards for the surfaces a system is made of, consulted standalone or from inside a tech spec. This file carries the routing and everything the document modes share; each reference file carries its mode's or domain's substance.
 
 ## Route to the Document Type
 
@@ -32,9 +36,26 @@ Routing rules:
 - Handoffs between modes are internal. A PRD approved with design work requested: continue into tech mode. A tech spec approved with flagged ADR candidates: offer to record each in ADR mode. A tech spec requested with no product context: offer to capture requirements verbally (acceptable for small features) or run product mode first.
 - Guard against mode drift. A PRD growing endpoint shapes or schemas has drifted: capture the requirement those details serve and defer the design to tech mode. A tech spec litigating one decision's alternatives at length: flag it as an ADR candidate and move on.
 
+## Route to the Design Domain
+
+Domain design work outside a full spec document is a consult: read the domain reference and apply it directly, delivering the domain's artifact (a contract document, DDL or key design, alert rules, a server or pipeline design, a staged migration plan). A consult skips the document workflow and its gates, follows the reference's own workflow, and still surfaces decisions as options rather than deciding unilaterally. During a tech spec, the same references deepen the matching interrogation phase: read the domain reference before designing that section of the spec.
+
+| Domain | Read | Consult triggers / tech-spec phase |
+|---|---|---|
+| API contract (REST, GraphQL, typed interfaces) | references/api.md | "design the API", "add an endpoint"; phase 4 interfaces |
+| Data schema (SQL, DynamoDB) | references/schema.md | "model this data", "add a table"; phase 3 data |
+| Observability (signals, SLOs, alerts, dashboards) | references/observability.md | "define SLOs", "design the alerts", "alert fatigue"; phase 5 and the rollout section |
+| LLM and agent systems | references/llm-agents.md | "build an agent", "add an LLM feature"; any phase with an LLM in the loop |
+| CLI tools | references/cli.md | "build a CLI", "turn this script into a real tool" |
+| MCP servers | references/mcp.md plus references/mcp-protocol.md | "build an MCP server", "tool or resource?"; read both, the digest carries the exact protocol fields |
+| CI/CD pipelines | references/cicd.md | "set up CI", "gate merges on tests", "CI is too slow"; the rollout section |
+| Migrations and deprecation | references/migration.md, which routes among references/data-migrations.md, references/dependency-upgrades.md, references/infrastructure-migrations.md, and references/api-contract-migrations.md | "plan the migration", "add a column without downtime", "deprecate this" |
+
+A consult that grows into whole-system design (several components, cross-cutting constraints, competing architectures) upgrades to tech-spec mode: say so and switch. A significant decision settled during a consult gets the ADR offer.
+
 ## Shared Interrogation Spine
 
-Every mode runs this interview discipline; the reference adds the mode's phases and rules on top.
+Every document mode runs this interview discipline (consults follow their domain reference's workflow instead); the mode's reference adds its phases and rules on top.
 
 - **Mine before asking.** Read what already exists first: the conversation so far, the codebase, AGENTS.md files, READMEs, existing specs and ADRs. Every question answerable by reading is a wasted round-trip and signals the work is not grounded. When the conversation already contains the discussion, synthesize from it and interrogate only the gaps.
 - **One question at a time, guess attached.** Ask one focused question, wait, process, then ask the next thing that matters most. Never dump a question list.
@@ -68,3 +89,4 @@ Every mode runs this interview discipline; the reference adds the mode's phases 
 - **Mining beats interviewing when the context is rich.** If the user has been discussing the topic for an hour, opening with phase-1 question 1 is interrogation theater. Synthesize, present your understanding at high confidence, and interrogate only what is genuinely unresolved.
 - **The polite yes is the dangerous yes.** A user agreeing with your guess to be agreeable produces a confidently wrong document. Be visibly willing to be wrong, and occasionally guess in a direction you expect pushback on; a user who never corrects you is not converged, they are disengaged.
 - **One question at a time is a pacing rule, not a padding rule.** Asking every phase question to a user with a small, well-understood need is process worship. The phases are coverage checklists, not scripts.
+- **Consults deliver artifacts, not documents.** "Add an endpoint" wants a contract, not a PRD; do not drag a domain consult through the document gates. The reverse also holds: when a consult starts sprouting components and cross-cutting constraints, it is a tech spec now, so upgrade.

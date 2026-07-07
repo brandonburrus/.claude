@@ -8,7 +8,7 @@ description: >-
   persuade-to-adopt RFC, whereas a design RFC that specifies how to build is the spec skill. It
   should not be used for pure documentation, reference material, or educational content where the
   goal is reader understanding rather than persuasion, for recording a decision already made
-  (use spec), or for the staged migration plan itself (use design-migration; this skill writes
+  (use spec), or for the staged migration plan itself (use spec; this skill writes
   the pitch that gets it adopted).
 ---
 

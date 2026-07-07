@@ -7,7 +7,7 @@ description: >-
   this", "write the docs", "the docs are a mess", "add docs for this feature", or "what docs does
   this need". It should not be used for the prose craft of a single explainer or tutorial (use
   teach-through-writing), for recording one architectural decision (use spec), or for API
-  contract definition (use design-api).
+  contract definition (use spec).
 ---
 
 ## Purpose

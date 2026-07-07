@@ -59,7 +59,7 @@ Work through the phases in order.
 | 5. Performance and reliability | Latency targets (p50/p95/p99); throughput; availability target and what "down" means; degradation modes; monitoring and alert thresholds |
 | 6. Security | Sensitive data classification; threat model; compliance requirements; secrets management; audit trail |
 
-Skip a phase only when it genuinely does not apply (a local CLI tool has no availability target), and say you are skipping it and why rather than silently omitting it.
+Skip a phase only when it genuinely does not apply (a local CLI tool has no availability target), and say you are skipping it and why rather than silently omitting it. Where a phase's design goes deep on a domain (data modeling, an API contract, observability, an LLM in the loop, a pipeline, a migration), read the domain reference SKILL.md maps to that phase before designing that section.
 
 Tech interrogation rules, on top of the spine:
 

@@ -1,28 +1,26 @@
----
-name: design-migration
-description: >-
-  This skill should be used when planning or writing a migration of any kind: a schema or data
-  change on a live table, a major version bump of a library, framework, or runtime, a move to a new
-  platform, provider, region, or datastore engine, an evolution of a public API consumers depend
-  on, or deprecating and sunsetting something with consumers. It covers both the staged rollout
-  plan and writing each stage safely. It applies when the user says "plan the migration", "write
-  the migration", "add a column without downtime", "upgrade to the next major version safely",
-  "version this API without breaking consumers", "deprecate this", or "how do we get rid of this
-  safely". It should not be used for designing the target tables, keys, and indexes (use
-  design-schema), executing the broader code change (use create-code-plan), writing ordinary
-  application queries (use code-with-best-practices), or release mechanics (use prepare-for-deploy).
----
+# Migration and Deprecation Design
+
+Consulted from the spec skill (SKILL.md routes here): staged migration and deprecation planning of any type. This file routes to a type-specific playbook; SKILL.md names all four.
+
+## Contents
+
+- [Purpose](#purpose)
+- [Plan the staged rollout first](#plan-the-staged-rollout-first)
+- [The universal safe-migration method](#the-universal-safe-migration-method)
+- [Route to the type-specific playbook](#route-to-the-type-specific-playbook)
+- [Worked example: a column add-backfill-drop, the universal shape in one type](#worked-example-a-column-add-backfill-drop-the-universal-shape-in-one-type)
+- [Gotchas](#gotchas)
 
 ## Purpose
 
-Plan and write a migration of any type so it moves the system to its new state without breaking what is deployed, without a window where traffic is lost, and with a way back at every step. This skill owns both the staged rollout plan (the sequence of safe states, the macro strategy, the deprecation window) and the execution craft that writes each stage. For a multi-stage effort the deliverable is the staged plan, ready for decompose; for a given stage it is the migration artifact (the migration file, the upgrade diff and codemod, the cutover runbook, or the versioned contract) plus the execution approach that makes it safe.
+Plan and write a migration of any type so it moves the system to its new state without breaking what is deployed, without a window where traffic is lost, and with a way back at every step. This covers both the staged rollout plan (the sequence of safe states, the macro strategy, the deprecation window) and the execution craft that writes each stage. For a multi-stage effort the deliverable is the staged plan, ready for decompose; for a given stage it is the migration artifact (the migration file, the upgrade diff and codemod, the cutover runbook, or the versioned contract) plus the execution approach that makes it safe.
 
 ## Plan the staged rollout first
 
 Before writing anything, plan the migration as a sequence of safe states, not a before-and-after diff: every stage leaves the system deployed, working, and abandonable, and the irreversible steps come last. Migrations fail in the gap between states, not at the endpoints, so a plan that describes only the destination has not planned the migration.
 
 - **Scope it.** Quantify the consumers with evidence (call sites, traffic, dependent packages), not assumptions: Hyrum's Law means that with enough users every observable behavior is depended on, so "nobody uses that" needs data. Confirm the replacement exists and covers the depended-on behavior before announcing any deprecation. Weigh the migration cost against the standing cost of not migrating; keeping the old thing for another year can be the right finding, not a failure.
-- **Pick the macro strategy.** The type references carry the per-type mechanics; this is the overall shape the stages take:
+- **Pick the macro strategy.** The type playbooks carry the per-type mechanics; this is the overall shape the stages take:
 
 | Strategy | Use for | Shape | Rollback |
 |---|---|---|---|
@@ -49,9 +47,9 @@ Every migration, regardless of type, follows the same discipline. The mechanics 
 
 Treat these six as standing constraints on the artifact you produce, not a checklist to mention. If a step cannot satisfy one, that is a finding to surface, not a corner to cut quietly.
 
-## Route to the type-specific reference
+## Route to the type-specific playbook
 
-Read the reference for the migration's type; each carries the concrete sequence, tools, and pitfalls for that type.
+Read the playbook for the migration's type; each carries the concrete sequence, tools, and pitfalls for that type.
 
 | Migration type | Read | Covers |
 |---|---|---|
@@ -60,7 +58,7 @@ Read the reference for the migration's type; each carries the concrete sequence,
 | Move between platforms, providers, regions, clusters, or datastore engines | references/infrastructure-migrations.md | Running old and new in parallel, traffic cutover (DNS or load-balancer weight), data sync, verification, decommissioning the old |
 | Evolving a public API or consumer-facing interface | references/api-contract-migrations.md | Additive vs breaking changes, versioning, deprecation windows and signals, consumer migration, removing the old contract last |
 
-If the task spans types (a provider move that is also a datastore-engine change, an API version that needs a schema change behind it), read each relevant reference and sequence the work so each piece independently satisfies the six.
+If the task spans types (a provider move that is also a datastore-engine change, an API version that needs a schema change behind it), read each relevant playbook and sequence the work so each piece independently satisfies the six.
 
 ## Worked example: a column add-backfill-drop, the universal shape in one type
 

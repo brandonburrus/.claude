@@ -90,11 +90,11 @@ if __name__ == "__main__":
     main()
 ```
 
-`mcp.run()` defaults to stdio transport. The tool here is a placeholder; the real tool/resource/prompt contract is `design-mcp`'s job, not this skill's.
+`mcp.run()` defaults to stdio transport. The tool here is a placeholder; the real tool/resource/prompt contract is the spec skill's job (mcp reference), not this skill's.
 
 ## Optional add-on: GitHub Actions CI gate
 
-Opt-in, the uv variant of the shared CI gate (suggest it for projects that will be published or shared). Runs ruff lint, a format check, and pytest on every push to `main` and every pull request. Starter gate only; richer CI is `design-cicd`'s job. Action versions are best-practice defaults; bump to the current major when scaffolding.
+Opt-in, the uv variant of the shared CI gate (suggest it for projects that will be published or shared). Runs ruff lint, a format check, and pytest on every push to `main` and every pull request. Starter gate only; richer CI is the spec skill's job (cicd reference). Action versions are best-practice defaults; bump to the current major when scaffolding.
 
 `.github/workflows/ci.yml`:
 

@@ -1,13 +1,6 @@
----
-name: design-schema
-description: >-
-  This skill should be used when designing or reviewing a database schema, including SQL tables,
-  columns, constraints, indexes, and migrations, or DynamoDB and similar NoSQL key design, access
-  patterns, and single-table modeling. It applies when the user says "design the schema", "model
-  this data", "what should the tables look like", "add a table", or "single-table design". It
-  should not be used for API contract design (use design-api) or for writing application-level
-  queries and ORM code against an existing schema.
----
+# Data Schema Design
+
+Consulted from the spec skill (SKILL.md routes here): standalone schema design or review, or the deepener for tech-spec phase 3 (data).
 
 ## Purpose
 

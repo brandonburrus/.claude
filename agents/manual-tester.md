@@ -8,8 +8,7 @@ description: Use this agent to manually validate a feature against a running app
   endpoint and check the response", or "does it actually work end to end". Pass
   the change (diff, PR, or task) plus the running app URL if known. Do not use
   for authoring an automated test suite (use test-writer), for diagnosing why
-  something fails (use root-cause-investigator), or for visual design work (use
-  design-ui).
+  something fails (use root-cause-investigator), or for visual design work (use design).
 skills:
   - validate-web
   - validate-api
