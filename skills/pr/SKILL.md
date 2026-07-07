@@ -34,11 +34,13 @@ Stop and report instead of proceeding when any of these fails:
 - `git rev-parse --abbrev-ref HEAD` is a real branch: detached HEAD or the default branch means stop and have the user create a feature branch first; never open a PR from the default branch onto itself
 - `gh pr view --json url,state 2>/dev/null`: if an open PR already exists for this branch, do not create a duplicate; report its URL and offer to update its title or body instead (`gh pr edit`)
 
+Also note whether verification and code review ran this session or were declined, and state that in the PR-creation message; this is informational only, never an approval gate.
+
 ### 2. Commit pending work
 
 If `git status --porcelain` shows changes, commit them without asking:
 
-- Stage everything first (`git add -A`), then scan the staged diff for secrets (`git diff --cached` against patterns like `password`, `secret`, `api_key`, `token`, private key headers). Staging before scanning matters: untracked files never appear in `git diff`, so scanning the unstaged diff silently misses a brand-new credentials file. On a hit, unstage, stop, and show the user the offending lines; a secret pushed to a remote is published even if force-removed later.
+- Review `git status --porcelain` and stage only the paths belonging to this branch's work (`git add <path> ...`), including any related untracked files; never sweep unrelated working-tree changes into the commit with a blanket `git add -A`. Then scan the staged diff for secrets (`git diff --cached` against patterns like `password`, `secret`, `api_key`, `token`, private key headers). Staging before scanning matters: untracked files never appear in `git diff`, so scanning the unstaged diff silently misses a brand-new credentials file. On a hit, unstage, stop, and show the user the offending lines; a secret pushed to a remote is published even if force-removed later.
 - Then commit with a message derived from the staged diff, following the repository's commit conventions (review recent commits per the global git rules). If the diff is too broad for one honest summary, use `chore: save branch changes for pull request`.
 
 ### 3. Resolve the base branch

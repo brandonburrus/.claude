@@ -6,9 +6,12 @@ description: >-
   performance, best practices, maintainability, and an optional acceptance check against a work
   item). It applies when the user says "review the code I just wrote", "review my changes", "review
   what we just built", "review this before I commit", "multi-angle review", "adversarially review
-  this", or asks for a thorough review of the current change. It should not be used for reviewing
-  someone else's pull request or an external branch (use review-pull-request), or for fixing the
-  issues it finds (it reports only; hand fixes to fix or refactor).
+  this", or asks for a thorough review of the current change. It is the multi-lens adversarial
+  fan-out over the current change; for a quick single-pass review of the current diff use the
+  bundled /code-review instead, and inside the execute-code-plan pipeline the code-reviewer and
+  security-reviewer agents fill this role. It should not be used for reviewing someone else's
+  pull request or an external branch (use review-pull-request), or for fixing the issues it finds
+  (it reports only; hand fixes to fix or refactor).
 ---
 
 ## Purpose

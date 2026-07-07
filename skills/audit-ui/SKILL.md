@@ -1,13 +1,15 @@
 ---
 name: audit-ui
 description: >-
-  This skill should be used to review or critique an existing UI for quality and accessibility
-  without changing it, returning a severity-ranked findings report. It applies when the user says
-  "review this UI", "audit the frontend", "critique this design", or "is this accessible", or
-  hands over a live page, screenshots, or a component. Covers anti-slop visual quality, hierarchy
-  and typography, accessibility (contrast, focus, ARIA, keyboard, alt text), responsive behavior,
-  and interaction states. It should not be used for building or fixing UI (use design); this
-  skill reports problems and never implements the fix.
+  This skill should be used to review or critique an existing UI for visual quality and
+  accessibility without changing it, returning a severity-ranked findings report. It applies when
+  the user says "review this UI", "audit the frontend", "critique this design", or "is this
+  accessible", or hands over a live page, screenshots, or a component. Covers anti-slop visual
+  quality, hierarchy and typography, accessibility (WCAG contrast, focus, ARIA, keyboard, alt
+  text), responsive behavior, and interaction states. It should not be used for building or
+  fixing UI (use design), or when only behavioral usability is in question (heuristics,
+  mental-model match, flow completeness; use the ux-reviewer agent); this skill reports problems
+  and never implements the fix.
 ---
 
 ## Purpose
@@ -44,7 +46,7 @@ Walk all six. Skipping a dimension silently reads as a pass; if a dimension does
 | Interaction / feedback states | Every interactive element has hover, focus, active, disabled; async actions show loading; lists have empty states; errors are inline and recoverable; success is confirmed | Missing focus state, spinner where a skeleton belongs, blank "No results", destructive action with no confirm or undo |
 | Content / copy | Strings read like a person wrote them; button labels are verb plus object; no marketing buzzwords; no em dashes; realistic data, not "John Doe" or fake-perfect numbers | LLM-poetic cadence, "Click here" links, exclamation marks in success messages |
 
-The dimensions above catch visual and structural defects. To catch usability defects that look fine but cost the user effort, run this lens against the interaction and hierarchy dimensions. Nielsen's heuristics name the usability failure; cognitive load names why the screen feels heavy.
+The dimensions above catch visual and structural defects. To catch usability defects that look fine but cost the user effort, run this lens against the interaction and hierarchy dimensions. Nielsen's heuristics name the usability failure; cognitive load names why the screen feels heavy. Behavioral usability is owned by the ux-reviewer agent; when only usability is in question, with no visual or accessibility audit needed, defer to it. The lens here exists so a full audit does not miss usability defects.
 
 | Usability check | Failure to flag | Maps to dimension |
 |---|---|---|

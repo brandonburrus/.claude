@@ -65,7 +65,9 @@ Run this checklist against the draft before presenting it. Fix issues inline.
 
 ### 7. Present and wait for approval
 
-Present the plan and ALWAYS wait for explicit user approval before implementing. For large plans or work spanning multiple sessions, offer to save the plan to a markdown file so it survives session boundaries and compaction.
+Present the plan and ALWAYS wait for explicit user approval before implementing. Deliver the presentation through the visual-plan skill (a rendered, scannable plan page) rather than a wall of text, unless the user asked for plain prose. For large plans or work spanning multiple sessions, offer to save the plan to a markdown file so it survives session boundaries and compaction.
+
+Once the user approves, execute the plan via the execute-code-plan skill, whose subagent pipeline implements, verifies, and reviews each task. For a small plan (roughly 1-2 tasks), executing directly in the main loop is acceptable; state which route you are taking.
 
 ## Template
 

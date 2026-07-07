@@ -3,8 +3,9 @@ name: follow-tdd
 description: >-
   This skill should be used when implementing any feature, fixing any bug, or changing any code
   behavior, before writing the implementation code. It also applies when the user says "TDD",
-  "test first", "red-green-refactor", "write the test before the code", and after the fix skill
-  has reproduced a bug's root cause, to write the regression test first. It should not be used to
+  "test first", "red-green-refactor", "write the test before the code", when authoring automated
+  end-to-end browser tests (Playwright) for a user journey, and after the fix skill has reproduced
+  a bug's root cause, to write the regression test first. It should not be used to
   diagnose a reported bug (use fix; it hands off here), for pure configuration changes,
   documentation, static content, or for runtime-verifying an already-built change (use the verify
   skill for that).
@@ -58,6 +59,8 @@ For every feature, the coverage floor is three tests, and naming them is how you
 - **Golden path**: the feature does what it is for, with valid input under expected conditions. The proof it works at all.
 - **Error case**: invalid input or a failure condition is handled as designed (rejected, returns an error, throws, degrades), not swallowed or crashed. The proof it fails safely.
 - **Edge case**: the boundary where the logic is most likely to break (empty, null, zero, the maximum, the off-by-one, the concurrent call, the duplicate). The proof it holds at the corners.
+
+This skill is the canonical home of the three-test floor; other skills and documents that cite golden path, error, and edge coverage reference this definition rather than restating it.
 
 This is a floor, not a ceiling. A feature with branching logic or several failure modes needs an error and an edge test per branch; a trivial pure function may genuinely need only the three. Above the floor, prioritize critical paths and complex logic over exhaustive enumeration, and confirm priorities with the user when the interface design is not already settled. Skipping a category is a decision to state, not a default to drift into: "no error case because the type system makes invalid input unrepresentable" is a valid call, silently testing only the golden path is not.
 

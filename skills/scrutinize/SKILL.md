@@ -1,15 +1,15 @@
 ---
 name: scrutinize
 description: >-
-  This skill should be used to scrutinize a plan, PR, diff, design doc, or proposed decision from
-  an outsider's perspective: first whether it should exist at all or a simpler path reaches the
-  same goal, then tracing the real end-to-end path to verify it does what it claims. It applies
-  when the user says "scrutinize this", "sanity-check this", "poke holes in this plan", "second
-  opinion", or "is this the right approach". It should not be used for line-level code review of a
-  PR (use review-pull-request), for verifying a finished task meets its spec with fresh evidence
-  (use the completion-verifier agent), for whole-system architecture evaluation (use
-  audit-architecture), or for sharpening a vague request before any work exists (use
-  interrogate).
+  This skill should be used to scrutinize the approach, premise, or decision behind a plan, design
+  doc, or proposed change from an outsider's perspective: first whether it should exist at all or
+  a simpler path reaches the same goal, then tracing the real end-to-end path to verify it does
+  what it claims. It applies when the user says "scrutinize this", "sanity-check this", "poke
+  holes in this plan", "is this the right approach", or wants a second opinion on whether the
+  direction itself is sound. It should not be used for line-level review of a PR or diff (use
+  review-pull-request), for verifying a finished task meets its spec with fresh evidence (use the
+  completion-verifier agent), for whole-system architecture evaluation (use audit-architecture),
+  or for sharpening a vague request before any work exists (use interrogate).
 ---
 
 ## Purpose

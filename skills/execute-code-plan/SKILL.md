@@ -12,7 +12,7 @@ description: >-
 
 ## Purpose
 
-Drive an approved code plan to completion by orchestrating the agent pipeline from the main conversation. This skill conducts; it does not implement. It dispatches `task-implementer` per plan task in dependency order, gates each checkpoint with `completion-verifier`, routes failures to `root-cause-investigator`, runs `code-reviewer` and `security-reviewer` on the finished change, and live-validates web and API surfaces with `validate-web` or `validate-api` once the change is green. It stays thin because the agents own the methodology and already speak compatible output contracts; the skill's whole job is sequencing, gating, and honest failure handling. Do not begin until an approved plan exists, and do not let the orchestrator drift into doing the work itself.
+Drive an approved code plan to completion by orchestrating the agent pipeline from the main conversation. This skill conducts; it does not implement. It dispatches `task-implementer` per plan task in dependency order, gates each checkpoint with `completion-verifier`, routes failures to `root-cause-investigator`, runs `code-reviewer` and `security-reviewer` on the finished change, and live-validates runnable surfaces through the `manual-tester` agent once the change is green. It stays thin because the agents own the methodology and already speak compatible output contracts; the skill's whole job is sequencing, gating, and honest failure handling. Do not begin until an approved plan exists, and do not let the orchestrator drift into doing the work itself.
 
 ## This must run in the main conversation
 
@@ -29,7 +29,7 @@ Execute Plan:
 - [ ] 3. Execute tasks in dependency order (parallel where marked)
 - [ ] 4. Gate every checkpoint with completion-verifier
 - [ ] 5. Final review pass (code + security)
-- [ ] 6. Validate live behavior for web and API surfaces (validate-web / validate-api)
+- [ ] 6. Validate live behavior on runnable surfaces (manual-tester)
 - [ ] 7. Report; the user owns commit and merge
 ```
 
@@ -62,12 +62,15 @@ After each task, or each phase checkpoint the plan defines, dispatch `completion
 
 When every task is `Complete` and `Verified`, dispatch `code-reviewer` on the cumulative diff, and `security-reviewer` too when the change touched any sensitive surface (auth, input handling, secrets, external integrations). Route each confirmed finding back through a `task-implementer` the same way, then re-verify.
 
-### 6. Validate live (web and API surfaces)
+### 6. Validate live (runnable surfaces)
 
-Green and reviewed is not the same as working: the suite and the reviewers exercise code paths and the diff, and neither renders the UI or hits the live endpoint. When the change has a runnable surface, validate it after the pipeline is green:
+Green and reviewed is not the same as working: the suite and the reviewers exercise code paths and the diff, and neither renders the UI, hits the live endpoint, or runs the built artifact. When the change has a runnable surface, validate it after the pipeline is green. Conduct here too: dispatch the `manual-tester` agent with the change summary and the running app URL; it drives the surface and returns a pass/fail-with-evidence report. Fall back to running `validate-web` or `validate-api` directly in the main thread only when the `manual-tester` agent is unavailable.
 
-- Web UI: run `validate-web` against the running dev server.
-- HTTP API: run `validate-api` against the running service.
+| Surface | Route |
+| ------- | ----- |
+| Web UI | `manual-tester` against the running dev server (it wraps `validate-web`) |
+| HTTP API | `manual-tester` against the running service (it wraps `validate-api`) |
+| CLI / TUI / worker / desktop | Drive the built artifact directly: the run skill, or the project's own run instructions, observing the changed behavior live |
 
 Validation needs the app actually running, so start it (or have the user start it) first. If no target can be brought up, report that validation was not possible rather than skipping it silently. Fold the evidence (pass/fail per behavior, screenshots, the saved Bruno collection path) into the report. A change with no runnable surface (a pure library, an internal refactor with no behavioral change) skips this step; say so.
 
@@ -89,7 +92,7 @@ Summarize for the user: tasks completed with their evidence, what each checkpoin
 - **Parallel tasks on shared files corrupt silently.** Two implementers editing one file without worktree isolation overwrite each other; the plan's parallel marker is a claim of independence you verify, not assume.
 - **The retry loop has a floor.** Re-dispatching forever on a `Rejected` is the orchestrator refusing to admit the task or plan is wrong. Two rounds, then escalate.
 - **Review findings do not reopen the plan.** A `code-reviewer` finding becomes a new task routed through the pipeline, not a license to re-architect mid-execution; if a finding reveals the plan itself was wrong, stop and say so instead of improvising a rewrite.
-- **Green is not validated.** A verified, reviewed, green change can still render a broken UI or return 500 on a real request, because the suite proves the logic, not the running system. Live validation (`validate-web` / `validate-api`) is the post-pipeline step that closes that gap; skip it only when there is no runnable surface, and say so.
+- **Green is not validated.** A verified, reviewed, green change can still render a broken UI or return 500 on a real request, because the suite proves the logic, not the running system. Live validation (the `manual-tester` agent wrapping `validate-web` / `validate-api`, or driving the built artifact directly) is the post-pipeline step that closes that gap; skip it only when there is no runnable surface, and say so.
 
 ## Example
 
@@ -106,8 +109,9 @@ A four-task plan (T1 schema, T2 endpoint depends on T1, T3 client depends on T1,
 5. T3 blocked: stop that branch, surface the report to the user; do not guess a version.
 6. Verify T2 -> Verified. Dispatch code-reviewer + security-reviewer on the T1+T2+T4 diff.
    One finding (missing authz check on the endpoint) -> new task -> implement -> re-verify.
-7. Validate live: T2 is a new endpoint, so run validate-api against the running service; the
-   saved request returns 201 and the asserted body shape holds. Collection saved to bruno/.
+7. Validate live: T2 is a new endpoint, so dispatch manual-tester against the running service
+   (it runs validate-api); the saved request returns 201 and the asserted body shape holds.
+   Collection saved to bruno/.
 8. Report: T1/T2/T4 complete, verified, and live-validated, review clean after the fix, T3
    blocked pending the SDK question. Suite green (51 passing). No commit; the user owns git.
 ```

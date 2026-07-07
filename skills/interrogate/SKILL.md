@@ -5,11 +5,12 @@ description: >-
   or likely bigger than it first sounds, and must be understood from every angle before any work
   starts. It flips the script: the agent relentlessly questions the user until everything
   discovered is explicitly in scope, out of scope, or deferred, ending in a user-confirmed scope
-  contract. It applies when the user says "interrogate me", "grill me", "interview me", "question
-  me until you get it", "clarify this", "refine this idea", "stress-test my thinking", "poke holes
-  in my idea", "define the scope", or "am I missing something". It should not be used for writing
-  the resulting PRD or tech spec (use spec), or for single-fact ambiguities that one direct
-  question resolves.
+  contract. It also applies when a mostly defined request carries just a couple of load-bearing
+  unknowns; a lightweight mode asks only the 2-3 targeted questions those need. It applies when
+  the user says "interrogate me", "grill me", "interview me", "question me until you get it",
+  "clarify this", "refine this idea", "stress-test my thinking", "poke holes in my idea", "define
+  the scope", or "am I missing something". It should not be used for writing the resulting PRD or
+  tech spec (use spec), or for single-fact ambiguities that one direct question resolves.
 ---
 
 ## Purpose
@@ -17,6 +18,10 @@ description: >-
 Flip the script: the agent asks, the user answers. Interrogate an unclear request, idea, or topic until it is understood from every angle and everything discovered is explicitly in scope, out of scope, or deferred. The deliverable is a scope contract the user has confirmed with an explicit yes. Produce no plan, spec, code, or any other artifact before that confirmation; premature solutioning is the exact failure this skill exists to prevent. The interrogation ends in exactly two ways: the angle checklist completes and the user signs off, or the user aborts. There is no third exit, and the agent never takes the exit on the user's behalf.
 
 This protocol needs a live user. In non-interactive contexts (CI, background runs, subagent work) flag the ambiguity as a blocker instead of guessing.
+
+## Lightweight Mode
+
+When the ambiguity is contained (a couple of load-bearing unknowns inside an otherwise defined ask, rather than undefined or open-ended scope), skip the full protocol: ask only the 2-3 targeted questions those unknowns need, one at a time with your best guess attached, and proceed once they are answered, with no angle checklist and no scope contract. The full interrogation below remains the default for open-ended, underdefined, or high-stakes scope. If a lightweight round reveals the scope is bigger than it looked, escalate into the full protocol rather than stretching the shortcut.
 
 ## The Angle Checklist
 
@@ -136,7 +141,7 @@ Different ambiguities yield to different techniques; pick per question, then ret
 
 ## Gotchas
 
-- **Proportionality gates invocation, not depth.** A single missing fact gets one direct question without this protocol. But once the interrogation starts, it runs the full checklist; a half interrogation produces a contract that lies about being complete.
+- **Proportionality gates invocation, not depth.** A single missing fact gets one direct question without this protocol, and a contained ambiguity gets Lightweight Mode. But once the full interrogation starts, it runs the full checklist; a half interrogation produces a contract that lies about being complete.
 - **The polite user is the failure mode.** Someone agreeing with every guess is disengaging, not converging. Occasionally guess in a direction you expect pushback on; a user who never corrects you has stopped reading.
 - **Domain interrogations outrank this skill.** The spec skill's product and tech modes carry their own interrogation protocols tuned to their documents. When the conversation is clearly headed at one of those artifacts, hand off instead of making the user answer everything twice.
 - **Relentless describes the agent's persistence, not the user's captivity.** The agent never quits first, but the user can abort at any time and gets the unconfirmed ledger when they do.

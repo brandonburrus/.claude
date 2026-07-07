@@ -40,17 +40,16 @@ This repository is Brandon's personal Claude Code configuration directory (`~/.c
 ## Key Decisions
 
 - 2026-06-06: The debugging skill is named `fix`. Why: Claude Code's bundled `/debug` skill (session debug logs) collides with the obvious name.
-- 2026-06-06: `design-ui` is build-only; auditing existing UI without changing it belongs to `audit-ui` (added 2026-06-13), not `design-ui`. Why: user choice to keep building and read-only critique as separate skills.
+- 2026-06-06: `design` (named `design-ui` until 2026-07-06) is build-only; auditing existing UI without changing it belongs to `audit-ui` (added 2026-06-13). Why: user choice to keep building and read-only critique as separate skills.
 - 2026-06-06: `pr` is frictionless: no approval gate before `gh pr create`, pending work auto-committed. Why: user chose one-command PR creation.
 - 2026-06-26: `pr` (renamed from `open-pull-request`) keeps a noun name, a deliberate exception to the verb-led naming rule. Why: user wants the terse `/pr` command.
 - 2026-06-06: `triage-backlog` was verified by judged trigger checks only. Why: no live tracker was available; shake it down on first real use.
-- 2026-06-06: `execute-code-plan` is deferred until the agents phase. Why: user wants the skills library finished first.
 - 2026-06-06: `hooks/inject-agents-md.py` surfaces AGENTS.md files (root at SessionStart, nested lazily on file touch). Why: Claude Code natively loads only CLAUDE.md.
 - 2026-06-11: The AGENTS.md hook points at the file (read-this pointer) rather than injecting its content. Why: Claude reads it anyway once told, so inlining only duplicated context and risked a stale copy.
 - 2026-06-11: `hooks/enforce-verification.py` plus the CLAUDE.md done-gate enforce verify-before-done; the Stop hook blocks ending a turn that changed source code without running any check. Why: the verification agents were opt-in, leaving the everyday main-loop edit path ungated.
 - 2026-06-13: `hooks/warn-context-budget.py` warns before context runs out via a statusline-to-hook bridge file (`statusline.sh` writes `~/.cache/claude-context/<session_id>.json`, the hook reads it). Why: hooks never receive `context_window` in stdin, only the statusline does, and `autoCompactEnabled` is false so a long session can wall silently.
 - 2026-06-06: Decision records are gated one-liners; work narrative lives in git history. Why: the log had grown to 25KB of changelog, bloating the always-loaded context.
-- 2026-06-06: Threat modeling lives inside `harden-security` as a proactive front-section, not a separate `model-threats` skill. Why: same attacker-mindset domain across design and build; avoids a near-duplicate security skill.
+- 2026-06-06: Threat modeling lives inside `harden` as a proactive front-section, not a separate `model-threats` skill. Why: same attacker-mindset domain across design and build; avoids a near-duplicate security skill.
 - 2026-06-07: `README.md` is a flow overview, not a per-item inventory with maintained counts. Why: user prefers readability over enumeration; the directories are the source of truth.
 - 2026-06-13: `edit-image` scripts are Node (`.mjs` via sharp), not Python. Why: sharp is the chosen image library and is Node-only; quick edits use `npx sharp-cli`, complex edits use a global sharp install resolved via `createRequire`.
 - 2026-06-26: Consolidated `explore-solutions`, `research-solutioning`, and `evaluate-software-options` into `research-solutions` (decide the technical approach, then select the dev tool) and `research-build-vs-buy` (decide build vs buy vs partner, then evaluate products on the buy path). Why: user chose two skills split by object, superseding the 2026-06-07 keep-separate decision.
