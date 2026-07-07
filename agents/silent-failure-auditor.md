@@ -1,6 +1,7 @@
 ---
 name: silent-failure-auditor
-description: Use this agent to audit code for silent failures: swallowed
+description: >-
+  Use this agent to audit code for silent failures: swallowed
   exceptions, empty catch blocks, errors converted to null or empty collections,
   bare except/catch that hides the cause, log-and-continue on a critical path,
   dangerous default fallbacks, lost stack traces, and missing error handling

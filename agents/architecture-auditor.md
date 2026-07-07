@@ -1,6 +1,7 @@
 ---
 name: architecture-auditor
-description: Use this agent to audit a codebase's architecture for improvement
+description: >-
+  Use this agent to audit a codebase's architecture for improvement
   candidates in an isolated context: tight coupling, low cohesion, hard-to-test
   seams, duplicated concepts, and refactoring opportunities. Use proactively
   before a large change to a subsystem, or when the user says "audit the

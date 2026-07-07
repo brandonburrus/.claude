@@ -1,6 +1,7 @@
 ---
 name: maintainability-reviewer
-description: Use this agent to review whether code is structured to stay
+description: >-
+  Use this agent to review whether code is structured to stay
   maintainable long term in an isolated context, returning a severity-ranked
   findings report: module depth and information hiding, cohesion and local
   coupling, change locality, per-unit complexity, naming, and testability seams.
