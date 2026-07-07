@@ -17,6 +17,16 @@ wraps up and offers a handoff before context runs out.
 Warns once per threshold per session: with auto-compact off, context only shrinks
 within a session, so each level fires at most once and never spams.
 
+Subagent handling: subagents SHARE the main loop's session_id but run their own
+transcript (main loop: <session_id>.jsonl; subagents: .../subagents/agent-*.jsonl).
+Only the main loop has a statusline, so the bridge file describes the main loop's
+window, not a subagent's; a subagent tool call must therefore never consume the
+warning. Two guards: transcripts whose basename is not <session_id>.jsonl skip
+warning entirely, and the dedup sentinel is keyed by session+transcript (like
+inject-agents-md.py) so no other transcript can mute the main loop's one shot.
+The bridge file itself stays keyed by session_id alone: statusline.sh writes it
+and only receives session_id.
+
 Convenience-grade: fails OPEN (exit 0 on any error) so a parser bug or a missing
 bridge never wedges tool execution.
 
@@ -26,6 +36,7 @@ the stale-file skip, and exit 0.
 """
 import json
 import os
+import re
 import sys
 import time
 
@@ -36,8 +47,22 @@ CRITICAL_REMAINING = 15  # stronger nudge when <= 15% remains
 # stale read under-reports usage (it can only delay a warning, never raise a false
 # critical); the guard exists to drop a leftover file from a long-dead session.
 STALE_SECONDS = 600
+# Bridge/sentinel files from dead sessions accumulate forever otherwise; a week
+# is comfortably past any session's lifetime (matches the sibling hooks).
+PRUNE_MAX_AGE_SECONDS = 7 * 24 * 3600
 
 CACHE_DIR = os.path.join(os.path.expanduser("~"), ".cache", "claude-context")
+
+
+def prune_stale_files():
+    try:
+        cutoff = time.time() - PRUNE_MAX_AGE_SECONDS
+        for name in os.listdir(CACHE_DIR):
+            path = os.path.join(CACHE_DIR, name)
+            if os.path.getmtime(path) < cutoff:
+                os.remove(path)
+    except OSError:
+        pass
 
 
 def emit(message):
@@ -56,11 +81,23 @@ def main():
     if not session or "/" in session or "\\" in session or ".." in session:
         return
 
+    prune_stale_files()
+
+    # The bridge measures the MAIN LOOP's window (only the main loop has a
+    # statusline). A subagent shares the session_id but runs its own transcript
+    # (.../subagents/agent-*.jsonl), so any transcript other than the session's
+    # own <session_id>.jsonl skips warning entirely. A missing transcript_path
+    # cannot be distinguished, so it is treated as the main loop (fail toward
+    # warning; a wrong nudge is cheaper than a missed one).
+    transcript = os.path.basename(data.get("transcript_path") or "")
+    if transcript and transcript != f"{session}.jsonl":
+        return
+
     try:
         with open(os.path.join(CACHE_DIR, f"{session}.json")) as f:
             metrics = json.load(f)
     except (FileNotFoundError, ValueError):
-        # No bridge file = subagent, fresh session, or the statusline has not run yet.
+        # No bridge file = fresh session, or the statusline has not run yet.
         return
 
     ts = metrics.get("timestamp")
@@ -73,8 +110,11 @@ def main():
 
     level = "critical" if remaining <= CRITICAL_REMAINING else "warning"
 
-    # Dedup: each level fires at most once per session.
-    sentinel = os.path.join(CACHE_DIR, f"{session}.warned.json")
+    # Dedup: each level fires at most once per session. Keyed by
+    # session+transcript (like the sibling hooks) so a transcript that slips
+    # past the main-loop check above can never consume the main loop's shot.
+    key = re.sub(r"[^A-Za-z0-9._-]", "_", f"{session}-{transcript}")
+    sentinel = os.path.join(CACHE_DIR, f"{key}.warned.json")
     try:
         with open(sentinel) as f:
             fired = json.load(f).get("fired", [])

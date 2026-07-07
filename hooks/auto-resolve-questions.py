@@ -3,7 +3,8 @@
 
 When the model asks the user a question via AskUserQuestion and the question
 (a) carries exactly one option flagged "(recommended)", (b) is single-select,
-and (c) mentions nothing that signals an irreversible one-way-door action, this
+(c) mentions nothing that signals an irreversible one-way-door action, and
+(d) is not a scope-contract/sign-off gate question (see GATE_SIGNALS), this
 hook answers it automatically by denying the tool call with a reason naming the
 recommended option, so the model proceeds without nagging the user on a cheap,
 reversible choice. Anything that fails those gates is let through to the user
@@ -54,6 +55,18 @@ ONE_WAY_SIGNALS = (
     "irreversible", "permanent", "merge", "rebase", "reset", "rm -", "git push",
 )
 
+# Scope-contract and sign-off questions are never auto-resolved, in ANY mode.
+# The interrogate and spec skills gate work behind an explicit AskUserQuestion
+# sign-off; auto-answering one with the model's own recommendation would void
+# the gate (the model would be signing off on its own guess). Conservative
+# substring heuristic, same philosophy as ONE_WAY_SIGNALS: a false "gate" only
+# costs one normal prompt, while a false "not a gate" silently approves scope.
+GATE_SIGNALS = (
+    "scope", "sign off", "sign-off", "signoff", "approve", "approval",
+    "confirm", "proceed with this plan", "proceed with the plan",
+    "is this correct", "look right", "looks right", "ready to proceed",
+)
+
 
 def let_through():
     """Exit 0 with no stdout: the normal permission flow shows the question."""
@@ -86,14 +99,23 @@ def recommended_label(question):
     return hits[0] if len(hits) == 1 else None
 
 
-def looks_one_way(question):
-    """True if the question mentions any irreversible-action signal."""
+def question_haystack(question):
     haystack = (str(question.get("question", "")) + " " + str(question.get("header", ""))).lower()
     for opt in question.get("options", []):
         if isinstance(opt, dict):
             haystack += " " + str(opt.get("label", "")).lower()
             haystack += " " + str(opt.get("description", "")).lower()
-    return any(sig in haystack for sig in ONE_WAY_SIGNALS)
+    return haystack
+
+
+def looks_one_way(question):
+    """True if the question mentions any irreversible-action signal."""
+    return any(sig in question_haystack(question) for sig in ONE_WAY_SIGNALS)
+
+
+def looks_like_gate(question):
+    """True if the question looks like a scope-contract or sign-off gate."""
+    return any(sig in question_haystack(question) for sig in GATE_SIGNALS)
 
 
 def resolve_one(question):
@@ -102,6 +124,8 @@ def resolve_one(question):
         return None  # multi-select has no single recommended-option semantics
     if looks_one_way(question):
         return None
+    if looks_like_gate(question):
+        return None  # sign-off gates always reach the user
     return recommended_label(question)
 
 

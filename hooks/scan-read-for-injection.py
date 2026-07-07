@@ -79,7 +79,7 @@ EXCLUDED_SUBSTRINGS = (
     "/_refs/",
     "/.git/",
     "/.claude/hooks/",
-    "/skills/harden-security/",
+    "/skills/harden/",
     "/skills/triage-security-finding/",
     "/skills/create-claude-hook/",
     "/skills/humanize/",
@@ -93,11 +93,16 @@ def is_excluded(file_path):
 
 
 def extract_content(tool_response):
-    """Pull text out of a tool_response that may be a raw string (Read's cat -n
-    output) or an object whose content is a string or a list of text blocks."""
+    """Pull text out of a tool_response that may be a raw string, the Read
+    tool's real envelope ({"type": "text", "file": {"content": ...}}), or an
+    object whose content is a string or a list of text blocks."""
     if isinstance(tool_response, str):
         return tool_response
     if isinstance(tool_response, dict):
+        # Read's PostToolUse envelope nests the text under tool_response.file.content.
+        file_obj = tool_response.get("file")
+        if isinstance(file_obj, dict) and isinstance(file_obj.get("content"), str):
+            return file_obj["content"]
         content = tool_response.get("content")
         if isinstance(content, str):
             return content

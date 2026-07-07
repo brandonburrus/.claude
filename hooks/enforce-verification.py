@@ -304,6 +304,12 @@ def handle_edit(event):
     if os.path.splitext(file_path)[1].lower() not in CODE_EXTENSIONS:
         return
     real = os.path.realpath(file_path)
+    # Scratch files under temp dirs are throwaway tooling, not deliverables;
+    # tracking them makes unrelated repos' commits hit the done-gate.
+    temp_roots = ("/tmp/", "/private/tmp/", "/var/folders/")
+    tmpdir = os.environ.get("TMPDIR")
+    if real.startswith(temp_roots) or (tmpdir and real.startswith(os.path.realpath(tmpdir))):
+        return
     display = display_path(real, event.get("cwd"))
 
     spath = state_path(event)

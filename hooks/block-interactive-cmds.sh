@@ -13,8 +13,10 @@ COMMAND=$(jq -r '.tool_input.command // empty' < /dev/stdin 2>/dev/null)
 for cmd in cp mv rm; do
   # Deny when the command appears at a statement boundary without an -f flag,
   # unless it bypasses aliases via `command`, an absolute path, or a backslash.
+  # The -f may sit in any leading flag cluster (`rm -r -f x`, `rm --recursive
+  # -f x`), not just the first one.
   if echo "$COMMAND" | grep -qE "(^|[;&|] *)${cmd} " && \
-     ! echo "$COMMAND" | grep -qE "(^|[;&|] *)${cmd} +-[a-eg-zA-Z]*f" && \
+     ! echo "$COMMAND" | grep -qE "(^|[;&|] *)${cmd} +(--?[a-zA-Z-]+ +)*-[a-eg-zA-Z]*f" && \
      ! echo "$COMMAND" | grep -qE "(command +${cmd}|/bin/${cmd}|/usr/bin/${cmd})" && \
      ! echo "$COMMAND" | grep -qE "(^|[;&|] *)\\\\${cmd} "; then
     jq -n --arg cmd "$cmd" '{
