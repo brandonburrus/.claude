@@ -8,20 +8,32 @@ record it as a pending (unverified) change. If a fast linter the project has
 opted into is on PATH (ruff for Python, biome for JS/TS), run it on just that
 file and surface any findings as advisory context. Inform only; never blocks.
 
-PostToolUse (Bash): if the command is a test/build/typecheck/lint runner, treat
-the pending changes as verified and clear them.
+PostToolUse (Bash): if the command is a test/build/typecheck/lint runner AND it
+succeeded, treat the pending changes as verified and clear them. Trivia
+invocations (--version, --help, --collect-only, install/init) and commands that
+mask failure with `|| true` / `; true` never count. A Bash command can also ADD
+pending files: shell redirection, `sed -i`, or `tee` targeting a code-extension
+path is a code write too (false-negative-leaning: unknowable targets, e.g. the
+files inside a `git apply` patch, are simply not tracked).
 
-Stop: if code was changed and no verification command has run since, block the
-stop with a reason naming the unverified files. This is the forcing function:
-the main loop cannot silently end a turn on code it never checked. Honors
-stop_hook_active so it blocks at most once and never wedges the session.
+Stop / SubagentStop: if code was changed and no verification command has run
+since, block the stop with a reason naming the unverified files. This is the
+forcing function: neither the main loop nor a subagent can silently end a turn
+on code it never checked (a subagent's edits accrue under its own transcript
+key, so SubagentStop gates exactly its own work). Honors stop_hook_active so it
+blocks at most once and never wedges the session.
 
-Scope, stated honestly: the Stop gate enforces that verification was ATTEMPTED,
-not that it passed. A green-but-wrong suite is the completion-verifier agent's
-job and the CLAUDE.md done-gate's job, not this hook's. Delegated work is gated
-by the subagents' own evidence contracts: a subagent's edits land under the
-subagent's own transcript state (keyed like inject-agents-md.py), so this
-main-loop Stop hook only fires on code the main loop edited directly.
+Scope, stated honestly: the gate enforces that verification RAN AND EXITED 0,
+not that it proved the right thing. A green-but-wrong suite is the
+completion-verifier agent's job and the CLAUDE.md done-gate's job, not this
+hook's.
+
+gate-done-declarations.py (PreToolUse Bash) reads this hook's state files to
+deny `git commit` / `gh pr create` while changes are pending. The coupling is
+the on-disk format only: JSON {"pending": [paths]} at
+~/.cache/claude-verify/<session_id>-<transcript_basename> (non [A-Za-z0-9._-]
+chars replaced with "_"). Change state_path() or the schema and that hook must
+change in lockstep.
 
 Convenience-grade: fails open (any internal error exits 0) so a broken hook
 never wedges editing or traps a turn.
@@ -49,8 +61,10 @@ MAX_LINT_OUTPUT_CHARS = 1500
 CODE_EXTENSIONS = {
     ".py", ".pyi",
     ".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs",
+    ".vue", ".svelte", ".astro",
     ".go", ".rs", ".java", ".kt", ".scala",
-    ".rb", ".php", ".swift",
+    ".rb", ".php", ".swift", ".dart",
+    ".ex", ".exs",
     ".c", ".h", ".cc", ".cpp", ".hpp", ".cxx",
     ".cs",
 }
@@ -68,7 +82,10 @@ _VERIFY_TOKENS = [
     r"pytest",
     r"tox\b",
     r"nox\b",
-    r"(?:npm|pnpm|yarn|bun)\s+(?:run\s+\S+|test|build|ci|check|typecheck|lint)",
+    # `run <script>` counts only when the script is named like a check
+    # (test/lint/typecheck/check/build/e2e/ci, anywhere in the name); a bare
+    # `npm run dev` or `npm run deploy` is not verification.
+    r"(?:npm|pnpm|yarn|bun)\s+(?:run\s+[\w:./-]*(?:test|lint|typecheck|check|build|e2e|ci)[\w:./-]*|test|build|ci|check|typecheck|lint)",
     r"npx\s+(?:vitest|jest|tsc|playwright|eslint|biome)",
     r"vitest\b",
     r"jest\b",
@@ -98,12 +115,76 @@ _VERIFY_TOKENS = [
 ]
 _VERIFY_RE = re.compile(_BOUNDARY + r"(?:" + r"|".join(_VERIFY_TOKENS) + r")")
 
+# Trivia invocations of a verify-shaped tool run no checks: version/help
+# banners, pytest --collect-only, and install/init setup commands (`make
+# install` matches the `make` token above). Conservative direction: a false
+# trivia hit only delays a clear until a real check runs.
+_TRIVIA_RE = re.compile(r"--(?:version|help|collect-only|init)\b|\b(?:install|init)\b")
+# `cmd || true` / `cmd; true` masks the exit status, so success is unknowable;
+# such a command never clears. `&& true` is harmless and not matched.
+_MASKED_RE = re.compile(r"(?:\|\||;)\s*true\b")
+
+# Bash-mediated code writes to track as pending. Deliberately false-negative-
+# leaning: only targets literally visible in the command text are caught.
+# Redirection targets are extracted directly; for in-place editors (sed -i,
+# tee, git apply, patch) every code-extension token in the command is treated
+# as a potential target (the files inside a patch body are unknowable and
+# simply not tracked).
+_REDIRECT_TARGET_RE = re.compile(r"(?<![<>])>{1,2}\s*([^\s;|&<>()]+)")
+_INPLACE_WRITE_RE = re.compile(
+    _BOUNDARY + r"(?:sed\s+[^;|&\n]*-i|tee\b|git\s+apply\b|patch\b)"
+)
+_TOKEN_RE = re.compile(r"[^\s;|&<>()'\"]+")
+
+
+def extract_bash_write_targets(command):
+    """Code-extension paths a Bash command visibly writes to."""
+    candidates = set()
+    for m in _REDIRECT_TARGET_RE.finditer(command):
+        candidates.add(m.group(1))
+    if _INPLACE_WRITE_RE.search(command):
+        candidates.update(_TOKEN_RE.findall(command))
+    targets = []
+    for c in candidates:
+        c = c.strip("'\"")
+        if os.path.splitext(c)[1].lower() in CODE_EXTENSIONS:
+            targets.append(c)
+    return targets
+
+
+def bash_succeeded(event):
+    """Whether the Bash command exited 0, judged from the PostToolUse envelope.
+
+    The harness gives PostToolUse no exit-code field for Bash: a successful
+    command's tool_response is a dict ({stdout, stderr, interrupted, ...}), and
+    per the hook-events digest PostToolUse fires "after tool succeeds" (failures
+    route to PostToolUseFailure). Empirically a nonzero-exit command surfaces as
+    a raw string tool_response starting "Error: Exit code N". So: string
+    starting with "Error" = failure; dict = success unless interrupted or a
+    future exit-code field says otherwise; missing/unknown shape = conservative
+    failure (an unwarranted clear is the case that silently voids the gate).
+    """
+    resp = event.get("tool_response")
+    if isinstance(resp, str):
+        return not resp.lstrip().lower().startswith("error")
+    if isinstance(resp, dict):
+        if resp.get("interrupted"):
+            return False
+        for key in ("exit_code", "exitCode", "returncode", "code"):
+            value = resp.get(key)
+            if isinstance(value, int) and value != 0:
+                return False
+        return True
+    return False
+
 
 def state_path(event):
     # Keyed by session_id plus transcript basename, matching inject-agents-md.py:
     # subagents share the session_id but run their own transcript, so this keeps
-    # a subagent's pending changes out of the main loop's Stop gate (subagents
-    # carry their own evidence contracts).
+    # a subagent's pending changes out of the main loop's Stop gate (SubagentStop
+    # gates them under their own key).
+    # COUPLING: gate-done-declarations.py computes this exact key and reads the
+    # same {"pending": [...]} JSON; keep the two in lockstep.
     session = event.get("session_id") or "unknown"
     transcript = os.path.basename(event.get("transcript_path") or "")
     key = re.sub(r"[^A-Za-z0-9._-]", "_", f"{session}-{transcript}")
@@ -170,9 +251,18 @@ def project_opts_into(file_dir, ext):
                 return None
         return None
     if ext in (".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs"):
-        if not shutil.which("biome"):
+        if not find_up(file_dir, ["biome.json", "biome.jsonc"]):
             return None
-        if find_up(file_dir, ["biome.json", "biome.jsonc"]):
+        # biome is normally a local devDependency, so a PATH lookup alone
+        # misses most real installs; prefer the project's node_modules/.bin
+        # binary (also correct when the global version differs), fall back to
+        # PATH. No `npx` fallback: `npx --no-install biome` on a project
+        # without the package exits nonzero with npx's own error text, which
+        # the advisory path would misreport as lint findings.
+        local = find_up(file_dir, [os.path.join("node_modules", ".bin", "biome")])
+        if local:
+            return [local, "check"]
+        if shutil.which("biome"):
             return ["biome", "check"]
         return None
     return None
@@ -242,7 +332,30 @@ def handle_edit(event):
 
 def handle_bash(event):
     command = (event.get("tool_input") or {}).get("command") or ""
+
+    # Bash-mediated code writes join the pending set like Edit/Write would.
+    targets = extract_bash_write_targets(command)
+    if targets:
+        cwd = event.get("cwd") or ""
+        spath = state_path(event)
+        state = load_state(spath)
+        for target in targets:
+            real = os.path.realpath(
+                target if os.path.isabs(target) else os.path.join(cwd, target)
+            )
+            display = display_path(real, cwd)
+            if display not in state["pending"]:
+                state["pending"].append(display)
+        state["pending"] = state["pending"][-MAX_PENDING_TRACKED:]
+        save_state(spath, state)
+
+    # Clears require outcome, not attempt: a verify-shaped command that is
+    # trivia, masks its exit status, or did not exit 0 leaves pending intact.
     if not _VERIFY_RE.search(command):
+        return
+    if _TRIVIA_RE.search(command) or _MASKED_RE.search(command):
+        return
+    if not bash_succeeded(event):
         return
     spath = state_path(event)
     state = load_state(spath)
@@ -268,14 +381,14 @@ def prune_resolved(pending, cwd):
     try:
         top = subprocess.run(
             ["git", "-C", realcwd, "rev-parse", "--show-toplevel"],
-            capture_output=True, text=True, timeout=5,
+            capture_output=True, text=True, timeout=3,
         )
         if top.returncode != 0:
             return pending
         repo_root = top.stdout.strip()
         status = subprocess.run(
             ["git", "-C", realcwd, "status", "--porcelain"],
-            capture_output=True, text=True, timeout=5,
+            capture_output=True, text=True, timeout=3,
         )
         if status.returncode != 0:
             return pending
@@ -339,7 +452,10 @@ def main():
             handle_bash(event)
         else:
             handle_edit(event)
-    elif name == "Stop":
+    elif name in ("Stop", "SubagentStop"):
+        # SubagentStop carries the subagent's own transcript_path, so
+        # state_path() resolves to the subagent's pending set; stop_hook_active
+        # is read with .get so its absence on either event is harmless.
         handle_stop(event)
 
 

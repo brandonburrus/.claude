@@ -24,6 +24,30 @@
       "Bash(* cat .env *)",
       "Bash(cat .env *)",
       "Bash(* cat .env)",
+      "Bash(bat .env)",
+      "Bash(* bat .env *)",
+      "Bash(bat .env *)",
+      "Bash(* bat .env)",
+      "Bash(head .env)",
+      "Bash(* head .env *)",
+      "Bash(head .env *)",
+      "Bash(* head .env)",
+      "Bash(tail .env)",
+      "Bash(* tail .env *)",
+      "Bash(tail .env *)",
+      "Bash(* tail .env)",
+      "Bash(less .env)",
+      "Bash(* less .env *)",
+      "Bash(less .env *)",
+      "Bash(* less .env)",
+      "Bash(more .env)",
+      "Bash(* more .env *)",
+      "Bash(more .env *)",
+      "Bash(* more .env)",
+      "Bash(cp .env)",
+      "Bash(* cp .env *)",
+      "Bash(cp .env *)",
+      "Bash(* cp .env)",
       "Bash(chmod *)",
       "Bash(chown *)",
       "Bash(dd *)",
@@ -31,7 +55,24 @@
       "Bash(git * --force-with-lease*)",
       "Bash(git * -f)",
       "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(git push * -f *)",
+      "Bash(git push * --force *)",
+      "Bash(git push +*)",
+      "Bash(git push * +*)",
       "Bash(git reset --hard *)",
+      "Bash(git reset --hard)",
+      "Bash(gp --force*)",
+      "Bash(gp -f*)",
+      "Bash(gp * --force*)",
+      "Bash(gp * --force-with-lease*)",
+      "Bash(gp * -f)",
+      "Bash(gp * -f *)",
+      "Bash(gp +*)",
+      "Bash(gp * +*)",
+      "Bash(gc --no-verify*)",
+      "Bash(gc -n*)",
+      "Bash(gc * --no-verify*)",
       "Bash(rm -r *)",
       "Bash(rm -rf *)",
       "Bash(rmdir *)",
@@ -46,7 +87,10 @@
     "ask": [
       "Bash(curl * -H *Authorization*)",
       "Bash(curl *)",
-      "Bash(git clean -fd *)"
+      "Bash(git clean -fd *)",
+      "Bash(git clean -fd)",
+      "Bash(git clean -fdx)",
+      "Bash(git clean -fdx *)"
     ],
     "defaultMode": "plan"
   },
@@ -69,6 +113,11 @@
           {
             "type": "command",
             "command": "bash ~/.claude/hooks/block-no-verify.sh",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/hooks/gate-done-declarations.py",
             "timeout": 5
           }
         ]
@@ -144,6 +193,16 @@
             "timeout": 5
           }
         ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/hooks/lint-agent-frontmatter.py",
+            "timeout": 5
+          }
+        ]
       }
     ],
     "Stop": [
@@ -152,7 +211,18 @@
           {
             "type": "command",
             "command": "python3 ~/.claude/hooks/enforce-verification.py",
-            "timeout": 10
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/hooks/enforce-verification.py",
+            "timeout": 15
           }
         ]
       }
