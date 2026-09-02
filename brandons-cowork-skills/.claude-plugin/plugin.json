@@ -1,6 +1,6 @@
 {
   "name": "brandons-cowork-skills",
-  "description": "Brandon's personal skill library for interrogation, planning, research, writing, and design work, packaged for GitHub Copilot CLI.",
+  "description": "Brandon's personal skill library for agentic research, writing, discovery, and design work, packaged for GitHub Copilot CLI.",
   "version": "1.0.0",
   "author": {
     "name": "Brandon Burrus",

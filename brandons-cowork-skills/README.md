@@ -3,8 +3,7 @@
 ![Brandons Cowork Skills icon](color.png)
 
 Twelve of Brandon's personal skills, packaged as a Microsoft 365 Copilot
-Cowork plugin: interrogation, planning, research, writing, and design
-workflows. Structured as a standard M365 App Package (the same distribution
+Cowork plugin: agentic research, writing, discovery, and design workflows. Structured as a standard M365 App Package (the same distribution
 mechanism as Teams apps), so the `skills/` directory is also a valid GitHub
 Copilot CLI / Claude Code plugin via `.claude-plugin/plugin.json`.
 
