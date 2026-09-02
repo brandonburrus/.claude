@@ -2,8 +2,11 @@
 
 ![Brandons Cowork Skills icon](color.png)
 
-Twelve of Brandon's personal skills, packaged as a Microsoft 365 Copilot
-Cowork plugin: agentic research, writing, discovery, and design workflows. Structured as a standard M365 App Package (the same distribution
+Ten of Brandon's personal skills, packaged as a Microsoft 365 Copilot
+Cowork plugin: agentic research, writing, discovery, and design workflows.
+Limited to prompt-only skills; skills that depend on running commands
+(`analyze-data`, `visualize-data`, both of which shell out to `uv`/`marimo`/
+`streamlit`) are excluded because Cowork has no command-execution capability. Structured as a standard M365 App Package (the same distribution
 mechanism as Teams apps), so the `skills/` directory is also a valid GitHub
 Copilot CLI / Claude Code plugin via `.claude-plugin/plugin.json`.
 
@@ -52,7 +55,7 @@ copilot plugin install /path/to/brandons-cowork-skills
 ```
 
 Verify with `copilot plugin list`, then `/skills list` in an interactive
-session to confirm all twelve skills loaded.
+session to confirm all ten skills loaded.
 
 ## Skills
 
@@ -68,8 +71,6 @@ session to confirm all twelve skills loaded.
 | `spec` | Writes product specs, tech specs, ADRs, and system design consults (API, schema, CI/CD, and more). |
 | `scrutinize` | Scrutinizes a plan's premise and end-to-end path from an outsider's perspective before trusting it. |
 | `teach-through-writing` | Writes tutorials, explainers, and onboarding docs that teach from first principles. |
-| `visualize-data` | Builds interactive data visualizations and dashboards with marimo, Streamlit, or D3. |
-| `analyze-data` | Analyzes, aggregates, and plots tabular data from CSV, Excel, JSON, Parquet, or SQLite. |
 
 ## Source of truth
 

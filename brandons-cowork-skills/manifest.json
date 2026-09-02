@@ -15,7 +15,7 @@
   },
   "description": {
     "short": "Agentic research, writing, discovery, and design skills",
-    "full": "Twelve prompt-based skills for agentic research, writing, discovery, and design workflows: check-comprehension, design, estimate-at-scale, humanize, interrogate, research-build-vs-buy, research-solutions, spec, scrutinize, teach-through-writing, visualize-data, and analyze-data."
+    "full": "Ten prompt-based skills for agentic research, writing, discovery, and design workflows: check-comprehension, design, estimate-at-scale, humanize, interrogate, research-build-vs-buy, research-solutions, spec, scrutinize, and teach-through-writing."
   },
   "icons": {
     "color": "color.png",
@@ -32,8 +32,6 @@
     { "folder": "./skills/research-solutions" },
     { "folder": "./skills/spec" },
     { "folder": "./skills/scrutinize" },
-    { "folder": "./skills/teach-through-writing" },
-    { "folder": "./skills/visualize-data" },
-    { "folder": "./skills/analyze-data" }
+    { "folder": "./skills/teach-through-writing" }
   ]
 }
