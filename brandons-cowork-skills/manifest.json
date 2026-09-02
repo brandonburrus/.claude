@@ -1,0 +1,39 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/teams/v1.28/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.28",
+  "version": "1.0.0",
+  "id": "b6c643ec-68d7-4c83-8f83-ea6fb58330de",
+  "developer": {
+    "name": "Brandon Burrus",
+    "websiteUrl": "https://www.republicservices.com",
+    "privacyUrl": "https://www.republicservices.com/privacy-policy",
+    "termsOfUseUrl": "https://www.republicservices.com/terms-of-use"
+  },
+  "name": {
+    "short": "Brandons Cowork Skills",
+    "full": "Brandons Cowork Skills for Copilot Cowork"
+  },
+  "description": {
+    "short": "Interrogation, planning, research, writing, and design skills",
+    "full": "Twelve prompt-based skills for interrogation, planning, research, writing, and design workflows: check-comprehension, design, estimate-at-scale, humanize, interrogate, research-build-vs-buy, research-solutions, spec, scrutinize, teach-through-writing, visualize-data, and analyze-data."
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "accentColor": "#004C7D",
+  "agentSkills": [
+    { "folder": "./skills/check-comprehension" },
+    { "folder": "./skills/design" },
+    { "folder": "./skills/estimate-at-scale" },
+    { "folder": "./skills/humanize" },
+    { "folder": "./skills/interrogate" },
+    { "folder": "./skills/research-build-vs-buy" },
+    { "folder": "./skills/research-solutions" },
+    { "folder": "./skills/spec" },
+    { "folder": "./skills/scrutinize" },
+    { "folder": "./skills/teach-through-writing" },
+    { "folder": "./skills/visualize-data" },
+    { "folder": "./skills/analyze-data" }
+  ]
+}
